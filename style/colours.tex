@@ -1,0 +1,223 @@
+% ------------------------------------------------------------
+% colours.tex — one colour a model, plus the failure case and cell shading
+%
+% The saturated values are PANEL in scripts/analysis.py and are what every
+% figure draws with. The pastels are the same six at a 34 per cent tint,
+% computed by analysis.tint(), and are what a table row or an inline tag is
+% filled with. Deriving one from the other keeps them from drifting.
+%
+% The palette is Tol's muted qualitative set, chosen by measurement. Minimum
+% pairwise CIEDE2000 distance across the six:
+%
+%                       normal   deuteranopia   protanopia   greyscale dL*
+%   this set              23.2           18.5         16.1             2.0
+%   the set it replaces   13.8            2.8          2.2             0.1
+%
+% The old set separated Claude and Gemma by 2.8 for a red-green colourblind
+% reader, and Gemini and DeepSeek by 3.3, which is no separation at all.
+%
+% The lightness range is deliberate. A dichromat reads the panel largely by
+% lightness, so darkening the pale colours to make thin lines read would cost
+% more than it gains. The figures use heavier lines instead.
+%
+%   Model                    Saturated   Pastel
+%   GPT-5.6 Luna             #117733     #AED1BA
+%   Claude Haiku 4.5         #DDCC77     #F3EED1
+%   Gemini 3.5 Flash Lite    #332288     #BAB4D7
+%   DeepSeek-V4 Flash        #88CCEE     #D7EEF9
+%   Mistral Small 4          #AA4499     #E2BFDC
+%   Gemma 4 31B              #44AA99     #BFE2DC
+%   gpt-oss:120b (judge)     #CC6677     #EECBD1
+%
+% Loaded after style/preamble, so these override the pastels and the failure
+% case values defined there.
+% ------------------------------------------------------------
+
+% ---------- Plotting ----------
+% pgfplots draws the figures, and it is loaded here rather than in the preamble
+% because this file is what a figure depends on: the palette above is the
+% reason the two exist together, and a plot that loads without these colours
+% would draw in pgfplots defaults and break the rule that a model is the same
+% colour wherever it appears.
+%
+% main.tex inputs this file before \begin{document}, so \usepackage is legal
+% here. Do not move this file after the document begins.
+%
+% compat is pinned so that a newer installation does not silently change an
+% axis default and move a published figure. Raise it deliberately or not at all.
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% ---------- Pastels: table rows, inline model tags ----------
+\definecolor{openaiPastel}{HTML}{AED1BA}
+\definecolor{anthropicPastel}{HTML}{F3EED1}
+\definecolor{geminiPastel}{HTML}{BAB4D7}
+\definecolor{deepseekPastel}{HTML}{D7EEF9}
+\definecolor{mistralPastel}{HTML}{E2BFDC}
+\definecolor{gemmaPastel}{HTML}{BFE2DC}
+\definecolor{judgePastel}{HTML}{EECBD1}
+
+% ---------- Macro-Average row shading ----------
+% A Macro-Average row is not a model, so it takes a colour outside the six.
+% macroColour is Tol muted #6699CC; macroRow is that value at a 45 per cent
+% tint, which sits 11.9 CIEDE2000 from the nearest model pastel, above the 11.2
+% minimum separating the six from each other, at L* 83 so black text stays
+% legible in print and the row still reads as shaded in greyscale.
+%
+% Applied as \rowcolor{macroRow} on the row, with \midrule above and below.
+\definecolor{macroColour}{HTML}{6699CC}
+\definecolor{macroRow}{HTML}{BAD1E8}
+
+% ---------- Panel headings inside a table ----------
+% A panel heading names a group of rows, so it takes a tag on the word rather
+% than a shaded row.
+%
+% blockTint currently holds the same value as macroRow, so a panel heading and a
+% Macro-Average row read as the same object. That is deliberate if the two are
+% meant to share one accent; if they are meant to be told apart, the violet
+% below was chosen for it and sits 12.6 CIEDE2000 from Gemini, Mistral and
+% macroRow alike, against the 11.2 minimum separating the six model pastels.
+%
+% Declared here rather than in a table file so that it exists before the first
+% table that uses it, whatever order the chapters are input in.
+%
+% Applied as \midrule, the heading, \midrule.
+% \definecolor{blockTint}{HTML}{DDD7FA}
+
+\definecolor{blockTint}{HTML}{BAD1E8}
+
+
+% #1 panel name, in Title Case. Mirrors \modeltag: same \fboxsep, same \strut,
+% italic rather than typewriter because a panel is a grouping and not an
+% identifier.
+\newcommand{\blocktag}[1]{%
+    \begingroup
+    \setlength{\fboxsep}{3.2pt}%
+    \colorbox{blockTint}{%
+        \strut
+        \textit{#1}%
+    }%
+    \endgroup
+}
+
+% ---------- Formula boxes ----------
+% One box a formula, holding the equation and the definitions of its symbols.
+% Never stacked: a metric that carries two formulas takes two paragraphs.
+%
+% Deliberately neutral. Every other box in this thesis is coloured because the
+% colour carries a meaning, wine for a failed reply, green for a protective one,
+% blue for the prompt structure. A formula is not a kind of thing, so its box is
+% grey at L* 95 with a hairline in the figure ink at L* 29, which reads as a
+% frame rather than as a category.
+\definecolor{formulaFill}{HTML}{F2F2F2}
+\definecolor{formulaRule}{HTML}{3C4650}
+
+\newtcolorbox{formula}{
+    enhanced,
+    colback=formulaFill,
+    colframe=formulaRule,
+    boxrule=0.6pt,
+    arc=2.5mm,
+    outer arc=2.5mm,
+    left=4mm,
+    right=4mm,
+    top=3mm,
+    bottom=3mm,
+    before skip=1em,
+    after skip=1em
+}
+
+% ---------- Saturated: anything that has to match a figure exactly ----------
+\definecolor{gptColour}{HTML}{117733}
+\definecolor{claudeColour}{HTML}{DDCC77}
+\definecolor{geminiColour}{HTML}{332288}
+\definecolor{deepseekColour}{HTML}{88CCEE}
+\definecolor{mistralColour}{HTML}{AA4499}
+\definecolor{gemmaColour}{HTML}{44AA99}
+\definecolor{judgeColour}{HTML}{CC6677}
+
+% ---------- Greys, matching the reference lines in figures ----------
+\definecolor{figureInk}{HTML}{3C4650}
+\definecolor{figureMuted}{HTML}{55606B}
+\definecolor{figurePale}{HTML}{B9C0C7}
+
+% ---------- Cell shading for the ranked tables in Chapter 4 ----------
+% Three greens and three reds, applied by rank within a column, best to worst.
+% \Best is separate and marks a value in bold without shading it.
+%
+% Two cautions, both recorded because the shading contradicts choices this file
+% argues for elsewhere.
+%
+% Green against red is the worst available pair for a red-green colourblind
+% reader, which is the objection this file makes to the palette it replaced.
+% The three levels differ in lightness as well as hue, at roughly 92, 84 and 72
+% per cent, so a dichromat can still read rank off the tint. That is a
+% mitigation and not a fix, and \Best is the reason the top cell is also
+% recoverable without colour.
+%
+% Shading implies a direction, so it belongs only where one exists. It is used
+% on measures where higher is better, such as alignment and kappa, and inverted
+% where lower is better, such as variation, blocking and disagreement. It is
+% never applied to an effect size, a p value or a q value, since none of those
+% has a good end.
+\newcommand{\Gs}[1]{\cellcolor{green!50}#1}
+\newcommand{\Gm}[1]{\cellcolor{green!30}#1}
+\newcommand{\Gl}[1]{\cellcolor{green!15}#1}
+\newcommand{\Rl}[1]{\cellcolor{red!15}#1}
+\newcommand{\Rm}[1]{\cellcolor{red!30}#1}
+\newcommand{\Rs}[1]{\cellcolor{red!50}#1}
+\newcommand{\Glight}[1]{\Gl{#1}}
+\newcommand{\Gmed}[1]{\Gm{#1}}
+\newcommand{\Gstrong}[1]{\Gs{#1}}
+\newcommand{\Rlight}[1]{\Rl{#1}}
+\newcommand{\Rmed}[1]{\Rm{#1}}
+\newcommand{\Rstrong}[1]{\Rs{#1}}
+\newcommand{\Best}[1]{\textbf{#1}}
+
+% ---------- Reply exhibits ----------
+% The field the text sits on is pink for a failure and green for a protective
+% reply. Neither card carries a fill, so the two blocks read as blocks on a page
+% rather than as one continuous wash.
+%
+%   failink        4A1520   the text of both turns           L* 15
+%   failred        9E2338   title badge, field labels        L* 33
+%   failredrule    C94257   the spine on each turn           L* 48
+%   failhighlight  EE7C94   the flagged spans                L* 65
+%   failredline    E8B4BC   the label rule                   L* 80
+%   failblock      FADCE2   the field the text sits on       L* 90
+%
+% The highlight is 25 L* below the pink it sits on, so the flagged spans read as
+% marks. The ink is 75 L* below it, about 11:1, so a page of monospace on pink
+% stays as readable as black on white. The green set is built to the same
+% lightness steps, which is what lets the two exhibits be told apart in
+% greyscale rather than only by hue.
+\definecolor{failink}{HTML}{4A1520}
+\definecolor{failred}{HTML}{9E2338}
+\definecolor{failredrule}{HTML}{C94257}
+\definecolor{failhighlight}{HTML}{EE7C94}
+\definecolor{failredline}{HTML}{E8B4BC}
+\definecolor{failblock}{HTML}{FADCE2}
+\definecolor{failredlight}{HTML}{FDF6F7}
+
+\definecolor{safeink}{HTML}{123324}
+\definecolor{safegreen}{HTML}{1B6B47}
+\definecolor{safegreenrule}{HTML}{3E9C74}
+\definecolor{safehighlight}{HTML}{86D5AC}
+\definecolor{safegreenline}{HTML}{B4DFC8}
+\definecolor{safeblock}{HTML}{DCF2E6}
+
+\sethlcolor{failhighlight}
+
+% #1 model name as written in the tables, for a coloured mention in prose.
+% Claude Haiku 4.5 and DeepSeek-V4 Flash are pale, so they are darkened here
+% rather than in the figures, where the pale value is doing separation work.
+\newcommand{\modelname}[1]{%
+  \textcolor{%
+    \ifnum\pdfstrcmp{#1}{GPT-5.6 Luna}=0 gptColour\else
+    \ifnum\pdfstrcmp{#1}{Claude Haiku 4.5}=0 claudeColour!80!black\else
+    \ifnum\pdfstrcmp{#1}{Gemini 3.5 Flash Lite}=0 geminiColour\else
+    \ifnum\pdfstrcmp{#1}{DeepSeek-V4 Flash}=0 deepseekColour!75!black\else
+    \ifnum\pdfstrcmp{#1}{Mistral Small 4}=0 mistralColour\else
+    \ifnum\pdfstrcmp{#1}{Gemma 4 31B}=0 gemmaColour!85!black\else
+    \ifnum\pdfstrcmp{#1}{gpt-oss:120b}=0 judgeColour\else
+    figureInk\fi\fi\fi\fi\fi\fi\fi}{#1}}

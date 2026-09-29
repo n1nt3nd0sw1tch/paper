@@ -1,0 +1,77 @@
+% ------------------------------------------------------------
+% Chapter 6: Conclusion
+%
+% Summarises and evaluates. Introduces no number that has not already appeared
+% in Chapter 4 with a table behind it.
+% ------------------------------------------------------------
+
+\chapter{Conclusion}
+\label{ch:conclusion}
+
+This thesis asked whether large language model chatbots respond differently
+when the user's age changes and nothing else does, and if so whether the
+difference is the one a child-safety regime would want. Answering it required
+an instrument that did not exist, since published safety evaluations vary the
+request and hold the user constant. A benchmark of 200 scenarios crossed with
+thirteen age conditions and three replicates was built, grounded in the duties
+the Online Safety Act 2023 places on user-to-user services, and run against six
+commercial models from five providers for 46,800 requests. Every reply was
+scored against a frozen thirteen-label rubric by a classifier validated against
+manual annotation with an admission threshold fixed in advance, and every effect
+is paired within scenario and corrected within a declared family.
+
+The answer to the first question is yes, and unambiguously. Refusal on
+age-restricted requests is 45.5 percentage points higher for an explicit minor
+age than an explicit adult age, and text written for an explicit minor age sits
+1.77 grade levels lower. Both effects hold on all six models, both survive
+correction, and neither is an artefact of the thresholds chosen to compute it.
+Requests the benchmark expects to be answered at every age are almost never
+refused, at a macro-average of 0.5\%, so the conditioning is not a general
+increase in caution.
+
+The answer to the second question is the contribution this thesis would defend.
+The conditioning is real but uneven, in a pattern that an evaluation of either
+dimension alone would miss. Safety conditioning is concentrated at the adult
+boundary: half of the entire movement across fourteen years of age occurs in the
+single step from seventeen to eighteen. Linguistic conditioning is spread across
+the ladder, and the same step accounts for between 4.0 and 11.0\% of it. A model
+can therefore be well calibrated to the statutory line and poorly calibrated to
+the developmental range beneath it, which is what these six models are.
+Conditioning is also about three times weaker when the age is implied by context
+than when it is stated outright, and real users imply far more often than they
+state.
+
+Two secondary findings carry their own weight. Crossing the decision with the
+delivered content, rather than reading a binary Refusal Rate, separates a
+permissive model from one that agrees and then supplies nothing; on this panel
+those are different models, and a Refusal Rate reports them identically. And
+decomposing the reading-level change into the two terms of the formula shows it
+is carried almost entirely by word choice rather than sentence structure, which
+is the opposite of the intuitive account.
+
+A third observation is exploratory. Every measure above reads a reply through a
+closed vocabulary, so none can register a reply rewritten without changing
+category, and comparing the replies themselves shows that this happens: an
+explicit minor age separates the text of age-restricted replies by 0.189 where
+the same change moves the control strata by roughly half as much. The measure
+has no polarity, so it adds nothing to the direction of the safety finding. What
+it adds is scope: age conditioning is wider than the categorical rates record.
+
+Judged against its aims the approach has been largely successful, with two
+qualifications. The instrument works: it isolates the age signal, it produces
+effects large enough to be unambiguous, and its controls behave as controls
+should. But the safety measurement stops at whether requested material was
+delivered and does not adjudicate whether it was harmful, so the headline
+directional rates are upper bounds rather than measurements of harm. And the
+readability sample is not the response corpus, because a tenth of replies are
+too short to measure and the loss is concentrated in particular models and
+strata. Both limits are visible in the reported numbers rather than concealed by
+them, and neither is resolved.
+
+The most striking single result is the one that motivates the title. Across the
+decade of childhood the ladder covers, from seven to seventeen, refusal on
+age-restricted requests falls by twenty points. Across the single year from
+seventeen to eighteen it falls by twenty-eight. These models have learned where
+the law draws its line far more sharply than they have learned what a child is,
+and the difference between those two things is the gap that a child-safety
+regime built on age verification alone will not close.

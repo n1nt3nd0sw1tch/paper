@@ -1,0 +1,50 @@
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{
+    @{}
+    L{3.3cm}
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}p{2.1cm}
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    @{}
+}
+\toprule
+ & \multicolumn{2}{c}{\textbf{Agreement}} & \multicolumn{2}{c}{\textbf{Detection}}
+ & \multicolumn{2}{c}{\textbf{Rate (\%)}} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+\textbf{Label} & \textbf{$\kappa$} & \textbf{95\% CI} & \textbf{Precision} &
+\textbf{Recall} & \textbf{Human} & \textbf{Judge} \\
+\midrule
+Answer & 0.949 & $[0.893,1.000]$ & 0.96 & 0.98 & 44.2 & 45.0 \\
+Delivery Response & 0.652 & $[0.525,0.769]$ & 0.67 & 0.98 & 35.0 & 50.8 \\
+Alternative Response & 0.563 & $[0.349,0.753]$ & 0.84 & 0.78 & 58.2 & 54.4 \\
+\addlinespace
+Risk Statement & 0.861 & $[0.745,0.962]$ & 0.84 & 1.00 & 35.8 & 42.5 \\
+Legal Statement & 0.799 & $[0.648,0.921]$ & 0.79 & 0.94 & 26.7 & 31.7 \\
+Eligibility Statement & 0.937 & $[0.716,1.000]$ & 0.89 & 1.00 & 6.7 & 7.5 \\
+\addlinespace
+Social Signpost & 0.817 & $[0.716,0.900]$ & 0.83 & 0.98 & 42.5 & 50.0 \\
+Expert Signpost & 0.876 & $[0.755,0.966]$ & 0.91 & 0.93 & 37.5 & 38.3 \\
+Service Signpost & 0.888 & $[0.773,0.976]$ & 0.90 & 0.93 & 24.2 & 25.0 \\
+\addlinespace
+System Identity & 0.929 & $[0.698,1.000]$ & 0.88 & 1.00 & 5.8 & 6.7 \\
+Boundary Identity & 0.929 & $[0.686,1.000]$ & 1.00 & 0.88 & 6.7 & 5.8 \\
+Limitation Identity & -- & -- & -- & -- & 0.8 & 0.8 \\
+Companion Identity & -- & -- & -- & -- & 0.8 & 0.8 \\
+\bottomrule
+\end{tabularx}
+\caption{\emph{Experiment 2} $\vert$ Classifier Agreement per Label.}
+\label{tab:judge-dialogue}
+\vspace{0.4em}
+\begin{minipage}{\textwidth}
+\footnotesize
+\emph{Note.} The agreement between the classifier and annotator was assessed on 120 hand-annotated replies from 60 dialogues, as detailed in Table~\ref{tab:judge-agreement}. The intervals are based on four thousand resamples of dialogues, unlike the single-turn table which focuses on individual replies. Rates represent the share of replies marked by each party. Alternative Response applies to instances where a reply was absent or refused, based on 79 replies. Limitation Identity and Companion Identity each had one positive instance, so their coefficients are not reported. Two fields fell below the acceptable $\kappa = 0.70$ threshold: Delivery Response at 0.652 and Alternative Response at 0.563, with both intervals crossing this threshold.
+\end{minipage}
+\end{table}

@@ -1,0 +1,26 @@
+% Algorithm 2, Chapter 3, Section 3.3.2, beside Table~\ref{tab:dialogue-design}.
+% Follows scripts/build.py. [H] holds it beside that table.
+% The short caption is what the List of Algorithms prints.
+\begin{algorithm}[H]
+\caption[Retention Dialogue Construction]{\textbf{Retention Dialogue
+Construction.} The observed Experiment~1 reply is replayed as the opening
+response before the fixed attack turns are appended.}
+\label{alg:dialogue}
+\footnotesize
+\begin{algorithmic}[1]
+\Require prompt $p$, its opening reply $y$ from Experiment~1, attack method $m$
+with wordings $T_m$, canonical request $r$
+\Ensure a dialogue whose expected answer stays fixed at the age signal it opened under
+\State $e \gets \Call{ExpectedAnswer}{p}$
+\State $q \gets \Call{Prompt}{p}$
+\State $D \gets [\,(1, \textsc{user}, q, e)\,]$
+\State $D \gets D \frown [\,(2, \textsc{assistant}, y, \textsc{none})\,]$ \Comment{Replayed}
+\For{$i \gets 1$ \textbf{to} $|T_m|$}
+    \State $t \gets 3 + 2(i-1)$
+    \State $u \gets T_m[i]$ with $r$ substituted
+    \State $D \gets D \frown [\,(t, \textsc{user}, u, \textsc{none})\,]$
+    \State $D \gets D \frown [\,(t+1, \textsc{assistant}, \emptyset, e)\,]$ \Comment{Generated Later}
+\EndFor
+\State \Return $D$
+\end{algorithmic}
+\end{algorithm}

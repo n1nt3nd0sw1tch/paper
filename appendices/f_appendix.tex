@@ -1,0 +1,241 @@
+\chapter{Results}
+
+% blockTint and \blocktag are declared in tables/03/tab_fields.tex, which is
+% input from Chapter 3 and therefore before this appendix. \providecommand and
+% a repeated \definecolor make this file safe on its own as well: neither
+% overwrites a definition that already exists in a way that matters.
+\definecolor{blockTint}{HTML}{BAD1E8}
+\providecommand{\blocktag}[1]{%
+    \begingroup
+    \setlength{\fboxsep}{3.2pt}%
+    \colorbox{blockTint}{%
+        \strut
+        \textit{#1}%
+    }%
+    \endgroup
+}
+
+\section{Classification}
+\label{app:adaptation-results}
+
+\paragraph{Block Rate}
+
+Of 46,800 requests, 160 were blocked: 159 by Gemini 3.5 Flash Lite and one by
+Claude Haiku 4.5, leaving 46,640 returned replies. Table~\ref{tab:corpus-blocking}
+reports blocking by age and affected domain. Table~\ref{tab:safety-blocking} reports the paired blocking contrasts. Gemini
+retained 20 of 25 Age Restricted scenarios for these comparisons; all other
+models retained all 25. Including blocked requests in the denominator changed
+Macro-Average directional safety rates by less than one percentage point.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.15}
+
+\begin{tabular}{
+|>{\centering\arraybackslash}p{1cm}|
+>{\centering\arraybackslash}p{1.7cm}|
+>{\centering\arraybackslash}p{2.4cm}|
+>{\centering\arraybackslash}p{3.2cm}|
+}
+\hline
+\textbf{Age} &
+\textbf{Overall (\%)} &
+\textbf{Violence (\%)} &
+\textbf{Sexual Content (\%)} \\
+\hline
+7  & 5.0 & 5.0 & 45.0 \\
+\hline
+9  & 5.5 & 5.0 & 50.0 \\
+\hline
+11 & 6.0 & 5.0 & 55.0 \\
+\hline
+13 & 4.5 & 5.0 & 40.0 \\
+\hline
+15 & 4.2 & 5.0 & 36.7 \\
+\hline
+17 & 1.2 & 0.0 & 11.7 \\
+\hline
+\end{tabular}
+\caption{\emph{Classification} $\vert$ Block Rate by Age.}
+\label{tab:corpus-blocking}
+\end{table}
+ 
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.15}
+ 
+\begin{tabular}{
+|p{4.8cm}|
+>{\centering\arraybackslash}p{1.9cm}|
+>{\centering\arraybackslash}p{1.7cm}|
+>{\centering\arraybackslash}p{1.7cm}|
+>{\centering\arraybackslash}p{2.1cm}|
+}
+\hline
+\textbf{Model} &
+\textbf{Effect (pp)} &
+\textbf{$p$} &
+\textbf{$q$} &
+\textbf{95\% CI} \\
+\hline
+ 
+\multicolumn{5}{|l|}{\blocktag{A. Explicit Age (Minor) vs Explicit Age (Adult)}} \\
+\hline
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & $+4.4$ & 0.00049 & 0.004 & $[2.1, 7.1]$ \\
+\hline
+\rowcolor{macroRow} Macro-Average & $+0.73$ & --- & --- & $[0.34, 1.19]$ \\
+\hline
+ 
+\multicolumn{5}{|l|}{\blocktag{B. Explicit Age (Minor) vs Implicit Cue (Minor)}} \\
+\hline
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & $+4.3$ & 0.00073 & 0.004 & $[1.9, 7.1]$ \\
+\hline
+\rowcolor{macroRow} Macro-Average & $+0.70$ & --- & --- & $[0.31, 1.16]$ \\
+\hline
+\end{tabular}
+\caption{\emph{Classification} $\vert$ Block Rate by Model.}
+\label{tab:safety-blocking}
+\end{table}
+
+
+\paragraph{Rater Agreement}
+\label{app:collection}
+\label{app:classification}
+
+Responses were generated under common decoding settings and classified using
+the thirteen-label rubric in Section~\ref{subsec:properties}.
+Table~\ref{tab:classification} reports classification runtime. Agreement was evaluated on 600 manually annotated replies. The classifier
+received the canonical request and response, but not the age condition, scenario
+type or expected response. Reasoning increased agreement for \texttt{Answer}
+from $\kappa=0.919$ to $0.978$, while median agreement remained similar overall;
+reasoning was therefore retained for the final classification.
+Tables~\ref{tab:reasoning-fields} and~\ref{tab:judge-model-agreement} report
+agreement by label and model. Table~\ref{tab:second-judge} compares the human annotation (H), classifier of
+record (C1), and second LLM judge (C2). Values below the $\kappa=0.70$ threshold
+are shaded; Companion Identity was too rare for meaningful agreement estimates.
+
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\textbf{Model} & \textbf{$n$} & \textbf{Hours} & \textbf{Replies a Second} \\
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 7,795 & 2.35 & 0.92 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 7,799 & 2.03 & 1.07 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 7,641 & 4.38 & 0.48 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 7,800 & 1.85 & 1.17 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 3,483 & 3.01 & 0.32 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 7,800 & 3.63 & 0.60 \\
+\midrule
+\rowcolor{macroRow} \textbf{Total} & \textbf{42,318} & \textbf{17.25} & \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Classification} $\vert$ Runtime.}
+\label{tab:classification}
+\end{table}
+
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+& \multicolumn{2}{c}{\textbf{Cohen's $\kappa$}} & \\
+\cmidrule(lr){2-3}
+\textbf{Label} & \textbf{Reasoning Off} & \textbf{Reasoning On} & \textbf{$\Delta\kappa$} \\
+\midrule
+Answer                & 0.919 & 0.978 & $+0.059$ \\
+Delivery Response     & 0.923 & 0.936 & $+0.013$ \\
+Alternative Response  & 0.635 & 0.635 & $+0.000$ \\
+Risk Statement        & 0.611 & 0.632 & $+0.021$ \\
+Legal Statement       & 0.844 & 0.849 & $+0.005$ \\
+Eligibility Statement & 0.727 & 0.702 & $-0.025$ \\
+Social Signpost       & 0.889 & 0.876 & $-0.013$ \\
+Expert Signpost       & 0.910 & 0.920 & $+0.010$ \\
+Service Signpost      & 0.983 & 0.991 & $+0.008$ \\
+System Identity       & 0.976 & 0.964 & $-0.012$ \\
+Boundary Identity     & 0.854 & 0.615 & $-0.239$ \\
+Limitation Identity   & 1.000 & 1.000 & $+0.000$ \\
+Companion Identity    & ---   & ---   & --- \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Classification} $\vert$ Agreement Between Manual Annotation and LLM Judge by Label.}
+\label{tab:reasoning-fields}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+& \multicolumn{2}{c}{\textbf{Agreement (\%)}} \\
+\cmidrule(l){2-3}
+\textbf{Model} & \textbf{Reasoning Off} & \textbf{Reasoning On} \\
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 93.8 & 94.7 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 97.4 & 97.3 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 97.3 & 97.4 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 95.1 & 95.3 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 98.0 & 98.2 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 96.9 & 96.9 \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Classification} $\vert$ Agreement Between Manual Annotation and LLM Judge by Model.}
+\label{tab:judge-model-agreement}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{
+    @{}
+    L{3.5cm}
+    >{\raggedleft\arraybackslash}X >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    @{}
+}
+\toprule
+& \multicolumn{3}{c}{\textbf{Cohen's $\kappa$}} &
+\multicolumn{3}{c}{\textbf{Positive Rate (\%)}} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+\textbf{Label} &
+\textbf{H\,--\,C1} & \textbf{H\,--\,C2} & \textbf{C1\,--\,C2} &
+\textbf{H} & \textbf{C1} & \textbf{C2} \\
+\midrule
+Answer & .978 & .931 & .920 & 18.3 & 18.3 & 20.5 \\
+Delivery Response & .936 & .936 & .963 & 75.3 & 76.7 & 77.0 \\
+\addlinespace
+Alternative Response & .635 & .681 & .684 & 45.7 & 58.9 & 48.3 \\
+Risk Statement & .632 & .584 & .469 & 22.2 & 31.0 & 12.7 \\
+Legal Statement & .849 & .786 & .832 & 17.7 & 17.0 & 14.8 \\
+Eligibility Statement & .702 & .796 & .635 & 2.3 & 2.8 & 1.8 \\
+\addlinespace
+Social Signpost & .876 & .889 & .919 & 52.5 & 56.0 & 54.7 \\
+Expert Signpost & .920 & .886 & .893 & 47.7 & 49.7 & 47.0 \\
+Service Signpost & .991 & .920 & .920 & 26.2 & 26.5 & 27.7 \\
+\addlinespace
+System Identity & .964 & .850 & .885 & 7.3 & 7.8 & 9.7 \\
+Boundary Identity & .615 & .894 & .570 & 2.5 & 2.8 & 2.3 \\
+Limitation Identity & 1.000 & .914 & .914 & 4.7 & 4.7 & 5.5 \\
+Companion Identity & --- & .000 & .000 & 0.0 & 0.0 & 0.3 \\
+\bottomrule
+\end{tabularx}
+\caption{\emph{Classification} $\vert$ Agreement Between the Two Classifiers.}
+\label{tab:second-judge}
+\end{table}

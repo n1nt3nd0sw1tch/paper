@@ -1,0 +1,77 @@
+% What the dialogue pass attempted and returned. Chapter 3, Section 3.3.2.
+%
+% Figures are read from the run logs and from results/dialogue/turns.csv rather
+% than typed from the console.
+%
+% Three counts per model, and they differ only on Gemini 3.5 Flash Lite:
+%
+%   Attempted   dialogues x 2, the turns the pass asked for
+%   Returned    the turns that came back, so attempted less the withheld
+%   Analysable  the turns sitting in a dialogue holding both of its own, since
+%               a movement needs two and a dialogue missing one is dropped
+%
+% Gemini is short by 102 dialogues before any of that, because those openings
+% were withheld in the Adaptation pass and a dialogue cannot be replayed from a
+% reply that does not exist.
+%
+% Word counts are medians over the returned turns, not means, because a handful
+% of very long replies on DeepSeek-V4 Flash and Gemma 4 31B would otherwise
+% carry the figure. They are words rather than tokens so that the two generated
+% turns can be compared with each other and with the replayed opening.
+%
+% The cost column is dropped: Gemma 4 31B is reached through an Ollama endpoint
+% that does not meter per call, so one of the six carried no figure, and the
+% pass total is given in the prose instead.
+%
+% The two panels split closed-weight from open-weight, as in
+% Table~\ref{tab:model-specs}.
+%
+% \caption and \label sit after \end{tabular}, as everywhere else.
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{
+    @{}
+    L{3.9cm}
+    L{1.75cm}
+    L{1.75cm}
+    L{1.75cm}
+    L{1.35cm}
+    L{1.35cm}
+    L{1.35cm}
+    @{}
+}
+\toprule
+& \multicolumn{3}{c}{\textbf{Turns}} &
+\multicolumn{3}{c}{\textbf{Median Words}} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+\textbf{Model} & \textbf{Attempted} & \textbf{Returned} & \textbf{Analysable} &
+\textbf{Turn 1} & \textbf{Turn 2} & \textbf{Turn 3} \\
+\midrule
+\multicolumn{7}{@{}l}{\blocktag{A. Closed-Weight}} \\[0.15em]
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna} &
+2{,}400 & 2{,}400 & 2{,}400 & 110 & 87 & 102 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} &
+2{,}400 & 2{,}400 & 2{,}400 & 90 & 113 & 147 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} &
+2{,}196 & 2{,}189 & 2{,}184 & 92 & 106 & 127 \\
+\midrule
+\multicolumn{7}{@{}l}{\blocktag{B. Open-Weight}} \\[0.15em]
+\midrule
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} &
+2{,}400 & 2{,}400 & 2{,}400 & 172 & 296 & 342 \\
+\modeltag{mistralPastel}{Mistral Small 4} &
+2{,}400 & 2{,}400 & 2{,}400 & 87 & 105 & 111 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} &
+2{,}400 & 2{,}400 & 2{,}400 & 182 & 172 & 262 \\
+\midrule
+\rowcolor{macroRow} \textbf{Total} & \textbf{14{,}196} & \textbf{14{,}189} & \textbf{14{,}184} &
+& & \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Methods} $\vert$ Experiment 2 Collection.}
+\label{tab:dialogue-collection}
+\end{table}

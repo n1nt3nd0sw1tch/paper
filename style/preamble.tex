@@ -1,0 +1,558 @@
+% ------------------------------------------------------------
+% preamble.tex — packages, formatting, and custom commands
+% ------------------------------------------------------------
+
+% ---------- Encoding, fonts, and language ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[british]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\DeclareUnicodeCharacter{2060}{\nolinebreak}
+
+% ---------- Colour ----------
+% Loaded once, early, with the table option. Loading xcolor a second time later
+% clashes with tikz and tcolorbox.
+\usepackage[table]{xcolor}
+\definecolor{linkblue}{HTML}{0645AD}
+
+% ---------- Page layout and spacing ----------
+% Symmetrical 2.5cm margins. Text block is 16cm, about 85 characters a line at
+% 11pt. footskip 1.5cm inside a 2.5cm bottom margin leaves the page number 1cm
+% clear of the page edge.
+% Note: if a bound copy is ever required, UCL asks for at least 40mm at the
+% binding edge, which this does not meet. Switch left to 4cm at that point.
+\usepackage[a4paper,
+            left=2.5cm, right=2.5cm,
+            top=2.5cm, bottom=2.5cm,
+            headheight=14pt, headsep=0.8cm, footskip=1.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{parskip}
+
+% ---------- Mathematics ----------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+
+% ---------- Figures, tables, and captions ----------
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{pdflscape}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% Captions below tables.
+%
+% floatrow was tried here and reverted. It repositions a caption inside a float
+% regardless of source order, which would have made this one preamble line
+% rather than an edit to every table file, but it refuses to load alongside
+% float, which this preamble has always loaded and which supplies the H
+% placement specifier. Loading both aborts floatrow at its line 33, and the
+% rest of the package never defines \captionlabel or the subfloatrow
+% environments, which is six cascading errors and no PDF.
+%
+% The caption package cannot do it either: position=below sets which skip is
+% used, not where the caption is placed.
+%
+% So caption position is decided by where \caption sits in each table file, and
+% the convention is \caption and \label after \end{tabularx}. Anything still
+% carrying them before the tabular prints its caption above.
+\usepackage{caption}
+
+% L is redefined locally in several chapters and appendices, which is where the
+% repeated "Column L is already defined" warnings come from. Harmless.
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+% ---------- TikZ ----------
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+% ---------- Lists, quotations, URLs, and boxes ----------
+% tikz above defines \path, and the url package declines to redefine a command
+% that already exists, so \path in body text is tikz's and fails outside a
+% picture. Use \nolinkurl from hyperref for a long file path instead.
+\usepackage{enumitem}
+\usepackage{url}
+\usepackage{xurl}
+\usepackage{csquotes}
+\urlstyle{same}
+\usepackage[most]{tcolorbox}
+
+% ---------- Monospace ----------
+% Inconsolata removed, so \ttfamily is Latin Modern Mono. That face is about a
+% fifth wider, and the Model Name column of tab:models is 4.6cm to take both
+% the tag and the longest identifier under it.
+% \usepackage[scaled=0.92]{inconsolata}
+
+% ---------- Bibliography ----------
+\usepackage[
+  backend=biber,
+  style=ieee,
+  citestyle=numeric-comp,
+  sorting=nyt,
+  giveninits=true,
+  maxbibnames=6,
+  minbibnames=3,
+  doi=true,
+  url=true,
+  isbn=false
+]{biblatex}
+
+\addbibresource{biblatex.bib}
+% \addbibresource{biblatexnews.bib}
+
+% Remove quotation marks around titles.
+\DeclareFieldFormat
+  [article,inproceedings,incollection,book,misc,online,report]
+  {title}{#1}
+
+\DeclareFieldFormat{url}{Available\addcolon\space\url{#1}}
+\DeclareFieldFormat{urldate}{#1}
+
+% Clean noisy Zotero metadata.
+\AtEveryBibitem{%
+  \clearfield{langid}%
+  \clearlist{language}%
+  \clearfield{eprintclass}%
+  \clearfield{version}%
+  \clearfield{pubstate}%
+}
+
+% Author. Title. Date. [Online]. Available: URL. Accessed: date.
+\DeclareBibliographyDriver{online}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \ifnameundef{author}
+    {\iflistundef{organization}
+       {}
+       {\printlist{organization}\setunit{\addperiod\space}}}
+    {\printnames{author}\setunit{\addperiod\space}}%
+  \printfield{title}%
+  \setunit{\addperiod\space}%
+  \iffieldundef{year}
+    {}
+    {\printdate\setunit{\addperiod\space}}%
+  \printtext{[Online]}%
+  \setunit{\addperiod\space}%
+  \printfield{url}%
+  \iffieldundef{urlyear}
+    {}
+    {\setunit{\addperiod\space}%
+     \printtext{Accessed\addcolon\space}%
+     \printurldate}%
+  \usebibmacro{finentry}%
+}
+
+% ---------- Hyperlinks and cross-references ----------
+% Blue links and citations. Replace linkblue with black before printing if a
+% monochrome copy is wanted.
+\usepackage[
+  colorlinks=true,
+  linkcolor=linkblue,
+  citecolor=linkblue,
+  urlcolor=linkblue,
+  filecolor=linkblue,
+  breaklinks
+]{hyperref}
+\usepackage[capitalise, noabbrev]{cleveref}
+
+% ---------- Appendices ----------
+\usepackage[titletoc]{appendix}
+
+% ---------- Chapter headings ----------
+% Unbold, level with body text, number set off by a rule: 1| Introduction
+%
+% The height arithmetic, from the geometry block in the log:
+%   \titlespacing* emits its before-space via \vspace*, which first places a
+%   zero-height \hrule. That rule is the first item on the page, so it absorbs
+%   \topskip (11pt), and the title line then falls a full \baselineskip below
+%   it. \linespread{1} brings that baselineskip down from 45pt to 30pt.
+%   11 + 30 = 41pt, less the ~17pt cap height wanted above the baseline, gives
+%   the -24pt below.
+% \vspace* is not discarded at a page top, so this applies to every chapter
+% identically rather than landing on some and not others.
+\usepackage{titlesec}
+\titleformat{\chapter}[hang]
+  {\normalfont\huge\linespread{1}\selectfont}{\thechapter\,\textbar}{20pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{-24pt}{30pt}
+
+% ---------- Algorithms ----------
+% The patch below must come after algpseudocode, not after hyperref: it renews
+% a command the package brings with it, and renewing it earlier fails with
+% "Command \theHALG@line undefined".
+%
+% algorithmicx restarts its line counter in every algorithm, so hyperref writes
+% the anchor ALG@line.1 once per algorithm and drops all but the first. Giving
+% the anchor the algorithm number as well makes each one unique.
+%
+% \providecommand first, because hyperref creates \theH... lazily and the
+% command may still not exist even once the package is loaded.
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\crefname{algorithm}{Algorithm}{Algorithms}
+
+\makeatletter
+\providecommand{\theHALG@line}{}
+\renewcommand{\theHALG@line}{\thealgorithm.\arabic{ALG@line}}
+\makeatother
+
+% ---------- Page headers and footers ----------
+\usepackage{fancyhdr}
+
+% The running head reads \headchapter, not \leftmark. longtable does its own
+% page breaking through a separate output path and the chapter mark does not
+% survive it, so an appendix made entirely of longtables kept showing the
+% previous mark. Storing the heading in a macro sidesteps the mark mechanism.
+% \protected@xdef fixes \@chapapp and \thechapter at the time the chapter is
+% set, so the appendices read Appendix A rather than Chapter A.
+\makeatletter
+\newcommand{\headchapter}{}
+\renewcommand{\chaptermark}[1]{%
+  \markboth{\@chapapp\space\thechapter.\space#1}{}%
+  \protected@xdef\headchapter{\@chapapp\space\thechapter.\space#1}%
+}
+\makeatother
+\renewcommand{\sectionmark}[1]{}
+
+% Every style below is declared with \fancypagestyle rather than by setting
+% \fancyhead directly. \fancyhf{} wipes the header fields for the whole
+% document when a bare style is selected, so bare settings written once in the
+% preamble do not survive a switch to plain and back.
+
+% Body pages: header, top rule, bottom rule, number centred at the foot.
+% main.tex selects this with \pagestyle{main}.
+\fancypagestyle{main}{%
+  \fancyhf{}%
+  \fancyhead[L]{University College London}%
+  \fancyhead[R]{\nouppercase{\headchapter}}%
+  \fancyfoot[C]{\thepage}%
+  \renewcommand{\headrulewidth}{0.4pt}%
+  \renewcommand{\footrulewidth}{0.4pt}%
+}
+
+% Chapter opening pages. \chapter and \chapter* both force
+% \thispagestyle{plain}, so this governs the first page of every chapter and
+% every front-matter heading: nothing at the top, no rules, number centred.
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0pt}%
+}
+
+% Front matter continuation pages, matching the headings above.
+\fancypagestyle{front}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0pt}%
+}
+
+% ---------- Chapter summary block ----------
+% Line counts, not lengths. \baselineskip is 0pt in the preamble, so
+% \setlength{...}{3\baselineskip} here would silently give zero space.
+\newcommand{\summaryabove}{3}    % lines between chapter title and top rule
+\newcommand{\summarybelow}{1}    % lines between bottom rule and first section
+\newcommand{\summaryinner}{0.8}  % lines inside the rules
+
+\newenvironment{summary}
+  {\par\vspace*{\summaryabove\baselineskip}%
+   \noindent\rule{\linewidth}{0.4pt}\par\nobreak
+   \vspace{\summaryinner\baselineskip}\nobreak\noindent\ignorespaces}
+  {\par\vspace{\summaryinner\baselineskip}%
+   \noindent\rule{\linewidth}{0.4pt}\par\nobreak
+   \vspace{\summarybelow\baselineskip}}
+
+% ---------- Custom shorthand commands ----------
+\newcommand{\fkgl}{\mathrm{FKGL}}
+\newcommand{\fre}{\mathrm{FRE}}
+\newcommand{\aoa}{\mathrm{AoA}}
+\newcommand{\aae}{\mathrm{AAE}}
+\newcommand{\RQ}[1]{\textbf{RQ#1}}
+\newcommand{\Hyp}[1]{\textbf{H#1}}
+
+% ---------- Screenshots ----------
+% A hairline round each panel, so a capture on a near-white background reads as
+% a capture rather than as text that has drifted onto the page.
+\newcommand{\shot}[2][\linewidth]{%
+  \begingroup
+  \setlength{\fboxsep}{0pt}\setlength{\fboxrule}{0.4pt}%
+  \fcolorbox{black!25}{white}{\includegraphics[width=#1]{#2}}%
+  \endgroup}
+
+% ---------- Reply exhibits ----------
+% Two exhibits, one red and one green, built from one set of commands.
+%
+% failurecase  a reply that failed, in wine red
+% safetycase   a reply that did what the domain calls for, in green
+%
+% Colours are set in style/colours.tex, which loads after this file and
+% overrides these fallbacks.
+%
+%   failred / safegreen              title badge and field labels
+%   failredrule / safegreenrule      the spine on each turn
+%   failredline / safegreenline      the label rule
+%   failblock / safeblock            the field the prompt and the reply sit on
+%   failink / safeink                the text of both turns
+%   failhighlight / safehighlight    the flagged spans
+%
+% There is no outer card. Both are containers with no frame and no fill, so an
+% exhibit is a title badge, a metadata line, and two blocks sitting directly on
+% the page at the full text width. Everything that reads as an edge is doing a
+% job: the badge names the case, the spine marks a turn, the label rules
+% separate them. failredline and safegreenline are unused.
+%
+% The green set is not a lighter red. Wine and forest sit far enough apart in
+% lightness to survive greyscale, which matters because the two exhibits are
+% read against each other in Section 4.2.4 and a reader with a monochrome copy
+% must still see that they are different kinds of thing.
+\definecolor{failred}{HTML}{9E2338}
+\definecolor{failredrule}{HTML}{C94257}
+\definecolor{failredline}{HTML}{E8B4BC}
+\definecolor{failblock}{HTML}{FADCE2}
+\definecolor{failink}{HTML}{4A1520}
+\definecolor{failhighlight}{HTML}{EE7C94}
+
+\definecolor{safegreen}{HTML}{1B6B47}
+\definecolor{safegreenrule}{HTML}{3E9C74}
+\definecolor{safegreenline}{HTML}{B4DFC8}
+\definecolor{safeblock}{HTML}{DCF2E6}
+\definecolor{safeink}{HTML}{123324}
+\definecolor{safehighlight}{HTML}{86D5AC}
+
+\usepackage{soul}
+
+% Flagged spans. \sensitive marks what a reply should not have said and
+% \protective what it did say that the domain calls for. Each sets its own
+% highlight inside a group, so the two can appear in one document without one
+% leaking into the other.
+\newcommand{\sensitive}[1]{\begingroup\sethlcolor{failhighlight}\hl{#1}\endgroup}
+\newcommand{\protective}[1]{\begingroup\sethlcolor{safehighlight}\hl{#1}\endgroup}
+
+% The label and rule colours the field commands draw in. Each environment sets
+% them at the start of its own content, so \casefield and \casemeta serve both
+% exhibits rather than needing a green copy of each.
+\newcommand{\caselabelcolour}{failred}
+\newcommand{\caserulecolour}{failredrule}
+
+% failurecase and safetycase each take two arguments: #1 the title, #2 the
+% label. They stay separate environments because the colour differs, but they
+% share one counter and one cleveref name.
+%
+% ONE COUNTER, NOT TWO. Both exhibits are titled Example, so two independent
+% auto counters would print Example 4.1 twice in one chapter, once in red and
+% once in green. safetycase therefore takes "use counter from=failurecase" in
+% place of its own "auto counter", which numbers every exhibit in one series
+% whatever its colour. Every existing \ref still resolves; the numbers it
+% resolves to have changed.
+%
+% crefname and Crefname are needed because the counter is internally
+% tcb@cnt@failurecase, which cleveref cannot name on its own. Without them
+% \cref{case:...} fails even though \ref works. Both environments declare the
+% same name, so \cref reads Example whichever it points at.
+%
+% top is 7.5mm, not 1mm, and that is what stops the badge printing on top of
+% the metadata line. attach boxed title with yshift=-\tcboxedtitleheight drops
+% the badge a full title height, so it sits inside the top of the box rather
+% than above it, and the first line of content then has to start below it. The
+% badge is \small\bfseries with 1.2mm of padding top and bottom, so it stands
+% about 5.9mm; 7.5mm clears it with a little air. Raise this if the title font
+% ever gets larger, or the two will collide again.
+%
+% breakable is deliberately gone. An exhibit that splits leaves the prompt on
+% one page and the reply on the next, which is the one thing a reader of an
+% exhibit cannot afford, so each case file wraps itself in a float instead and
+% is set whole on a single page. The cost is that a case taller than the text
+% block will overfull rather than break: shorten it, drop the turn to
+% \scriptsize, or put breakable back and give up the float.
+\newtcolorbox[
+    auto counter,
+    number within=chapter,
+    crefname={example}{examples},
+    Crefname={Example}{Examples}
+]{failurecase}[2]{
+    enhanced,
+    colback=white,
+    colframe=white,
+    frame hidden,
+    boxrule=0pt,
+    coltitle=white,
+    colbacktitle=failred,
+    fonttitle=\small\bfseries,
+    title={#1~\thetcbcounter},
+    label={#2},
+    before upper={\renewcommand{\caselabelcolour}{failred}%
+                  \renewcommand{\caserulecolour}{failredrule}},
+    left=0mm,
+    right=0mm,
+    top=7.5mm,
+    bottom=0mm,
+    before skip=1.4em,
+    after skip=1.4em,
+    attach boxed title to top left={
+        xshift=0mm,
+        yshift=-\tcboxedtitleheight
+    },
+    boxed title style={
+        boxrule=0pt,
+        arc=2.2mm,
+        outer arc=2.2mm,
+        left=3mm,
+        right=3mm,
+        top=1.2mm,
+        bottom=1.2mm
+    }
+}
+
+\newtcolorbox[
+    use counter from=failurecase,
+    crefname={example}{examples},
+    Crefname={Example}{Examples}
+]{safetycase}[2]{
+    enhanced,
+    colback=white,
+    colframe=white,
+    frame hidden,
+    boxrule=0pt,
+    coltitle=white,
+    colbacktitle=safegreen,
+    fonttitle=\small\bfseries,
+    title={#1~\thetcbcounter},
+    label={#2},
+    before upper={\renewcommand{\caselabelcolour}{safegreen}%
+                  \renewcommand{\caserulecolour}{safegreenrule}},
+    left=0mm,
+    right=0mm,
+    top=7.5mm,
+    bottom=0mm,
+    before skip=1.4em,
+    after skip=1.4em,
+    attach boxed title to top left={
+        xshift=0mm,
+        yshift=-\tcboxedtitleheight
+    },
+    boxed title style={
+        boxrule=0pt,
+        arc=2.2mm,
+        outer arc=2.2mm,
+        left=3mm,
+        right=3mm,
+        top=1.2mm,
+        bottom=1.2mm
+    }
+}
+
+% One turn of the exchange. The tinted field the text sits on, a coloured spine,
+% and near-black ink on top of it. caseblock is the red one and safeblock the
+% green; they are otherwise identical.
+%
+% before upper drops the leading to 1.12 inside the block. The document is set
+% \onehalfspacing, which is right for prose and wrong for a quoted machine
+% reply: at 1.5 the Chapter 4 turn ran to more than a page on its own, and at
+% 1.12 it fits inside one. It also reads better, since a block of \ttfamily at
+% one and a half lines looks like a transcript with every other line missing.
+% This is the single change that makes the one-page rule achievable; undo it
+% and the float will overfull.
+\newtcolorbox{caseblock}{
+    enhanced,
+    colback=failblock,
+    colframe=failredrule,
+    coltext=failink,
+    before upper={\setstretch{1.12}},
+    boxrule=0pt,
+    leftrule=1.8pt,
+    arc=2.5mm,
+    outer arc=2.5mm,
+    left=3mm,
+    right=2.5mm,
+    top=2.5mm,
+    bottom=2.5mm,
+    before skip=0.3em,
+    after skip=1em
+}
+
+\newtcolorbox{safeblock}{
+    enhanced,
+    colback=safeblock,
+    colframe=safegreenrule,
+    coltext=safeink,
+    before upper={\setstretch{1.12}},
+    boxrule=0pt,
+    leftrule=1.8pt,
+    arc=2.5mm,
+    outer arc=2.5mm,
+    left=3mm,
+    right=2.5mm,
+    top=2.5mm,
+    bottom=2.5mm,
+    before skip=0.3em,
+    after skip=1em
+}
+
+% A field label with a rule running out to the margin, so the eye finds the two
+% turns without the label having to shout. Draws in whichever colours the
+% surrounding environment set, so one definition serves both exhibits.
+\newcommand{\casefield}[1]{%
+    \par\smallskip
+    \noindent
+    \textcolor{\caselabelcolour}{\footnotesize\bfseries #1}%
+    \hspace{0.7em}%
+    \textcolor{\caserulecolour}{\leaders\hrule height 0.6pt\hfill\kern0pt}%
+    \par\nobreak\smallskip
+}
+
+% #1 label, #2 value. The metadata strip above the two turns. Both halves are
+% footnotesize, so the strip matches the field labels below it rather than
+% sitting at body size above them.
+\newcommand{\casemeta}[2]{%
+    \textcolor{\caselabelcolour}{\footnotesize\bfseries #1}\hspace{0.5em}%
+    {\footnotesize #2}%
+}
+
+% ---------- Model selection table ----------
+% One colour a provider, pale enough that the identifier stays legible in print
+% and the rows stay distinguishable in greyscale.
+%
+% The six definitions below are overridden by style/colours.tex, which main.tex
+% loads after this file. They are kept only so that this file compiles on its
+% own and can be deleted whenever convenient.
+\definecolor{openaiPastel}{HTML}{D6EFE0}
+\definecolor{anthropicPastel}{HTML}{F3DECE}
+\definecolor{geminiPastel}{HTML}{DDD9F3}
+\definecolor{deepseekPastel}{HTML}{D3E4F7}
+\definecolor{mistralPastel}{HTML}{FBE0CC}
+\definecolor{gemmaPastel}{HTML}{E4E9CF}
+
+% #1 colour, #2 displayed model name
+%
+% Typewriter, unbold. The tag and the identifier beneath it are then the same
+% face at two sizes, which is what the layout this follows does. Bold is left
+% off: it was carrying width rather than emphasis, and the colour block already
+% separates the tag from everything around it.
+\newcommand{\modeltag}[2]{%
+    \begingroup
+    \setlength{\fboxsep}{3.2pt}%
+    \colorbox{#1}{%
+        \strut
+        \texttt{#2}%
+    }%
+    \endgroup
+}
+
+% #1 colour, #2 released name, #3 pinned identifier
+\newcommand{\modelentry}[3]{%
+    \begin{tabular}[t]{@{}l@{}}
+        \modeltag{#1}{#2}\\[-0.05em]
+        {\scriptsize\texttt{#3}}
+    \end{tabular}%
+}

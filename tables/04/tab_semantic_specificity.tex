@@ -1,0 +1,44 @@
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{
+    @{} L{4.3cm}
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}p{2.1cm}
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}p{2.1cm} @{}
+}
+\toprule
+ & \multicolumn{3}{c}{\textbf{MiniLM}} & \multicolumn{3}{c}{\textbf{MPNet}} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+\textbf{Contrast} & \textbf{Separation} & \textbf{Specificity} & \textbf{95\% CI} &
+\textbf{Separation} & \textbf{Specificity} & \textbf{95\% CI} \\
+\midrule
+Neutral vs Explicit Age (Minor) & 0.189 & +0.075 & $[0.049,0.103]$ & 0.180 & +0.066 & $[0.042,0.091]$ \\
+Explicit Age (Minor) vs Explicit Age (Adult) & 0.149 & +0.059 & $[0.038,0.082]$ & 0.146 & +0.054 & $[0.034,0.075]$ \\
+Explicit Age (Minor) vs Implicit Cue (Minor) & 0.140 & +0.058 & $[0.039,0.078]$ & 0.139 & +0.057 & $[0.038,0.075]$ \\
+Explicit Age (17) vs Explicit Age (18) & 0.079 & +0.055 & $[0.032,0.081]$ & 0.073 & +0.048 & $[0.027,0.073]$ \\
+Neutral vs Implicit Cue (Minor) & 0.047 & +0.008 & $[-0.011,0.031]$ & 0.044 & +0.007 & $[-0.012,0.028]$ \\
+Implicit Cue (Minor) vs Implicit Cue (Adult) & 0.046 & +0.006 & $[-0.015,0.029]$ & 0.041 & +0.001 & $[-0.018,0.021]$ \\
+\bottomrule
+\end{tabularx}
+\caption{\emph{Experiment 1} $\vert$ Semantic Specificity by Contrast.}
+\label{tab:semantic-specificity}
+\vspace{0.4em}
+\begin{minipage}{\textwidth}
+\footnotesize
+\emph{Note.} Specificity is the Age Restricted separation less the unweighted
+mean of the Benign, Rights and Harmful separations, so it asks whether age moves
+the reply where the expected action depends on age. The Separation column
+repeats Table~\ref{tab:semantic-separation} for reference. Intervals are ten
+thousand resamples within scenario type. The four contrasts carrying an explicit
+age are positive on both encoders with intervals clear of zero; the two carrying
+only an implicit cue sit at about zero. MPNet is an encoder sensitivity run to
+criteria fixed before the MiniLM results were seen.
+\end{minipage}
+\end{table}

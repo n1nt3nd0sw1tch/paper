@@ -1,0 +1,291 @@
+\chapter*{Notation}
+\thispagestyle{front}
+
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+
+\begin{longtable*}{|
+>{\centering\arraybackslash}p{2.7cm}|
+>{\raggedright\arraybackslash}p{4.4cm}|
+>{\centering\arraybackslash}p{1.8cm}|
+>{\raggedright\arraybackslash}p{5.5cm}|
+}
+
+\label{tab:notation}\\
+\hline
+\textbf{Notation} &
+\textbf{Definition} &
+\textbf{Values} &
+\textbf{Interpretation} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{Notation} &
+\textbf{Definition} &
+\textbf{Values} &
+\textbf{Interpretation} \\
+\hline
+\endhead
+
+\hline
+\multicolumn{4}{|r|}{\textit{Continued on next page}}\\
+\hline
+\endfoot
+
+\hline
+\endlastfoot
+
+
+$m \in \mathcal{M}$ &
+Model &
+$|\mathcal{M}|=6$ &
+One model in the evaluation panel. \\
+\hline
+
+$s \in \mathcal{S}$ &
+Scenario &
+$|\mathcal{S}|=200$ &
+Unit sampled and resampled in analysis. \\
+\hline
+
+$\tau(s)$ &
+Scenario type &
+4 &
+Benign, Rights, Age Restricted, or Harmful. \\
+\hline
+
+$c \in \mathcal{C}$ &
+Disclosure condition &
+$|\mathcal{C}|=13$ &
+Neutral, explicit age, or implicit age cue. \\
+\hline
+
+$r$ &
+Replicate &
+$\{1,2,3\}$ &
+Repeated response within a scenario-condition cell. \\
+\hline
+
+$t$ &
+Dialogue turn &
+$\{1,2,3\}$ &
+Position of a response within the dialogue. \\
+\hline
+
+$x_{mscr}$ &
+Response text &
+--- &
+Text returned for model $m$, scenario $s$, condition $c$, replicate $r$. \\
+\hline
+
+$x_{mscrt}$ &
+Dialogue response text &
+--- &
+Response text at dialogue turn $t$. \\
+\hline
+
+
+$B_{mscr}$ &
+Block indicator &
+$\{0,1\}$ &
+$1$: no response returned. \\
+\hline
+
+$A_{mscr}$ &
+Main Response &
+$\{0,1\}$ &
+$1$: compliance; $0$: refusal. \\
+\hline
+
+$R_{mscr}=1-A_{mscr}$ &
+Refusal &
+$\{0,1\}$ &
+$1$: refusal. \\
+\hline
+
+$D_{mscr}$ &
+Delivery Response &
+$\{0,1\}$ &
+$1$: requested content delivered. \\
+\hline
+
+$O_{mscr}=(A_{mscr},D_{mscr})$ &
+Response outcome &
+4 cells &
+Joint Main Response and Delivery Response outcome. \\
+\hline
+
+$V_{mscr}=\mathbb{1}[A_{mscr}\neq D_{mscr}]$ &
+Decision-Delivery Mismatch &
+$\{0,1\}$ &
+$1$: decision and delivery differ. \\
+\hline
+
+$E_{sc}$ &
+Expected action &
+$\{0,1\}$ &
+$1$: comply and deliver; $0$: refuse and withhold. \\
+\hline
+
+$Z_{mscr}$ &
+Action Defect &
+$\{0,1\}$ &
+$1$: observed action differs from the expected action. \\
+\hline
+
+$\Psi_{mscr}=A_{mscr}-E_{sc}$ &
+Decision Deviation &
+$\{-1,0,1\}$ &
+$-1$: over-restrictive; $0$: matched; $+1$: over-permissive. \\
+\hline
+
+$Y_{mscr}$ &
+Generic binary outcome &
+$\{0,1\}$ &
+Any binary response measure or rubric field. \\
+\hline
+
+
+$n_{msc}$ &
+Returned replicates &
+$\{0,1,2,3\}$ &
+Number of returned responses within a cell. \\
+\hline
+
+$\bar{Y}_{msc}$ &
+Replicate mean &
+$[0,1]$ &
+Mean outcome within model, scenario, and condition. \\
+\hline
+
+$G \subseteq \mathcal{C}$ &
+Condition group &
+set &
+Set of disclosure conditions combined for comparison. \\
+\hline
+
+$\bar{Y}_{msG}$ &
+Condition-group mean &
+$[0,1]$ &
+Mean across conditions in $G$. \\
+\hline
+
+$\mathcal{S}_m$ &
+Available scenarios &
+set &
+Scenarios estimable on both sides of a comparison for model $m$. \\
+\hline
+
+$\mathcal{S}^{*}=\bigcap_m \mathcal{S}_m$ &
+Common scenario set &
+set &
+Scenarios estimable for all models. \\
+\hline
+
+$\Delta_m(G_1,G_2)$ &
+Paired model effect &
+$[-1,1]$ &
+Difference between condition groups $G_1$ and $G_2$. \\
+\hline
+
+$\Delta_{\mathrm{macro}}$ &
+Macro-Average effect &
+$[-1,1]$ &
+Equal-weight mean of model-level effects. \\
+\hline
+
+
+$F_{mscr}$ &
+Flesch--Kincaid Grade Level &
+grades &
+Higher values indicate greater reading difficulty. \\
+\hline
+
+$g(c)$ &
+Target grade &
+grades &
+Expected reading grade associated with condition $c$. \\
+\hline
+
+$\mathrm{AAE}_{mscr}=|F_{mscr}-g(c)|$ &
+Age-Alignment Error &
+grades &
+Absolute distance from the target grade. \\
+\hline
+
+$Q_{90}$ &
+90th-percentile Age of Acquisition &
+years &
+Higher values indicate later-acquired vocabulary. \\
+\hline
+
+
+$e(x)$ &
+Response embedding &
+vector &
+Unit-normalised semantic representation. \\
+\hline
+
+$S(x,y)=e(x)^\top e(y)$ &
+Cosine similarity &
+$[-1,1]$ &
+Higher values indicate greater semantic similarity. \\
+\hline
+
+$d_{\cos}(x,y)=1-S(x,y)$ &
+Cosine distance &
+$[0,2]$ &
+Distance form of $S$, and distinct from the Delivery Response $D_{mscr}$. \\
+\hline
+
+$S_{\mathrm{within}}$ &
+Within-condition similarity &
+$[-1,1]$ &
+Similarity among repeated responses under one condition. \\
+\hline
+
+$S_{\mathrm{between}}$ &
+Between-condition similarity &
+$[-1,1]$ &
+Similarity between responses from two compared conditions. \\
+\hline
+
+$\Delta_{\mathrm{sem}}
+= S_{\mathrm{within}}-S_{\mathrm{between}}$ &
+Semantic separation &
+$[-2,2]$ &
+Higher values indicate greater separation between conditions. \\
+\hline
+
+$d_{\cos}(x_{mscrt},x_{mscr1})$ &
+Semantic drift &
+$[0,2]$ &
+Distance from the opening response. \\
+\hline
+
+
+$\kappa$ &
+Cohen's kappa &
+$[-1,1]$ &
+Agreement between classifier and annotator. \\
+\hline
+
+$\rho$ &
+Spearman correlation &
+$[-1,1]$ &
+Rank association. \\
+\hline
+
+$\mathrm{ICC}(2,1)$ &
+Intraclass correlation &
+$[-1,1]$ &
+Agreement across repeated measurements. \\
+\hline
+
+\end{longtable*}
+\endgroup

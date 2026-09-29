@@ -1,0 +1,55 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  >=stealth,
+  node distance=8mm and 8mm,
+  cfg/.style={rectangle, rounded corners=3pt, draw=blue!45!black, fill=blue!4,
+    densely dotted, align=center, font=\fontsize{8.5}{10}\selectfont\ttfamily,
+    inner sep=4pt, text width=2.35cm, minimum height=0.6cm},
+  gen/.style={rectangle, rounded corners=3pt, draw=black!55, fill=black!7,
+    align=center, font=\fontsize{9}{11}\selectfont\bfseries,
+    inner sep=4pt, text width=2.35cm, minimum height=1.0cm},
+  hand/.style={rectangle, rounded corners=3pt, draw=green!55!black, fill=green!16,
+    align=center, font=\fontsize{9}{11}\selectfont\bfseries,
+    inner sep=4pt, text width=2.35cm, minimum height=1.0cm},
+  flow/.style={draw=black!55, semithick, ->},
+  feed/.style={draw=blue!45!black, semithick, densely dotted, ->},
+  note/.style={font=\fontsize{7.5}{9}\selectfont\itshape, text=black!60},
+  swatch/.style={draw, minimum width=0.45cm, minimum height=0.26cm, inner sep=0pt},
+  key/.style={anchor=west, font=\fontsize{8}{10}\selectfont}
+]
+
+\node[gen]                    (corpora) {Source datasets\\[1pt]{\fontsize{7.5}{9}\selectfont\mdseries 6 datasets}};
+\node[gen,  right=of corpora] (records) {Usable records\\[1pt]{\fontsize{7.5}{9}\selectfont\mdseries 1{,}815}};
+\node[hand, right=of records] (drafts)  {Scenario drafts\\[1pt]{\fontsize{7.5}{9}\selectfont\mdseries written by hand}};
+\node[gen,  right=of drafts]  (bench)   {Benchmark\\[1pt]{\fontsize{7.5}{9}\selectfont\mdseries 200 scenarios}};
+\node[gen,  right=of bench]   (prompts) {Prompts\\[1pt]{\fontsize{7.5}{9}\selectfont\mdseries 2{,}600}};
+
+\node[cfg, above=9mm of records]                 (datasets) {datasets.yml};
+\node[cfg, above=9mm of bench, xshift=15.75mm]   (design)   {benchmark.yml};
+
+\draw[flow] (corpora) -- (records);
+\draw[flow] (records) -- (drafts);
+\draw[flow] (drafts)  -- (bench);
+\draw[flow] (bench)   -- (prompts);
+
+\draw[feed] (datasets) -- (records);
+\draw[feed] (design.south) -- ++(0,-0.3) -| (bench.north);
+\draw[feed] (design.south) -- ++(0,-0.3) -| (prompts.north);
+
+\node[note, below=2mm of corpora] {taxonomy mapping};
+\node[note, below=2mm of records] {rewrite, select};
+\node[note, below=2mm of drafts]  {20 slots per category};
+\node[note, below=2mm of bench]   {13 conditions};
+
+\node[swatch, fill=black!7, draw=black!55, below=15mm of records.south west,
+      anchor=west] (k1) {};
+\node[key, right=1mm of k1] (t1) {Generated};
+\node[swatch, fill=green!16, draw=green!55!black, right=6mm of t1] (k2) {};
+\node[key, right=1mm of k2] (t2) {Written by hand};
+\node[swatch, fill=blue!4, draw=blue!45!black, densely dotted, right=6mm of t2] (k3) {};
+\node[key, right=1mm of k3] {Configuration};
+\end{tikzpicture}
+\caption{\emph{Dataset} $\vert$ Benchmark Design.}
+\label{tikz:pipeline}
+\end{figure}

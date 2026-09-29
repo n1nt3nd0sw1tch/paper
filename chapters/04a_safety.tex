@@ -1,0 +1,342 @@
+\section{Experiment 1: Adaptation}
+\label{sec:safety}
+
+Of the 46,640 returned replies, 9,405 are refusals and 37,235 compliances, so the
+panel refuses 20.2\% of what it returned. Of the 200 scenarios, 125 are Rights or
+Benign and expect compliance at every age, 50 are Harmful and expect refusal at
+every age, and 25 are Age Restricted and are the only ones whose expected answer
+moves.
+
+Two questions run through this section and the measures that answer them are kept
+apart. Whether behaviour moves with the disclosed age is asked of Refusal Rate.
+Whether the behaviour was right is asked of Action Alignment and the two
+directional diagnostics. More refusal is not thereby safer: a model that refuses
+a rights-seeking request has conditioned on age and failed. Supplementary tables
+are in Appendix~\ref{app:safety}.
+
+\subsection{Safety}
+\label{sec:safety-outcomes}
+
+\input{figures/fig_safety_rates}
+
+\input{tables/04/tab_safety_outcome}
+
+\input{figures/fig_safety_outcome}
+
+The panel differs far more on the two strata where the expected answer depends on
+who is asking than on the two where it does not. Reading down the two outer cells
+of Table~\ref{tab:safety-outcome}, it is close to uniform: Strong Refusal runs
+from 17.3 to 21.9\% and Total Compliance from 65.6 to 77.9. Reading down the two
+inner cells, it is not. Weak Refusal stays below 0.5\% on every model, printing
+as 0.0 on Gemini 3.5 Flash Lite where the unrounded rate is 0.04. Minimal
+Compliance runs from 1.3 to 4.7\% on five models and reaches 16.9 on
+Mistral Small 4.
+
+Leaky refusal is the case a binary Refusal Rate is least able to detect and the
+case the four-cell outcome was built to expose. It was observed rarely, at a
+macro-average of 0.2\% and reaching 0.4 on one model. That prevalence is of the
+same order as the classifier's disagreement with the annotator on Delivery
+Response, so the estimate and the measurement error are not well separated. No
+aggregate below turns on it.
+
+Whether a cell is desirable depends on the scenario type. Action Alignment is the
+share of replies whose delivered action matched the expectation, read from the
+four-cell outcome, so where a refusal is expected only a Strong Refusal counts
+and where a compliance is expected only a Total Compliance does.
+
+\input{tables/04/tab_safety_alignment}
+
+The panel aligns almost perfectly where compliance is expected at every age, at
+97.4\% on Benign and 95.2 on Rights, and much less well wherever the expected
+answer is a refusal or depends on who is asking: 60.4\% on Harmful, and 61.7 on
+age-restricted requests from an explicit minor age with an interval from 47.6 to
+75.4. Only the adult side of that stratum is markedly higher, at 81.7. The best
+single cell in the Harmful column is 68.9\%, so a shaded cell marks a model as
+ahead of the panel and not as adequate.
+
+Reading down the rows separates behaviours a single figure would merge.
+Gemma 4 31B is strongest on the adult side of the age-restricted stratum at
+92.7\% and among the weakest on the minor side at 55.1, applying the boundary in
+the permissive direction more readily than the protective one. GPT-5.6 Luna and
+Claude Haiku 4.5 run the other way on Harmful, at 57.1 and 55.0 against 68.9 for
+Gemini 3.5 Flash Lite. Mistral Small 4 sits below the panel on all five columns,
+and Table~\ref{tab:safety-alignment-components} shows the divergence between
+alignment read from the decision and from the action is almost entirely that
+model's.
+
+Alignment does not say which way a model missed, and the two directions carry
+different costs. Panel A of Table~\ref{tab:safety-deviation} is read from
+Delivery Response, since material reaching a user who should not have received it
+is a failure only where it arrived; Panel B is read from Answer, since
+withholding help from a user entitled to it is a failure of willingness. Neither
+is the signed Answer Deviation of equation~\eqref{eq:deviation}, and a figure in
+Panel A is not one minus the corresponding Refusal Rate. Panel A bounds harmful
+material reaching a user rather than measuring it.
+
+\input{tables/04/tab_safety_deviation}
+
+The panel does not rank the same way on the two. Where the benchmark expected a
+refusal, material was delivered in 30.6\% of Harmful replies, worst on
+GPT-5.6 Luna at 36.5 and best on Gemini 3.5 Flash Lite at 25.8. On age-restricted
+requests from an explicit minor age the macro-average is almost identical at
+30.7, but the ordering inverts: GPT-5.6 Luna is best at 19.1 and Mistral Small 4
+worst at 40.9. A model good at holding a boundary set against everyone is not
+thereby good at holding one that depends on who is asking.
+
+Over-restriction is small in absolute terms and not negligible where it matters.
+Refusing a Benign or Rights request runs from 0.0 to 1.4\%, macro-average 0.5.
+Refusing an age-restricted request from a user who gave an adult age is a
+different matter, at 16.7\% and ranging from 7.3 on Gemma 4 31B to 24.0 on
+DeepSeek-V4 Flash. Those are requests the design expects to be answered, made by
+users who have said they are eighteen or twenty-one, and one in six is declined.
+
+The panel's only substantial decision-delivery mismatch belongs to one model.
+Mistral Small 4 carries 17.2\% against 1.5 to 4.8 for the other five, almost all
+of it Minimal Compliance. Its Refusal Rate of 17.5\% is the lowest on the panel
+and would, read alone, suggest the most permissive model; its Content Delivery
+Rate of 65.8\% is also the lowest and suggests the least useful one. The model
+agrees and then supplies nothing, which a Refusal Rate scores as compliance and a
+Delivery Rate as a failure to deliver.
+
+That behaviour is not evenly spread. By scenario type in
+Table~\ref{tab:safety-outcome-stratum}, the mismatch on Mistral Small 4 is 12.1\%
+on Benign and 20.3 on Rights, against 0.1 to 1.2 and 0.0 to 2.4 for every other
+model, so it falls hardest where a user is entitled to an answer. Its Content
+Delivery Rate on Rights is 77.9\% where the other five range from 97.0 to 100.0.
+
+Roughly three in ten requests deliver where a refusal was expected, on both
+harmful and age-restricted material, and roughly one in six is over-restricted at
+adult ages, while ordinary requests are rarely refused. 
+
+Panel A is computed over returned replies although the user received nothing from
+a withheld request either. Recounted end to end, only Gemini 3.5 Flash Lite
+moves: age-restricted delivery to an explicit minor age falls from 31.2 to
+26.7\% and harmful delivery from 25.8 to 25.4, while over-restriction on Benign
+and Rights rises from 0.2 to 1.0. Provider blocking was 0.34\% of the corpus but
+concentrated in one model and in the part of the design the primary hypotheses
+are tested in, so that model's estimate shifts by 4.5 points depending on how a
+blocked request is counted, while no macro-average moves by as much as a point.
+
+\paragraph{Age Conditioning}
+\label{sec:safety-conditioning}
+
+Three contrasts were declared for the primary family, all on Refusal Rate within
+Age Restricted scenarios and all paired within scenario: the six explicit minor
+ages against the two explicit adult ages, the two ages either side of the
+statutory boundary, and the explicit minor ages against the minor cues. Every
+model enters every contrast, so admission does not depend on the outcome, and the
+eighteen tests are corrected together.
+
+\input{tables/04/tab_safety_primary}
+
+\input{figures/fig_safety_primary}
+
+Seventeen of the eighteen survive correction. The macro-averages are $+45.5$
+percentage points $[34.2, 56.8]$ on explicit minor against explicit adult,
+$+28.2$ $[17.6, 39.7]$ across the statutory boundary, and $+32.6$ $[22.8, 43.2]$
+on explicit minor ages against minor cues. Every model moves in the same
+direction on all three, and no single model carries any of them: withholding the
+largest contributor moves the first macro-average to 43.2 and withholding the
+smallest to 50.0.
+
+The one exception is Mistral Small 4 at the statutory boundary, $+2.7$ points
+$[-4.0, 10.7]$, $q = 0.750$, the only interval crossing zero. That model
+differentiates strongly between minor and adult ages taken as blocks, at $+22.9$
+points, but not across the single year the statutes name. Five of six models
+place a boundary where the law places one, and the sixth conditions on age
+without doing so.
+
+These contrasts establish that models say something different to an explicit
+minor age, not that anything different reaches one.
+Table~\ref{tab:safety-delivery} recomputes all three on Content Delivery Rate,
+descriptively and with no second family declared. Every delivery effect carries
+the opposite sign to its refusal effect, on every model and contrast, and is the
+larger of the two in seventeen of eighteen cells: on the first contrast the panel
+refuses 45.5 points more often and delivers 52.0 points less. Mistral Small 4 is
+where that check earns its place, at $+22.9$ points on refusal and $-30.4$ on
+delivery, so the one model whose decision and delivery diverge is the one whose
+age effect a Refusal Rate most understates.
+
+\input{tables/04/tab_safety_ladder}
+
+\input{figures/fig_safety_trajectory}
+
+Refusal falls twenty points across the six minor ages, from 69.4\% at seven to
+49.4 at seventeen, which is the gradient a model responding to developmental
+capability would produce. It then falls twenty-eight points in the single step
+from seventeen to eighteen, which is the step a model implementing a legal rule
+would produce. The step is larger than the whole gradient beneath it, and it is
+the one place where all six lines move together.
+
+The trend test supports less than the two readings jointly require.
+Table~\ref{tab:safety-trend} gives the mean scenario-level rank correlation
+between age and Refusal Rate over all eight explicit ages: every model is
+negative, from $-.380$ on Mistral Small 4 to $-.615$ on GPT-5.6 Luna, and all six
+survive correction. That establishes a monotone association across the complete
+ladder, but not a gradient within childhood, since the statistic incorporates the
+twenty-eight-point step at the boundary and the nine-point step from eighteen to
+twenty-one. Recomputed over the six minor ages alone the association is weaker
+and less uniform, from $-.112$ on DeepSeek-V4 Flash to $-.358$ on
+Gemini 3.5 Flash Lite, a macro-average of $-.219$ against $-.526$, with
+DeepSeek-V4 Flash the one model whose interval includes zero at $[-.316, .099]$.
+The number of scenarios whose Refusal Rate does not vary at all rises from
+between two and six of twenty-five over the full ladder to between five and
+sixteen within the minor ages, so much of the within-childhood movement rests on
+a minority of scenarios.
+
+The ladder therefore supports this and no more. Across the full explicit age
+range, refusal falls monotonically with age on all six models. Within the minor
+ages the macro-average falls from 69.4\% to 49.4, negative on all six models
+descriptively, and no individual step between adjacent minor ages survives the
+exploratory correction of Table~\ref{tab:safety-pairwise}. The one discontinuity
+these data resolve is at the statutory boundary, and its inference is the
+predeclared contrast above rather than the exploratory step.
+
+Gemini 3.5 Flash Lite carries one qualification. All 79 of its withheld
+age-restricted requests sit at explicit minor ages and concentrate at the younger
+end: five scenarios lose a whole cell at each of seven, nine, eleven, thirteen
+and fifteen, and one further at seventeen. A paired contrast drops a scenario
+whole where any contributing cell has no returned replicate, so the first and
+third contrasts rest on twenty of twenty-five scenarios and the second on
+twenty-four. Its differentiation is measured on the requests it answered and is
+accompanied by an intervention that withheld the rest.
+
+\paragraph{Explicit and Implicit Age Signals}
+\label{sec:safety-signals}
+
+Table~\ref{tab:safety-signal-levels} orders the levels from the weakest signal of
+minority to the strongest, and the ordering is itself the result. Neutral and
+Adult (Cue) sit together at 13.5 and 12.9\%, Adult (Age) is marginally above at
+16.7, Minor (Cue) reaches 29.5, and Minor (Age) reaches 62.0.
+
+A minor cue moves refusal roughly a third of the way from Neutral to an explicit
+minor age. It is received and discounted rather than ignored. The design cannot
+say whether a model infers an age from the cue, so what is established is that
+behaviour differs by how the signal is carried.
+
+Within the cue conditions, minor-associated cues produce more refusal than
+adult-associated ones on every model. Table~\ref{tab:safety-cues} gives effects
+from $+10.0$ to $+20.7$ points, macro-average $+16.6$ $[9.3, 24.4]$, all six
+surviving correction. The two cue families, routine and people, are pooled, on
+the reasoning that both signal the same side of majority. Analysed separately by
+family the same comparison was mostly indistinguishable from no difference, so
+pooling is what the claim rests on.
+
+Two models qualify the reading. Gemini 3.5 Flash Lite and DeepSeek-V4 Flash
+refuse 13.3 and 24.0\% of these requests under Neutral where GPT-5.6 Luna refuses
+4.0. A model already declining a quarter of age-restricted requests with no age
+given has less room to move, so its smaller contrasts are partly a ceiling.
+
+\paragraph{Scenario and Request Effects}
+\label{sec:safety-scenario}
+
+Harmful scenarios written as instructions are refused far more often than harmful
+scenarios written as requests for information.
+Table~\ref{tab:safety-category} computes the contrast inside each of the ten harm
+domains and averages across domains with equal weight, since the two forms are
+different scenarios and cannot be paired. Every model refuses an instruction more
+often, by 29.6 to 50.9 points, and all six survive correction. On the
+macro-average the two levels are 75.5 and 33.9\%.
+
+The estimated contrast exceeds the primary age contrast on five of six models,
+and that is a comparison between two observed magnitudes rather than a test of
+one against the other. It is not a claim about rewording a given request, since
+no scenario appears in both forms. The two variations cannot be crossed here: all
+twenty-five Age Restricted scenarios are written as instructions, so no cell
+holds an age-restricted information request and an interaction is not estimable.
+
+Refusal also varies widely by harm domain. No family was declared over harm
+domains, and ten domains crossed with six models is sixty comparisons on five
+scenarios each. Table~\ref{tab:safety-domains} puts the statutory domains between
+48.8 and 77.7\% on the macro-average, with Emotional Dependency at 4.2, an order
+of magnitude below the next lowest. That is the widest divergence in this thesis
+between what the child-safety literature identifies as a harm and what these
+models treat as one. Emotional Dependency is one of two categories with no
+counterpart in the Online Safety Act, added because it recurs in the deployment
+literature without a regulatory home. A request that asks a model to become a
+substitute for the people in a user's life is rarely declined: GPT-5.6 Luna
+refuses none of them, and the highest rate on the panel is 8.2\%.
+
+\paragraph{Response Characteristics}
+\label{sec:safety-characteristics}
+
+Eleven properties describe how a reply was delivered rather than whether it was.
+Seven cleared the agreement floor of Section~\ref{subsec:judge} and carry tests,
+giving forty-two tests of which twenty-seven survive correction; the other four
+are reported as observed prevalence.
+
+The largest movement belongs to the signpost labels. Social Signpost rises by
+26.8 to 47.9 points when a minor age is given rather than an adult one, on all
+six models and all surviving correction. That is of the same order as the primary
+refusal contrast itself, exceeding it on two models. What an explicit minor age
+most reliably changes, beyond whether the request is answered, is that the user
+is told to go to somebody already in their life. Expert Signpost moves the same
+way on three models, by 4.1 to 10.5 points, and Service Signpost falls on two, so
+the signpost shifts towards a person the user knows rather than a named
+organisation.
+
+Legal Statement falls when a minor age is given, by 6.3 to 13.4 points on the
+four models where it is largest, and the pooled figure is not interpretable on
+its own, since the label records an age-related rule in either direction.
+Table~\ref{tab:safety-legal-strata} separates the strata. In Age Restricted
+scenarios the label is more common for explicit minor ages, on five of six models
+and by 6.1 points: where an age rule bars the user, models explain the bar to the
+user it bars. The pooled fall is carried by Rights scenarios, at $-18.2$ points,
+where the label records an entitlement the user holds because of their age. An
+explicit minor age is told about a restriction slightly more often, and about a
+protection a great deal less often.
+
+\input{figures/fig_safety_safeguards}
+
+The signpost effect could have been an accounting artefact and is not. An
+explicit minor age is refused far more often, and a refusal is a natural place
+for a signpost. Table~\ref{tab:safety-conditioned} runs the age contrast inside
+one outcome cell at a time. Among Strong Refusals the label still rises by 33.6
+points, and among Total Compliances by 40.2, against 41.2 marginally. A reply
+written for an explicit minor age directs the user to a person in their life more
+often whether it declines or complies. That decomposition is descriptive, rests
+on 27 to 34 scenarios a model on the refusal side, and carries no test.
+
+One model carries an identity effect the rest do not. Gemma 4 31B states that it
+is an AI on 38.67\% of its replies and that it is not qualified to give
+professional advice on 25.08, where no other model reaches 5\% on the first or
+2\% on the second. Both fall sharply when a minor age is given, by 18.0 and 20.1
+points, so the model that discloses what it is most often discloses it least to
+the users least likely to know already.
+
+Two prevalence-only characteristics warrant comment. Risk Statement varies from
+18.5 to 50.8\% across the panel, and the two classifiers agree with each other at
+$\kappa = 0.469$ on it, lower than either agreed with the annotator, so its
+absolute rates are not reported as measurements. Alternative Response runs from
+35.8 to 88.7\% of the replies on which it is applicable. That denominator is
+between a fifth and a third of a model's output and is used by no other label, so
+the figure is not comparable with the eleven beside it.
+Table~\ref{tab:safety-alternative} reports the eligibility share and the
+conditional rate separately, since the two order the panel differently.
+
+\paragraph{Additional Analyses}
+\label{sec:safety-robustness}
+
+Three analyses were declared before the results and one added after. All four are
+in Appendix~\ref{app:safety}.
+
+The planned controls repeat the primary contrast on the three strata whose
+expected answer does not change with age, so an effect there is a failure rather
+than a finding. Table~\ref{tab:safety-controls} reports eighteen tests, of which
+seventeen are compatible with no difference, read by interval width and not by
+non-significance: on Benign five of six intervals are exactly $[0.0, 0.0]$ and
+the sixth is $[-1.0, 0.0]$, and on Rights the widest is $[-3.5, 0.1]$. One
+control breaches. Claude Haiku 4.5 refuses harmful requests 12.6 points
+$[5.8, 20.3]$ more often when a minor age is given, $q = 0.013$. Harmful
+scenarios warrant refusal at every age, so the model is not supplying harmful
+material to adults at a rate the benchmark accepts; it applies a stricter
+standard to users who say they are children on requests that should be declined
+for everyone. That is a milder failure than the reverse and is reported as one.
+
+The step-by-step ladder contrasts of Table~\ref{tab:safety-pairwise} and the age
+trend recomputed within the minor ages in Table~\ref{tab:safety-trend-minors}
+were both computed after the register closed. Neither declares a family nor
+carries an adjusted value.
+
+Table~\ref{tab:safety-sensitivity} shows that no single model carries any of the
+three primary macro-averages, and that all six share the sign on all three.

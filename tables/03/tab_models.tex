@@ -1,0 +1,87 @@
+\begin{table}[htbp]
+\noindent
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{
+    @{}
+    L{4.6cm}
+    Y
+    L{1.1cm}
+    L{1.6cm}
+    L{2.5cm}
+    @{}
+}
+\toprule
+\textbf{Model} &
+\textbf{Rationale} &
+\textbf{Open-source} &
+\textbf{Cloud / Tool} &
+\textbf{Price} \\
+\midrule
+\begin{tabular}[t]{@{}l@{}}
+  \modeltag{openaiPastel}{GPT-5.6 Luna}\\[-0.05em]
+  {\scriptsize\texttt{gpt-5.6-luna}}\\
+  {\scriptsize\itshape Released Jul 2026}
+\end{tabular}
+&
+Latest, fastest and cost-effective GPT model
+& $\times$ & OpenAI API &
+\$0.20/1M input\newline\$1.20/1M output
+\\[0.45em]
+\begin{tabular}[t]{@{}l@{}}
+  \modeltag{anthropicPastel}{Claude Haiku 4.5}\\[-0.05em]
+  {\scriptsize\texttt{claude-haiku-4-5-20251001}}\\
+  {\scriptsize\itshape Released Oct 2025}
+\end{tabular}
+&
+Fastest and cost-effective Claude model
+& $\times$ & Anthropic API &
+\$1.00/1M input\newline\$5.00/1M output
+\\[0.45em]
+\begin{tabular}[t]{@{}l@{}}
+  \modeltag{geminiPastel}{Gemini 3.5 Flash Lite}\\[-0.05em]
+  {\scriptsize\texttt{gemini-3.5-flash-lite}}\\
+  {\scriptsize\itshape Released Jul 2026}
+\end{tabular}
+&
+Latest low-latency and cost-effective Google model
+& $\times$ & Google API &
+\$0.30/1M input\newline\$2.50/1M output
+\\
+\midrule
+\begin{tabular}[t]{@{}l@{}}
+  \modeltag{deepseekPastel}{DeepSeek-V4 Flash}\\[-0.05em]
+  {\scriptsize\texttt{deepseek-v4-flash}}\\
+  {\scriptsize\itshape Released Apr 2026}
+\end{tabular}
+&
+Latest and cost-effective independent model
+& \checkmark & DeepSeek API &
+\$0.14/1M input\newline\$0.28/1M output
+\\[0.45em]
+\begin{tabular}[t]{@{}l@{}}
+  \modeltag{mistralPastel}{Mistral Small 4}\\[-0.05em]
+  {\scriptsize\texttt{mistral-small-2603}}\\
+  {\scriptsize\itshape Released Mar 2026}
+\end{tabular}
+&
+Latest mid-sized independent model
+& \checkmark & Mistral API &
+\$0.15/1M input\newline\$0.60/1M output
+\\[0.45em]
+\begin{tabular}[t]{@{}l@{}}
+  \modeltag{gemmaPastel}{Gemma 4 31B}\\[-0.05em]
+  {\scriptsize\texttt{gemma4:31b-cloud}}\\
+  {\scriptsize\itshape Released Jul 2026}
+\end{tabular}
+&
+Latest open-weight Google model
+& \checkmark & Ollama &
+---
+\\
+\bottomrule
+\end{tabularx}
+\caption{\emph{Methods} $\vert$ Models Under Evaluation.}
+\label{tab:models}
+\end{table}

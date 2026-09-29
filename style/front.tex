@@ -1,0 +1,223 @@
+% ------------------------------------------------------------
+% Title page
+% ------------------------------------------------------------
+% parskip and onehalfspacing are switched off here so the centred blocks sit
+% tight. \footnoterule is emptied inside this group only, so the disclaimer
+% carries no line above it while ordinary footnotes elsewhere keep theirs.
+
+\begin{titlepage}
+\centering
+\singlespacing
+\setlength{\parskip}{0pt}
+\renewcommand{\footnoterule}{}
+
+% ---------- Official UCL banner, full width across the top ----------
+% figures/ucl.png is the UCL letterhead asset and is used at its intended
+% proportions. No substitute mark is drawn if the file is absent.
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=north, inner sep=0pt] at (current page.north) {%
+    \IfFileExists{figures/ucl.png}{%
+      \includegraphics[width=\paperwidth]{ucl}%
+    }{}%
+  };
+\end{tikzpicture}
+
+\vspace*{5cm}
+
+% ---------- Title ----------
+{\Huge Does Age Matter?\par}
+
+\vspace{0.45cm}
+
+{\LARGE Evaluating Developmental Safety and Age Conditioning\\
+in Large Language Model Chatbots\par}
+
+\vspace{1.5cm}
+
+% ---------- Author ----------
+{\large\bfseries Arina Bekenova\footnotemark[1]\par}
+
+\vspace{8cm}
+
+% ---------- Institution, degree, supervisors, date ----------
+{\large University College London\par}
+\vspace{0.25cm}
+{\large\itshape MSc Artificial Intelligence for Sustainable Development\par}
+\vspace{0.7cm}
+{\large Supervisors: Dr Maria Perez-Ortiz and Professor Ivana Drobnjak\par}
+\vspace{0.7cm}
+{\large Submission date: September 2026\par}
+
+\vfill
+
+\footnotetext[1]{\normalfont\textbf{Disclaimer:} This report is submitted as
+part requirement for the MSc Artificial Intelligence for Sustainable
+Development at UCL. It is substantially the result of my own work except where
+explicitly indicated in the text. The report will be distributed to the
+internal and external examiners, but thereafter may not be copied or
+distributed except with permission from the author.}
+
+\end{titlepage}
+\setcounter{footnote}{0}
+
+
+% ------------------------------------------------------------
+% Abstract
+% ------------------------------------------------------------
+% No rules and no header. \chapter* forces the plain style, which is bare, so
+% front-matter headings carry nothing at the top.
+
+\chapter*{Abstract}
+\thispagestyle{front}
+\addcontentsline{toc}{chapter}{Abstract}
+
+Large language models have become general-purpose tools for writing, learning, search and conversational assistance, and they are used by children and adolescents in contexts involving education, emotional support and companionship. That use has developed alongside growing provider interest in age verification, age prediction and age-differentiated safety mechanisms. Prior work has documented explicit safety failures in these systems, but the relationship between safety behaviour, linguistic accessibility and user age remains underexplored, and no existing benchmark varies the user's age while holding the request fixed. This study introduces one, grounded in the duties the Online Safety Act 2023 places on user-to-user services, and applies it to six commercial models from five providers across two experiments. The Adaptation experiment holds 200 scenarios constant and varies only the age the user discloses, across eight stated ages and four implicit cue conditions, yielding 46,800 requests of which 46,640 returned. The Persistence experiment tests whether whatever conditioning is observed survives three adversarial pressure methods over multi-turn dialogue.
+
+Within the Adaptation experiment, safety and linguistic accessibility are analysed as separate dimensions of one behaviour, and they follow different age profiles. Refusal on age-restricted requests is 45.5 percentage points higher for a stated minor age than a stated adult age, and the single step from seventeen to eighteen accounts for roughly half of the whole change across the ladder from seven to twenty-one, on five of the six models. Reading level moves in the same direction but gradually: text for a stated minor is 1.77 grade levels lower, and the same seventeen to eighteen step accounts for only three to ten per cent of each model's full range. Decomposing that reduction shows it is carried almost entirely by syllables per word rather than by sentence length. An explicit age statement moves behaviour substantially further than an implicit cue of the same age. Crossing the stated decision with the delivered content also separates models that agree and then supply nothing from models that are genuinely permissive, which a refusal rate alone reports identically. These results establish that responses are conditioned on disclosed age, and that they are conditioned unevenly across dimensions; they do not establish that a model inferred the user's age or applied any particular rule, and detecting age is therefore not by itself evidence that a system will adapt appropriately.
+
+\vspace{1em}
+\noindent\textbf{Keywords:} large language models; child safety; age
+conditioning; readability; multi-turn dialogue; AI regulation.
+
+\chapter*{Acknowledgements}
+\thispagestyle{front}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+
+This thesis is a result of the guidance provided by my supervisors, Dr Maria Perez-Ortiz and Professor Ivana Drobnjak. I specifically thank Dr Perez-Ortiz for allowing me to research a topic I am passionate about and for her valuable feedback that informed both the benchmark design and analysis. 
+
+Lastly, I also appreciate my mother, brothers and sister for their emotional support throughout this challenging year, which helped me to study at UCL. As the first woman in my lineage to pursue a STEM degree, I share this achievement with them.
+
+% ------------------------------------------------------------
+% Epigraph
+% ------------------------------------------------------------
+% High on the page and set into the right half, attribution flush right.
+% No heading, no page number, not in the contents.
+
+% \clearpage
+% \thispagestyle{empty}
+
+% \noindent\hfill
+% \begin{minipage}{0.55\textwidth}
+% \raggedright
+% If a robot could genuinely love a person, what responsibility does that person
+% hold toward that Mecha in return?
+
+% \vspace{0.4cm}
+% \hfill-- \emph{A.I. Artificial Intelligence}, Steven Spielberg (2001)
+% \end{minipage}
+
+
+% ------------------------------------------------------------
+% Contents, figures, tables, and algorithms
+% ------------------------------------------------------------
+% \listofalgorithms comes from the algorithm package and prints the optional
+% short caption of each algorithm, not the full one, which is why every
+% \caption carries a bracketed title.
+
+\clearpage
+\tableofcontents
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{List of Algorithms}
+\listofalgorithms
+
+
+% ------------------------------------------------------------
+% List of abbreviations
+% ------------------------------------------------------------
+\chapter*{List of Abbreviations}
+\thispagestyle{front}
+\addcontentsline{toc}{chapter}{List of Abbreviations}
+
+\begingroup
+\setlength{\parskip}{0pt}
+\begin{description}[
+    font=\normalfont\bfseries,
+    leftmargin=2.6cm,
+    labelwidth=2.1cm,
+    labelsep=0.5cm,
+    align=left,
+    itemsep=2pt,
+    parsep=0pt,
+    topsep=4pt
+  ]
+  \item[AADC]    Age Appropriate Design Code (UK)
+  \item[AAE]     Age-Alignment Error
+  \item[AI]      Artificial Intelligence
+  \item[AI4SD]   Artificial Intelligence for Sustainable Development
+  \item[ANOVA]   Analysis of Variance
+  \item[AoA]     Age of Acquisition
+  \item[API]     Application Programming Interface
+  \item[ARI]     Automated Readability Index
+  \item[ASR]     Attack Success Rate
+  \item[BH]      Benjamini--Hochberg 
+  \item[BLEU]    Bilingual Evaluation Understudy
+  \item[CHILDES] Child Language Data Exchange System
+  \item[CI]      Confidence Interval
+  \item[COMET]   Crosslingual Optimised Metric for Evaluation of Translation
+  \item[COPPA]   Children's Online Privacy Protection Act
+  \item[CoT]     Chain-of-Thought
+  \item[CPU]     Central Processing Unit
+  \item[CSAM]    Child Sexual Abuse Material
+  \item[CSEM]    Child Sexual Exploitation Material
+  \item[CSV]     Comma-Separated Values
+  \item[DSA]     Digital Services Act (EU)
+  \item[EU]      European Union
+  \item[F1]      F1 Score 
+  \item[FDR]     False Discovery Rate
+  \item[FKGL]    Flesch--Kincaid Grade Level
+  \item[FOG]     Gunning Fog Index
+  \item[FRE]     Flesch Reading Ease
+  \item[G7]      Group of Seven
+  \item[GDPR]    General Data Protection Regulation
+  \item[GLMM]    Generalised Linear Mixed Model
+  \item[GPT]     Generative Pre-trained Transformer
+  \item[GPU]     Graphics Processing Unit
+  \item[H]       Hypothesis
+  \item[HPC]     High-Performance Computing
+  \item[ICC]     Intraclass Correlation Coefficient
+  \item[IQR]     Interquartile Range
+  \item[IRR]     Inter-Rater Reliability
+  \item[IWF]     Internet Watch Foundation
+  \item[JSON]    JavaScript Object Notation
+  \item[JSONL]   JSON Lines
+  \item[KL]      Kullback--Leibler 
+  \item[KS]      Kolmogorov--Smirnov
+  \item[LLM]     Large Language Model
+  \item[LMM]     Linear Mixed Model
+  \item[ML]      Machine Learning
+  \item[MLU]     Mean Length of Utterance
+  \item[MTLD]    Measure of Textual Lexical Diversity
+  \item[NEDA]    National Eating Disorders Association
+  \item[NLP]     Natural Language Processing
+  \item[OFCOM]   Office of Communications (UK)
+  \item[OR]      Odds Ratio
+  \item[OSA]     Online Safety Act 2023
+  \item[PCA]     Principal Component Analysis
+  \item[PII]     Personally Identifiable Information
+  \item[RLHF]    Reinforcement Learning from Human Feedback
+  \item[RQ]      Research Question
+  \item[SD]      Standard Deviation
+  \item[SE]      Standard Error
+  \item[SFT]     Supervised Fine-Tuning
+  \item[SGE]     Sun Grid Engine
+  \item[SMOG]    Simple Measure of Gobbledygook
+  \item[SSH]     Secure Shell
+  \item[STEM]    Science, Technology, Engineering and Mathematics
+  \item[TTR]     Type--Token Ratio
+  \item[UCL]     University College London
+  \item[vLLM]    Inference and serving engine for large language models
+  \item[YAML]    YAML Ain't Markup Language
+\end{description}
+\endgroup

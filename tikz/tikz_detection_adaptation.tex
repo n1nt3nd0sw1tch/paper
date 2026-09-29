@@ -1,0 +1,86 @@
+% % ----- FIGURE: four-stage framework with blue/red evidence colours -----
+% % Preamble:
+% % \usepackage{tikz}
+% % \usepackage{graphicx}
+
+% \begin{figure}[htbp]
+% \centering
+% \resizebox{\textwidth}{!}{%
+% \begin{tikzpicture}[
+%   x=1cm, y=1cm,
+%   stage/.style={
+%     rectangle, draw, rounded corners=2pt, align=center,
+%     text width=2.25cm, minimum height=1.35cm,
+%     font=\scriptsize, inner sep=3pt
+%   },
+%   known/.style={stage, fill=blue!20, draw=blue!55!black},
+%   partial/.style={stage, fill=blue!8, draw=blue!45!black},
+%   gap/.style={stage, fill=red!20, draw=red!55!black, dashed},
+%   signal/.style={
+%     rectangle, draw, densely dotted, rounded corners=2pt, align=center,
+%     text width=2.25cm, minimum height=1.35cm,
+%     font=\scriptsize, inner sep=3pt,
+%     fill=blue!4, draw=blue!45!black
+%   },
+%   ev/.style={align=center, font=\tiny, text width=2.65cm},
+%   arrow/.style={draw, -latex, thick},
+%   swatch/.style={draw, minimum width=0.5cm, minimum height=0.28cm, inner sep=0pt}
+% ]
+
+% % ----- stage boxes -----
+% \node[signal]  (s0) at (0,0)    {\textbf{Age signal}\\[1pt] explicit / implicit / none};
+
+% \node[known]   (s1) at (3.2,0)  {\textbf{Stage 1}\\[1pt] Age recognition};
+
+% \node[known]   (s2) at (6.4,0)  {\textbf{Stage 2}\\[1pt] Access-control action};
+
+% \node[partial] (s3) at (9.6,0)  {\textbf{Stage 3}\\[1pt] Response-level adaptation};
+
+% \node[gap]     (s4) at (12.8,0) {\textbf{Stage 4}\\[1pt] Persistence across turns};
+
+% % ----- flow arrows -----
+% \draw[arrow] (s0) -- (s1);
+% \draw[arrow] (s1) -- (s2);
+% \draw[arrow] (s2) -- (s3);
+% \draw[arrow] (s3) -- (s4);
+
+% % ----- evidence row -----
+% \node[ev] at (3.2,-2.0) {
+% \textbf{Directly studied}\\
+% Models infer age from conversation
+% \cite{figueiraActionsSpeakLouder2026}
+% };
+
+% \node[ev] at (6.4,-2.0) {
+% \textbf{Directly studied}\\
+% Access restriction does not follow recognition
+% \cite{figueiraActionsSpeakLouder2026}
+% };
+
+% \node[ev] at (9.6,-2.0) {
+% \textbf{Partially studied}\\
+% Mainly single-turn and explicit age disclosure
+% \cite{ozcanEvaluatingChildAppropriateLanguage2026}
+% };
+
+% \node[ev] at (12.8,-2.0) {
+% \textbf{Under-examined}\\
+% Dialogue-depth effects are not fully tested under age conditioning
+% \cite{caoSafeDialBenchFineGrainedSafety2026, liStateDependentSafetyFailures2026}
+% };
+
+% % ----- legend -----
+% \node[swatch, fill=blue!20, draw=blue!55!black] at (2.1,-3.55) {};
+% \node[anchor=west, font=\scriptsize] at (2.45,-3.55) {Directly studied};
+
+% \node[swatch, fill=blue!8, draw=blue!45!black] at (6.0,-3.55) {};
+% \node[anchor=west, font=\scriptsize] at (6.35,-3.55) {Partially studied};
+
+% \node[swatch, fill=red!20, draw=red!55!black, dashed] at (9.9,-3.55) {};
+% \node[anchor=west, font=\scriptsize] at (10.25,-3.55) {Under-examined};
+
+% \end{tikzpicture}%
+% }
+% \caption{\emph{Background} $\vert$ From Age Recognition to Adaptation.}
+% \label{tikz:detection_adaptation}
+% \end{figure}

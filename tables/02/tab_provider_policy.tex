@@ -1,0 +1,37 @@
+\begin{table}[htbp]
+\centering
+\small
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}L{2.2cm}XX@{}}
+\toprule
+\textbf{Platform} & \textbf{Approach} & \textbf{Relevance} \\
+\midrule
+OpenAI &
+Minimum-age rules, age prediction, teen safeguards, parental controls for users under 18 \cite{PrivacyPolicy, BuildingAgePrediction2026, OurApproachAge2025, IntroducingParentalControls2025, IntroducingTeenSafety2026, TeenSafetyFreedom2026} &
+Matched prompts can test whether adult, teen, and child framing changes response content, refusal behaviour, and signposting. \\
+\addlinespace
+Anthropic &
+Claude.ai is restricted to adults; developers must ensure child-safety measures \cite{ResponsibleUseAnthropics2026, TermsServiceConsumersa, AnthropicsTransparencyHub} &
+Highlights that child-safety responsibility may be distributed between model providers and downstream application developers. \\
+\addlinespace
+Microsoft &
+Copilot access depends on country specific age rules and account settings \cite{MicrosoftCopilotAge, ListCountriesRegions} &
+Age thresholds vary by jurisdiction. \\
+\addlinespace
+Mistral, DeepSeek, and Qwen &
+Minor-access restrictions and consent requirements in policies, or jurisdiction-dependent conditions \cite{UsagePolicyMistral, DeepSeekTermsUse, QwenPrivacyPolicy} &
+Access policies do not, by themselves, indicate whether model outputs adapt when age cues appear in conversation. \\
+\addlinespace
+Meta &
+Supervision tools, teen-account defaults, age-prediction systems across platform services \cite{isolomonsIntroducingInstagramTeen2024, isolomonsOurApproachTeen2025, ExpandingTeenAccount2025, joedamianiNewAIPoweredAge2026, joedamianiNewSupervisionTools2026, heatheraHelpingParentsUnderstand2026, heatheraNewAlertsLet2026} &
+Shows a broader platform shift towards age-differentiated design. \\
+\addlinespace
+Google &
+Age assurance, parental controls, Android family tools, and AI literacy guidance \cite{BuildInternetYoung2025, PolicyFrameworkProtect2023, GuidingAIGeneration2026, 6TakeawaysOur2026, NewExpandedAndroid2026} &
+Supports the view that child-AI safety is treated as a combination of technical controls, family supervision, and user education. \\
+\bottomrule
+\end{tabularx}
+\caption{\emph{Background} $\vert$ Platform Commitments.}
+\label{tab:provider_policy_mapping}
+\end{table}

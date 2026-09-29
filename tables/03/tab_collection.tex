@@ -1,0 +1,37 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{
+    @{}
+    L{3.9cm}
+    L{2.2cm}
+    L{2.2cm}
+    L{2.0cm}
+    @{}
+}
+\toprule
+\textbf{Model} &
+\textbf{Input Tokens} &
+\textbf{Output Tokens} &
+\textbf{Output a Reply} \\
+\midrule
+\multicolumn{4}{@{}l}{\blocktag{A. Batch Queue}} \\[0.15em]
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 187,923 & 1,781,582 & 228 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 203,903 & 1,793,802 & 230 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 152,601 & 3,660,575 & 469 \\
+\midrule
+\multicolumn{4}{@{}l}{\blocktag{B. Live Requests}} \\[0.15em]
+\midrule
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 172,674 & 5,417,679 & 695 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 263,337 & 1,864,965 & 239 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 246,201 & 4,329,269 & 555 \\
+\midrule
+\rowcolor{macroRow} \textbf{Total} & \textbf{1,226,639} & \textbf{18,847,872} & \textbf{403} \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Experiment 1} $\vert$ Collection.}
+\label{tab:collection}
+\end{table}

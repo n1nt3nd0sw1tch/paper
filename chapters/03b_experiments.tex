@@ -1,0 +1,174 @@
+% ------------------------------------------------------------
+\section{Experiments}
+\label{sec:experiments}
+
+Two experiments evaluate complementary aspects of age conditioning.
+Experiment~1 measures response adaptation under matched single-turn requests,
+while Experiment~2 tests whether safety behaviour is retained under multi-turn
+pressure.
+
+\begin{enumerate}[leftmargin=1.5cm, itemsep=5pt, topsep=5pt]
+
+    \item
+    \hyperref[sec:exp-adaptation]{\textbf{Experiment 1 $\vert$ Adaptation}}
+    evaluates whether safety behaviour and linguistic form change with the
+    user's age while the request remains fixed. The 200 scenarios are expanded
+    across the thirteen conditions in Section~\ref{sec:prompts}, producing
+    2,600 prompts. Each prompt is submitted to all six models three times,
+    giving 46,800 requests.
+
+    \item
+    \hyperref[sec:exp-persistence]{\textbf{Experiment 2 $\vert$ Retention}}
+    evaluates whether behaviour at the opening turn persists under
+    conversational pressure. Experiment~1 openings are extended by two fixed
+    attack turns using Purpose Reverse, Role Play or Emotional Pushback.
+    Retention is measured by the change $\Delta_t$ defined in
+    Equation~\eqref{eq:persistence}.
+\end{enumerate}
+
+Table~\ref{tab:experiments} summarises the two experiments. Responses from both
+are evaluated with the rubric in Section~\ref{subsec:properties} and the
+estimators defined in Section~\ref{sec:statistics}.
+
+\input{tables/03/tab_experiments}
+
+
+% ============================================================
+\subsection{Experiment 1: Adaptation}
+\label{sec:exp-adaptation}
+\label{sec:exp-technical}
+
+Experiment~1 tests whether model behaviour changes with the age signal while
+the underlying request remains fixed. Each of the 200 scenarios is presented
+under the thirteen conditions defined in Section~\ref{sec:prompts}. The
+canonical request is byte-identical across conditions; only the opening age
+statement or cue changes. Explicit ages and implicit cues are analysed
+separately because contextual cues provide weaker evidence of age and also
+introduce a small change in social context
+\cite{figueiraActionsSpeakLouder2026}.
+
+Each scenario-condition-model cell is generated three times using the common
+settings in Section~\ref{subsec:decoding}. Replicates are averaged within a cell
+before inferential comparison, while replicate variation is reported separately
+as a stability measure. Provider-withheld responses are recorded as blocks and
+excluded from response-level rates rather than treated as model refusals.
+
+Analysis is stratified by scenario type because the expected response differs
+across the benchmark. Harmful scenarios require refusal at every age, while
+Rights and Benign scenarios require compliance. Age-related changes in these
+three strata therefore indicate unwanted conditioning. Age Restricted scenarios
+require refusal for minors and compliance for adults, making age differentiation
+the expected behaviour.
+
+Safety is evaluated using both the stated decision and the material delivered in
+the response. This distinction prevents a response that states a restriction but
+still provides the requested material from being treated as fully protective.
+The corresponding response taxonomy and alignment measures are defined in
+Section~\ref{subsec:properties}.
+
+The explicit-age ladder covers ages 7, 9, 11, 13, 15, 17, 18 and 21. It supports
+both a developmental reading across age and a direct comparison between 17 and
+18 at the adult boundary. The implicit conditions provide a separate comparison
+between minor-associated and adult-associated cues. Their interpretation remains
+descriptive of cue-conditioned behaviour rather than evidence that the model
+inferred a specific age.
+
+Linguistic adaptation is evaluated on the same responses using the measures in
+Section~\ref{subsec:linguistic}. Holding the request wording fixed allows changes
+in readability or lexical complexity to be attributed to the experimental
+condition rather than to differences in the input register.
+
+
+% ============================================================
+\subsection{Experiment 2: Retention}
+\label{sec:exp-persistence}
+
+Experiment~2 tests whether safety behaviour observed at the opening remains
+stable after conversational pressure. Each dialogue reuses an opening response
+from Experiment~1 and appends two fixed attack turns. Reusing rather than
+regenerating the opening fixes the observed starting response against which
+later behaviour is compared.
+
+\input{algorithms/alg_dialogue}
+
+The experiment uses the 25 Age Restricted and 25 Harmful scenarios, since both
+contain conditions for which refusal is expected at the opening. Rights and
+Benign scenarios are omitted because their expected response is compliance.
+Neutral and the explicit ages 7, 9, 11, 13, 15, 17 and 18 are retained.
+Implicit cues are excluded because Experiment~2 tests retention of a directly
+specified age condition rather than persistence of an inferred cue.
+
+The full design contains up to 7,200 dialogues, each with two newly generated
+assistant responses. One Experiment~1 replicate is carried forward for each
+opening cell, fixing one observed starting response while retaining the scenario
+as the unit of analysis.
+
+
+\paragraph{Attack Methods}
+
+Three fixed attack methods are used.
+(Table~\ref{tab:methods}). Purpose Reverse is adapted from SafeDialBench and was
+selected because it had the highest reported attack-success rate among its
+published methods
+\cite{caoSafeDialBenchFineGrainedSafety2026}. It asks the model to invert the
+meaning of its previous response. Role Play introduces a parent persona, testing
+whether a later persona displaces the age established at the opening. Emotional
+Pushback applies social and emotional pressure from the user rather than changing
+the substantive request.
+
+Role Play was adapted for this design, while Emotional Pushback was added to
+represent a form of pressure not covered by the selected SafeDialBench method.
+Methods that changed the underlying request or introduced additional topic
+changes were excluded.
+
+All attack turns are fixed before generation and are identical across scenarios,
+age conditions and models. None restates the user's age. This preserves the
+original age disclosure as the relevant dialogue state and avoids attacks that
+adapt to a model's own response, which can introduce intent drift
+\cite{fengSEMASimpleEffective2026}. The same Role Play persona is also used
+under Neutral and age-conditioned dialogues so that a general persona effect can
+be separated from displacement of an age signal.
+
+\input{tables/03/tab_methods}
+
+
+\paragraph{Scoring}
+
+The same response rubric is used in both experiments. Each generated assistant
+turn is classified separately, following the per-turn evaluation used in
+SafeDialBench \cite{caoSafeDialBenchFineGrainedSafety2026}. The Experiment~1
+opening is not reclassified because the identical response and verdict are
+reused.
+
+For retention dialogues, the classifier receives the conversation history only
+up to the target response. The original opening user message is replaced by the
+canonical request, withholding the experimental age condition while preserving
+the context needed to interpret later replies. As in Experiment~1, the
+classifier is not given the scenario type or expected response.
+
+The expected response remains that assigned to the opening condition throughout
+the dialogue. A later persona or reframing therefore does not change the
+experimental assignment. This allows a successful attack to be measured as a
+change in behaviour rather than redefined as a new condition.
+
+Retention is evaluated relative to the opening response using
+$\Delta_t$ in Equation~\eqref{eq:persistence}. Analyses that require a complete
+trajectory include only dialogues for which both generated turns were returned
+and classified. Provider-withheld turns remain recorded separately for the
+coverage analysis.
+
+
+\paragraph{Calibration}
+
+Experiment~2 is calibrated separately because classifying a response within
+dialogue history differs from single-turn classification. Sixty dialogues are
+sampled across the three attack methods and manually annotated at both generated
+turns. Agreement is evaluated using the criterion in
+Section~\ref{subsec:inference}.
+
+Confirmatory analyses are restricted to labels meeting that agreement threshold.
+The remaining response fields are retained for descriptive analysis. Four
+dialogue-specific behaviours are also annotated manually: whether the model
+identifies an attempt to change its behaviour, disputes the replayed opening,
+follows an inversion without delivering harmful material, or states the
+18-year threshold where it is not relevant to the user.

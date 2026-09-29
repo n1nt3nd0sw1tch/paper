@@ -1,0 +1,123 @@
+% ------------------------------------------------------------
+% APPENDIX B
+
+
+\chapter{Literature Review}
+\label{app:literature-review}
+
+Tables~\ref{tab:ext_design}--\ref{tab:ext_findings} summarise the studies
+reviewed in Chapter~\ref{ch:background}. E and I denote explicit and implicit
+age cues; S and M denote single- and multi-turn settings.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.6cm}
+                               Y
+                               >{\raggedright\arraybackslash}p{2.8cm}
+                               >{\raggedright\arraybackslash}p{2.6cm}
+                               >{\raggedright\arraybackslash}p{0.7cm}
+                               >{\raggedright\arraybackslash}p{0.9cm}@{}}
+\toprule
+\textbf{Study} & \textbf{Prompts} & \textbf{Domains} & \textbf{Age} & \textbf{Cue} & \textbf{Turns} \\
+\midrule
+Safe-Child-LLM \cite{jiaoSafeChildLLMDevelopmentalBenchmark2025} & 200 red-team prompts & General harm & 7--12; 13--17 & E & S \\
+ChildSafe \cite{muraliEvaluatingLLMSafety2026} & 1{,}200 child-agent dialogues & Composite safety & 6--8; 9--11; 12--14; 15--17 & I & M \\
+SproutBench \cite{xingSproutBenchBenchmarkSafe2025} & 1{,}283 adversarial prompts & Safety; risk; age appropriateness & 0--6; 7--12; 13--18 & E & S \\
+MinorBench \cite{khooMinorBenchHandbuiltBenchmark2025} & Middle-school deployment prompts & 6 risk categories & Middle school & E & S \\
+Rath et al.\ \cite{rathLLMSafetyChildren2025} & Child user model prompts & 12 harm categories & Child; adult & E & M \\
+Figueira et al.\ \cite{figueiraActionsSpeakLouder2026} & 1{,}050 prompt-library sessions & COPPA age gating & Under 13 & E, I & M \\
+ChildEval \cite{luoChildEvalWhenLarge2026} & 29{,}000 synthetic child personas & 5 preference categories & 3--6 & E, I & M \\
+Giorgi et al.\ \cite{giorgiExplicitImplicitLarge2024} & Demographic persona prompts & Persona conditioning & --- & E, I & --- \\
+SafeDialBench \cite{caoSafeDialBenchFineGrainedSafety2026} & $>$4{,}000 jailbreak dialogues & 6 safety dimensions & --- & --- & M \\
+STAR \cite{liStateDependentSafetyFailures2026} & Adversarial state dialogues & General safety & --- & --- & M \\
+SafeTutors \cite{hazraSafeTutorsBenchmarkingPedagogical2026} & Synthetic tutoring dialogues & 11 harm dimensions & Student & --- & M \\
+Özcan \cite{ozcanEvaluatingChildAppropriateLanguage2026} & 960 generated stories & Story generation & Children & E & S \\
+Valentini et al.\ \cite{valentiniAutomaticGenerationSimplification2023} & 750 generated stories & Story generation & Children & E & S \\
+Oshika et al.\ \cite{oshikaSimplifyingTranslationsChildren2024} & Translation corpora & Translation & Children & E & S \\
+Hassan et al.\ \cite{hassanEvaluatingLLMsGenerating2025} & Interview and model samples & Dialogue generation & 5; 9 & E & S \\
+\bottomrule
+\end{tabularx}
+\caption{\emph{Prior Work} $\vert$ Design.}
+\label{tab:ext_design}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.6cm}
+                               Y
+                               >{\raggedright\arraybackslash}p{2.6cm}
+                               >{\raggedright\arraybackslash}p{3.4cm}@{}}
+\toprule
+\textbf{Study} & \textbf{Models} & \textbf{Scoring} & \textbf{Metrics} \\
+\midrule
+Safe-Child-LLM \cite{jiaoSafeChildLLMDevelopmentalBenchmark2025} & GPT-4o, Claude 3.7 Sonnet, Gemini 2.0 Flash, Grok-3, DeepSeek-R1, Llama 3, Mistral-7B, Vicuna & Human annotation & Refusal-quality score; F1 \\
+ChildSafe \cite{muraliEvaluatingLLMSafety2026} & GPT-5, Claude Sonnet, Gemini 2.5 Pro, DeepSeek-V3 & LLM judge & Composite safety score \\
+SproutBench \cite{xingSproutBenchBenchmarkSafe2025} & GPT-3.5, GPT-4, Llama 2, Llama 3.2, Mistral, Vicuna, DeepSeek & Expert annotation & Safety score; Spearman $\rho$ \\
+MinorBench \cite{khooMinorBenchHandbuiltBenchmark2025} & GPT-4o, GPT-4o-mini, Claude 3.5 Haiku, Gemini 2.0 Flash, Llama 3.3, DeepSeek & Rule-based & Refusal Rate \\
+Rath et al.\ \cite{rathLLMSafetyChildren2025} & GPT-4, GPT-4o, Llama-2, Mistral-7B, Phi-3 & LLM judge & Defect rate \\
+Figueira et al.\ \cite{figueiraActionsSpeakLouder2026} & ChatGPT, Copilot, Gemini, Meta AI, Perplexity & LLM judge & Age-estimation accuracy; gating action \\
+ChildEval \cite{luoChildEvalWhenLarge2026} & Qwen2.5, Qwen3, DeepSeek-R1, Llama3.1, Mistral-7B & LLM judge & Preference accuracy \\
+Giorgi et al.\ \cite{giorgiExplicitImplicitLarge2024} & Gemini 2.0, GPT-4o, Claude 3.5 & Metric-based & Accuracy; precision; recall; F1 \\
+SafeDialBench \cite{caoSafeDialBenchFineGrainedSafety2026} & GPT-4o, GPT-4, GPT-3.5, Qwen2.5, Llama3.1, DeepSeek-R1, Mistral-7B & LLM judge & Attack-success rate; ability scores \\
+STAR \cite{liStateDependentSafetyFailures2026} & GPT-4o, Claude 3.5 Sonnet, Gemini 2.0 Flash, LLaMA-3, Qwen2.5 & LLM judge & Safety-failure rate; refusal projection \\
+SafeTutors \cite{hazraSafeTutorsBenchmarkingPedagogical2026} & GPT-5, Llama-3.1, Qwen2.5, Phi-3, Mistral-7B, DeepSeek-32B & Expert annotation & Harm rate \\
+Özcan \cite{ozcanEvaluatingChildAppropriateLanguage2026} & Grok 4 Fast, Gemini 2.5 Flash, GPT-4o mini, Mistral Large & Metric-based & $\aae$; $\fkgl$ \\
+Valentini et al.\ \cite{valentiniAutomaticGenerationSimplification2023} & GPT-3.5-Turbo, GPT-4, Vicuna, Phi-3 & Human annotation & $\fkgl$; $\aoa$; perplexity \\
+Oshika et al.\ \cite{oshikaSimplifyingTranslationsChildren2024} & GPT-3.5-turbo & Metric-based & $\aoa$; $\fkgl$; $\fre$; BLEU; COMET \\
+Hassan et al.\ \cite{hassanEvaluatingLLMsGenerating2025} & GPT-4, RUTER-LLaMA-2-13b, GPTSW, NorMistral-7b, NorBloom-7b & Expert annotation & Apparent age (ICC); $\aoa$ \\
+\bottomrule
+\end{tabularx}
+\caption{\emph{Prior Work} $\vert$ Evaluation.}
+\label{tab:ext_models}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.6cm} Y@{}}
+\toprule
+\textbf{Study} & \textbf{Findings} \\
+\midrule
+Safe-Child-LLM \cite{jiaoSafeChildLLMDevelopmentalBenchmark2025} &
+Safe-response rate 71.5--95.0\%; F1 80--89\% \\
+ChildSafe \cite{muraliEvaluatingLLMSafety2026} &
+Composite safety lowest at 6--8 (0.715) and highest at 9--11 (0.797), a gap of 11.5\% \\
+SproutBench \cite{xingSproutBenchBenchmarkSafe2025} &
+Age appropriateness falls as interactivity rises ($\rho = -0.48$) \\
+MinorBench \cite{khooMinorBenchHandbuiltBenchmark2025} &
+GPT-4o-mini refusal rises from 4.3\% to 97.0\% across three model prompts \\
+Rath et al.\ \cite{rathLLMSafetyChildren2025} &
+Child against adult defect gaps from 58.8 points for sexual content to 32.8 for terrorism \\
+Figueira et al.\ \cite{figueiraActionsSpeakLouder2026} &
+Age is inferred from conversation, but no model gated a user it identified as a child \\
+ChildEval \cite{luoChildEvalWhenLarge2026} &
+Implicit preferences harder to track and degrade with distractions \\
+Giorgi et al.\ \cite{giorgiExplicitImplicitLarge2024} &
+Personas reflect expressed opinions but not underlying perceptions \\
+SafeDialBench \cite{caoSafeDialBenchFineGrainedSafety2026} &
+Attack success reaches 69.60\% across nineteen models \\
+STAR \cite{liStateDependentSafetyFailures2026} &
+Safety-failure rates of 74.0--96.1\%; refusal projections collapse as state evolves \\
+SafeTutors \cite{hazraSafeTutorsBenchmarkingPedagogical2026} &
+Pedagogical failure rises from 17.7\% at one turn to 77.8\% over several; scale does not reduce harm \\
+Özcan \cite{ozcanEvaluatingChildAppropriateLanguage2026} &
+Adaptation is directional on all four models, with $\aae$ from 1.530 to 2.214 grade levels \\
+Valentini et al.\ \cite{valentiniAutomaticGenerationSimplification2023} &
+No story of 750 met the lexical constraint for the youngest group \\
+Oshika et al.\ \cite{oshikaSimplifyingTranslationsChildren2024} &
+Mean $\aoa$ falls from 11.58 to 8.03 with translation quality preserved \\
+Hassan et al.\ \cite{hassanEvaluatingLLMsGenerating2025} &
+Eleven blind expert raters agree on apparent age ($\mathrm{ICC} = 0.75$) \\
+\bottomrule
+\end{tabularx}
+\caption{\emph{Prior Work} $\vert$ Findings.}
+\label{tab:ext_findings}
+\end{table}

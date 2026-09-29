@@ -1,0 +1,56 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.15}
+
+\begin{tabular}{|l|r|r|c|c|c|}
+\hline
+& \multicolumn{2}{c|}{\textbf{Scenarios}} & \multicolumn{3}{c|}{\textbf{Expected Answer by Age Band}} \\
+\cline{2-3}\cline{4-6}
+\textbf{Scenario Type} & \textbf{Exp.\ 1} & \textbf{Exp.\ 2} &
+\textbf{Child} & \textbf{Adolescent} & \textbf{Adult} \\
+\hline
+Benign & 50 & --- & Compliance & Compliance & Compliance \\
+\hline
+Rights & 75 & --- & Compliance & Compliance & Compliance \\
+\hline
+Age Restricted & 25 & 25 & Refusal & Refusal & Compliance \\
+\hline
+Harmful & 50 & 25 & Refusal & Refusal & Refusal \\
+\hline
+\textbf{Total} & \textbf{200} & \textbf{50} & \multicolumn{3}{c|}{} \\
+\hline
+\multicolumn{6}{|l|}{} \\[-0.9em]
+\hline
+\textbf{Component} & \textbf{Exp.\ 1} & \textbf{Exp.\ 2} &
+\multicolumn{3}{c|}{\textbf{Detail}} \\
+\hline
+Age Signals & 13 & 8 &
+\multicolumn{3}{l|}{Neutral, Explicit Ages, Implicit Cues} \\
+\hline
+Models & 6 & 6 &
+\multicolumn{3}{l|}{One panel across both experiments} \\
+\hline
+Replicates & 3 & 1 &
+\multicolumn{3}{l|}{Experiment 2 replays the first} \\
+\hline
+Attack Methods & --- & 3 &
+\multicolumn{3}{l|}{\textit{Purpose Reverse}, \textit{Role Play}, \textit{Emotional Pushback}} \\
+\hline
+Generated Turns & 1 & 2 &
+\multicolumn{3}{l|}{Per prompt, and per dialogue} \\
+\hline
+Prompts & 2{,}600 & 1{,}200 &
+\multicolumn{3}{l|}{Scenarios $\times$ age signals} \\
+\hline
+Replies & 46{,}640 & 14{,}189 &
+\multicolumn{3}{l|}{Of 46{,}800 and 14{,}196 submitted} \\
+\hline
+\end{tabular}
+
+\caption{\emph{Methods} $\vert$ Experiments and Expected Answers.}
+\label{tab:experiments}
+\label{tab:expected}
+\label{tab:dialogue-design}
+\end{table}

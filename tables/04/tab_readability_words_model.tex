@@ -1,0 +1,87 @@
+{\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\LTleft}{\fill}\setlength{\LTright}{\fill}
+\begin{longtable}{@{}p{1.6cm}p{10.4cm}@{}}
+\toprule
+\textbf{Age} & \textbf{Most Unique Words} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Age} & \textbf{Most Unique Words} \\
+\midrule
+\endhead
+\midrule
+\endfoot
+\bottomrule
+\caption{\emph{Experiment 1} $\vert$ Unique Vocabulary by Model.}
+\label{tab:readability-words-model}
+\endlastfoot
+
+\multicolumn{2}{@{}l}{\modeltag{openaiPastel}{GPT-5.6 Luna}} \\[0.3em]
+7       & \textit{parent, tell, right, away, caregiver} \\
+9       & \textit{adult, school, helps, child, treasure} \\
+11      & \textit{counselor, relative, happened, immediately, asked} \\
+13      & \textit{coach, bullying, potato, helpline, vomit} \\
+15      & \textit{minors, pressured, teenagers, alive, topics} \\
+17      & \textit{youth, consent, believe, images, adolescence} \\
+18      & \textit{clinic, college, vary, legally, workplace} \\
+21      & \textit{seek, avoid, relevant, loss, housing} \\
+Neutral & \textit{confirm, select, appropriate, national, original} \\
+\midrule
+\multicolumn{2}{@{}l}{\modeltag{anthropicPastel}{Claude Haiku 4.5}} \\[0.3em]
+7       & \textit{tell, fun, safe, right, mean} \\
+9       & \textit{adult, adults, trusted, important, people} \\
+11      & \textit{worried, enjoy, sports, confused, talking} \\
+13      & \textit{school, real, handle, bullying, alone} \\
+15      & \textit{teens, text, seriously, dealing, developing} \\
+17      & \textit{parental, consent, confidential, crisis, required} \\
+18      & \textit{legal, resources, legally, services, platforms} \\
+21      & \textit{counseling, consider, centers, mental, practical} \\
+Neutral & \textit{context, type, lawyer, check, etc} \\
+\midrule
+\multicolumn{2}{@{}l}{\modeltag{geminiPastel}{Gemini 3.5 Flash Lite}} \\[0.3em]
+7       & \textit{help, play, dad, mom, away} \\
+9       & \textit{kids, trusted, feel, smart, game} \\
+11      & \textit{talk, growing, guardian, worried, childhelp} \\
+13      & \textit{school, parents, home, middle, schools} \\
+15      & \textit{text, teen, teenage, line, teens} \\
+17      & \textit{minors, minor, youth, regarding, confidentiality} \\
+18      & \textit{college, legal, adulthood, valid, stalking} \\
+21      & \textit{campus, university, career, twenties, universities} \\
+Neutral & \textit{loss, weight, depends, violence, copyright} \\
+\midrule
+\multicolumn{2}{@{}l}{\modeltag{deepseekPastel}{DeepSeek-V4 Flash}} \\[0.3em]
+7       & \textit{mom, big, special, question, little} \\
+9       & \textit{kids, cool, helps, awesome, game} \\
+11      & \textit{adult, trusted, adults, curious, totally} \\
+13      & \textit{school, text, parents, hurting, real} \\
+15      & \textit{teens, hormones, crisis, growth, literally} \\
+17      & \textit{minor, minors, parental, reporters, confidentiality} \\
+18      & \textit{college, legal, health, local, community} \\
+21      & \textit{university, student, career, domestic, counseling} \\
+Neutral & \textit{ensure, email, user, context, core} \\
+\midrule
+\multicolumn{2}{@{}l}{\modeltag{mistralPastel}{Mistral Small 4}} \\[0.3em]
+7       & \textit{tell, fun, teacher, little, ask} \\
+9       & \textit{kids, hurt, parents, upset, feelings} \\
+11      & \textit{adult, guardian, okay, counselor, everyone} \\
+13      & \textit{school, bullying, support, serious, alone} \\
+15      & \textit{teens, pepper, teen, allow, confidential} \\
+17      & \textit{consent, parental, legal, project, steam} \\
+18      & \textit{airsoft, seek, confidentiality, college, clinics} \\
+21      & \textit{delivery, hunting, butane, wine, canned} \\
+Neutral & \textit{loss, suspect, supermarkets, blade, context} \\
+\midrule
+\multicolumn{2}{@{}l}{\modeltag{gemmaPastel}{Gemma 4 31B}} \\[0.3em]
+7       & \textit{tell, special, little, happy, mom} \\
+9       & \textit{adult, talk, safe, important, parent} \\
+11      & \textit{parents, childline, uncle, trouble, real} \\
+13      & \textit{school, text, childhelpline, deal, alone} \\
+15      & \textit{teens, teenage, ireland, counselors, caseworker} \\
+17      & \textit{minor, laws, parental, vary, youth} \\
+18      & \textit{legally, jurisdictions, verify, centers, campuses} \\
+21      & \textit{insurance, campus, university, counseling, health} \\
+Neutral & \textit{emotional, platform, fear, psychological, physical} \\
+\end{longtable}
+\par}

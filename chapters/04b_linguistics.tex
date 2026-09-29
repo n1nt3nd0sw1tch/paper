@@ -1,0 +1,293 @@
+\subsection{Readability}
+\label{sec:accessibility}
+
+Section~\ref{sec:safety} asked whether a model changes what it is willing to say.
+This section asks whether it changes how it says it: a warning nobody can read is
+not a safeguard. The measure is the Flesch-Kincaid grade level, and the contrast
+is the one the safety analysis ran on Refusal Rate. Everything here is computed
+over measurable replies, a smaller and differently selected set than the safety
+denominator, so coverage comes first.
+
+\paragraph{Measurement Coverage}
+\label{sec:accessibility-coverage}
+
+The five formula measures are computed without a length restriction and then
+treated as unavailable below fifty words.
+
+\input{tables/04/tab_readability_coverage}
+
+Of the 46,640 replies the panel returned, 4,465 fall below the floor and 42,175
+remain measurable, so 9.6\% of the corpus carries no reading grade. The loss runs
+from 1.1\% on DeepSeek-V4 Flash to 19.9 on Mistral Small 4 and tracks how much a
+model writes: the median reply is 517.5 words on the first and 93 on the second.
+The second missingness mechanism is negligible. Mean $\aoa$ is undefined on six
+replies in the whole corpus, and median coverage sits between 97.1 and 97.7\% on
+every model.
+
+Where the length loss falls within a model matters more. On Harmful scenarios it
+runs from 3.1 to 43.8\% against 0.0 to 1.4 on Benign for five of six models, and
+Mistral Small 4 is short everywhere, losing 15.2\% of its Benign replies. A
+refusal is typically shorter than an answer, so the floor removes replies from
+the stratum and conditions where refusal is commonest, and refusal is what the
+age condition moves. Measurability is therefore post-treatment.
+
+\input{figures/fig_readability_coverage}
+
+That selection does not run one way across the panel. Across the six minor ages
+the loss falls as age rises on GPT-5.6 Luna, Claude Haiku 4.5 and
+Gemini 3.5 Flash Lite, by 1.9, 6.2 and 2.4 points; it rises on Mistral Small 4
+and Gemma 4 31B, by 1.3 and 4.8; and on DeepSeek-V4 Flash it moves by 0.3 points
+and never exceeds 1.5\% at any age. The youngest users are the worst covered on
+half the panel and the best covered on the rest, so no single direction biases
+every effect the same way.
+
+One feature of Figure~\ref{fig:readability-coverage} is not a property of the age
+ladder. On Gemini 3.5 Flash Lite and Gemma 4 31B the loss on Age Restricted
+scenarios falls sharply between seventeen and eighteen while the Harmful line
+holds flat. Age Restricted is the one stratum whose expected answer changes at
+that boundary, so what moves is the length of the expected reply and not the
+model's estimate of the reader.
+
+$\aae$ needs both a measurable reply and a target grade, so it rests on 19,340
+replies: the target is defined only at the six minor ages, which is 21,600
+requests, of which 21,442 returned and the floor removes 2,102. Every measure
+reported against the target uses that set.
+
+\paragraph{Age Conditioning}
+\label{sec:accessibility-conditioning}
+
+The primary contrast compares grade level at the six explicit minor ages against
+the two explicit adult ages, paired within scenario over measurable replies.
+
+\input{tables/04/tab_readability_conditioning}
+
+\input{figures/fig_readability_conditioning_grid}
+
+Every model writes at a lower grade for a user who has said they are a child, by
+1.32 to 2.23 grades, and all six survive correction. The macro-average is $-1.77$
+grades $[-1.89, -1.64]$. No interval approaches zero and the sign is the same on
+every model. This is the clearest result in the thesis and the one place where
+the panel behaves uniformly.
+
+The three panels beneath it put that in proportion. Mean age of acquisition and
+its ninetieth percentile move the same way on every model, by $-0.54$ and $-1.37$
+years. Response length is the one measure whose panel does not hold together:
+replies to an explicit minor age are shorter on every model, but by 11.8 words on
+Claude Haiku 4.5 against 147.0 on DeepSeek-V4 Flash, so the macro-average of 73.0
+words describes none of them closely. Length is not what the grade level
+measures, and the pooled correlation of $-.13$ says the same. A scenario enters
+only where the grade level is measurable at all eight explicit ages, so the
+contrast rests on 158 to 197 of the 200.
+
+\input{figures/fig_readability_distribution}
+
+The size of that effect and the separation it produces are not the same thing.
+The two age blocks overlap 39\% on Claude Haiku 4.5, which separates them
+furthest, and 69\% on Mistral Small 4, which separates them least. Read at the
+level of a single exchange, a reply written for a twenty-one-year-old and one
+written for a nine-year-old are frequently at the same reading grade. The
+contrast establishes a shift in the centre of a wide distribution, not a
+partition of it.
+
+Table~\ref{tab:readability-levels} gives the levels the contrast is taken
+between, and they rise without exception across all eight explicit ages on all
+six models. Table~\ref{tab:readability-boundary} measures the statutory step:
+seventeen against eighteen gives 0.10 to 0.41 grades, and the interval includes
+zero on Gemini 3.5 Flash Lite and DeepSeek-V4 Flash. Against the 2.48 to 3.88
+grades a model traverses across the whole ladder, that single year carries
+between 3.4 and 10.3\% of the movement, close to what a smooth climb over eight
+conditions would put there. Refusal behaves differently on the same ages: it
+falls twenty points across the six minor ages and then twenty-eight in the one
+step from seventeen to eighteen. Reading level responds to age as a continuum and
+refusal responds to it as a threshold, and only the second matches the shape of
+the statute.
+
+\paragraph{Reading Level and Lexical Complexity}
+\label{sec:accessibility-levels}
+
+That models adapt does not establish that they adapt enough.
+Table~\ref{tab:readability-calibration} places the replies against the
+operational target grade.
+
+The absolute error is 2.31 to 2.94 grades, so a reply at an explicit minor age
+misses the target for that age by between two and three school years. The signed
+offset runs from $-0.81$ to $+1.09$, and the difference between the two is the
+finding. The misses cancel because their direction flips along the ladder: at age
+seven the target is grade two and the panel writes at 4.58 to 6.56, and at age
+seventeen the target is grade twelve and the panel writes at 7.76 to 9.33.
+Gemma 4 31B is the clearest case, its offset of $+0.18$ describing a model
+writing within a fifth of a grade of the target and its absolute error of 2.36
+the same model missing by more than two years in both directions.
+
+\input{figures/fig_readability_ladder}
+
+Figure~\ref{fig:readability-ladder} shows what the table cannot: the two lines
+cross. The target rises ten grades between age seven and seventeen and the panel
+rises between 2.06 grades on Mistral Small 4 and 3.34 on Gemma 4 31B, so every
+model begins above the target and ends below it. The crossing falls between nine
+and eleven on Claude Haiku 4.5 and DeepSeek-V4 Flash, between eleven and thirteen
+on GPT-5.6 Luna, Mistral Small 4 and Gemma 4 31B, and between thirteen and
+fifteen on Gemini 3.5 Flash Lite. These models traverse between a fifth and a
+third of the developmental range the ages span: the direction of adaptation is
+right on every model and the magnitude short of the target on every model.
+
+Mean $\aoa$ correlates $.72$ with the grade level, $.86$ with mean word length
+and $.02$ with sentence length, so it moves with the vocabulary a model reaches
+for and not with how long its sentences are.
+
+Because the formula has exactly two inputs, the contrast can be run on each and
+the two contributions must sum to the contrast on the grade level. Over the same
+measurable replies and paired estimator, words per sentence moves by $+0.087$
+$[-0.088, +0.276]$, enters weighted by $0.39$ and contributes $+0.03$ grades;
+syllables per word moves by $-0.153$ $[-0.160, -0.145]$, enters weighted by
+$11.8$ and contributes $-1.80$ grades. The two sum to $-1.77$.
+
+The per-word term therefore carries the whole of the movement. The
+sentence-length term contributes about 2\% of the total absolute movement, its
+interval includes zero, and its sign is not stable across the panel: negative on
+GPT-5.6 Luna, DeepSeek-V4 Flash and Gemma 4 31B and positive on the other three,
+ranging from $-0.14$ to $+0.21$ grades. The syllabic term is negative on all six
+and ranges from $-1.44$ to $-2.35$. Models writing for an explicit minor age do
+not write shorter sentences; they choose words of fewer syllables.
+
+That is a claim about the phonological weight of the words chosen and not about
+vocabulary difficulty in the acquisition sense, since a word can carry fewer
+syllables without having been learned earlier. The acquisition measures move the
+same way, mean $\aoa$ by $-0.54$ $[-0.56, -0.52]$ years and the ninetieth
+percentile by $-1.37$ $[-1.42, -1.31]$. Those rest on a wider denominator, since
+the floor applies to the readability formulas alone; restricting them to the
+floored set moves them to $-0.56$ and $-1.43$. Two limits belong with this. The
+decomposition was run after the register closed, so it declares no family; and a
+readability formula estimates difficulty from sentence length and syllabic weight
+alone, so neither measure speaks to whether a reader understood anything.
+
+\subparagraph*{Unique Vocabulary}
+
+A formula reads length and nothing else, so it cannot see that a model has
+changed subject as well as register. Every returned reply is scored for the words
+most unique to the condition it was written under, within each scenario type and
+pooled across the panel. Each word is assigned to the single condition where its
+score is highest, so the nine panels of a part share almost no vocabulary.
+
+\input{figures/fig_words_type}
+
+The progression is orderly and the same in all four strata. At seven the unique
+words are familial and concrete, \textit{mom}, \textit{dad}, \textit{teacher},
+\textit{play}, \textit{tummy}, \textit{toy}. At nine they turn to peers and
+guardians, \textit{kids}, \textit{adult}, \textit{trusted}, \textit{guardian}. By
+eleven and thirteen they are a signpost vocabulary, \textit{counsellor},
+\textit{childline}, \textit{relative}, \textit{childhelp}. At fifteen and
+seventeen they are adolescent and legal at once, \textit{teens}, \textit{minor},
+\textit{consent}, \textit{parental}, \textit{confidentiality}. At eighteen and
+twenty-one they are institutional, \textit{college}, \textit{campus},
+\textit{university}, \textit{insurance}, \textit{provider}. Neutral sits last in
+each part and is abstract where the eight are specific: \textit{context},
+\textit{platform}, \textit{depends}, \textit{psychological}, \textit{factors}.
+
+One part departs from the pattern, and it is the one the design predicts. Age
+Restricted is the only stratum whose expected answer changes at eighteen, and its
+vocabulary changes with it. Seventeen is still the legal register of the other
+three, \textit{consent}, \textit{parental}, \textit{laws}; eighteen is a list of
+identity documents, \textit{passport}, \textit{verify}, \textit{license},
+\textit{driver}; and twenty-one is logistics, \textit{delivery},
+\textit{liquor}, \textit{app}, \textit{hours}. That is the statutory boundary
+appearing in the lexicon of the one stratum where it applies, on the same
+conditions where the reading level records only a tenth to four tenths of a
+grade.
+
+\paragraph{Explicit and Implicit Age Signals}
+\label{sec:accessibility-signals}
+
+\input{figures/fig_readability_signals}
+
+The same measure at each level of the age signal, ordered as
+Table~\ref{tab:safety-signal-levels} orders the Refusal Rate, gives the same
+ordering. An explicit minor age gives the lowest grade level on all six models
+and by a wide margin, 1.41 to 2.28 grades below Neutral. A minor cue moves the
+same measure by 0.14 to 0.62 grades, between a twelfth and a third of the
+distance an explicit age travels. The cue is received and heavily discounted,
+which is the conclusion Section~\ref{sec:safety-signals} reached on refusal,
+reached independently on a different measure. That the two agree is the strongest
+support the cue result has, since neither measure was used to calibrate the
+other.
+
+Two details qualify the reading. The adult cue produces the highest grade level
+on five of six models, above both Neutral and an explicit adult age; the
+exception is DeepSeek-V4 Flash, whose Neutral condition sits 0.16 grades above
+its adult cue. And on Mistral Small 4 the minor cue sits above the explicit adult
+age by 0.20 grades, as it does on DeepSeek-V4 Flash by 0.03. The ordering that
+holds across the panel is not universal at the level of an individual model.
+
+\paragraph{Additional Analyses}
+\label{sec:accessibility-robustness}
+
+Four analyses are reported. Two were declared before the results, the third
+follows from a decision taken above, and the fourth answers the selection
+objection raised in Section~\ref{sec:accessibility-coverage}.
+
+Table~\ref{tab:readability-floor} recomputes the primary contrast at word floors
+of 0, 25, 50, 75 and 100. The macro-average moves from $-1.67$ at no floor to
+$-1.85$ at a hundred words, a range of 0.18 grades against an effect of 1.77, and
+all six models keep the sign at every cut-off. The effect grows as the floor
+rises, which is the direction the selection argument predicts: the replies that
+survive a higher cut are the ones where a model had room to adapt.
+
+Table~\ref{tab:readability-coarse} recomputes $\aae$ under the coarse step
+mapping of the source, on ages seven, nine, eleven and thirteen, the only ages
+where the two mappings overlap. It gives a slightly smaller error on every model,
+by 0.02 to 0.11 grades, and does not reorder the panel, so the continuous
+extension is not what produces the calibration figures above.
+
+\subparagraph*{Outcome Composition}
+
+Refusals are short, the floor removes short replies, and the age condition moves
+refusal, so the primary contrast could in principle be reporting that a model
+refuses more often at young ages rather than that it writes more simply for a
+child. Table~\ref{tab:readability-outcome} tests that two ways.
+
+Restricted to Benign scenarios, where compliance is expected at every age, the
+six effects run from $-1.53$ to $-2.14$ with a mean of $-1.76$ against $-1.77$
+for the primary contrast. That is the clean control of the two, since it fixes
+the expected action without conditioning on anything the treatment produced.
+Restricted to replies scored as Total Compliance, which holds the observed
+outcome fixed directly, the effects run from $-1.48$ to $-2.36$ with a mean of
+$-1.90$. That second restriction conditions on a post-treatment variable and is
+reported as description. The two say the same thing from opposite directions.
+
+\subparagraph*{Unique Vocabulary by Model}
+
+Figure~\ref{fig:words-scenario} fixes the scenario type and pools the six models,
+so a difference in vocabulary between models would report as a mixture. The same
+scoring is therefore run the other way.
+
+\input{figures/fig_words_model}
+
+The progression is present on all six and close to identical in its terms. Every
+model is familial at seven, reaches the formal signpost vocabulary by eleven or
+thirteen, is legal and adolescent at fifteen and seventeen, and five of six are
+institutional at eighteen and twenty-one. All six name \textit{counselor}, at
+eleven on GPT-5.6 Luna and Mistral Small 4 and at thirteen on the other four, and
+all six name \textit{consent} at seventeen. Five name \textit{minor} or
+\textit{minors} there as well, GPT-5.6 Luna having reached both at fifteen. The
+pooling above is therefore an average over six things that agree.
+
+Where the models differ is in the services they name and not in the register they
+adopt. \textit{Childline} is unique at thirteen on GPT-5.6 Luna and at eleven on
+Gemini 3.5 Flash Lite and Gemma 4 31B, \textit{trevor} at fifteen on
+Gemini 3.5 Flash Lite, \textit{childhelpline} at thirteen on Gemma 4 31B, and
+\textit{rainn} at eighteen on GPT-5.6 Luna. That is a difference in which
+organisation a user is sent to rather than in whether they are sent to one, and
+Service Signpost cannot express it.
+
+Mistral Small 4 departs from the pattern. Its unique words are largely product
+nouns rather than register: \textit{pepper}, \textit{nails} and \textit{tattoo}
+at fifteen, \textit{airsoft}, \textit{guns} and \textit{wax} at eighteen, and
+\textit{butane}, \textit{lighters} and \textit{hunting} at twenty-one. A model
+that agrees to help and then supplies little has less prose in which a register
+can show, and that model carries the Minimal Compliance rate of 16.9\% against
+1.3 to 4.7 for the rest of the panel.
+
+One limit is stated rather than tested. The floor removes replies selected on the
+outcome, and no sensitivity at a lower cut-off can recover a reply that was never
+long enough to measure. What none of these analyses can establish is what the
+panel would have written had it written more, and no claim above rests on that.

@@ -1,0 +1,66 @@
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{
+    @{}
+    L{3.7cm}
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}p{0.9cm}
+    @{}
+}
+\toprule
+\textbf{Model} & \textbf{Across Childhood (7 to 17)} &
+\textbf{Step at the Boundary (17 to 18)} &
+\textbf{Above the Boundary (18 to 21)} & \textbf{Full Range (7 to 21)} &
+\textbf{Step as Share of Range (\%)} & \textbf{$n$} \\
+\midrule
+\multicolumn{7}{@{}l}{\blocktag{A. Refusal Rate (pp)}} \\[0.15em]
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna}          & 12.00 & 44.00 & 14.67 & 70.67 & 62.26 & 25 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5}   & 26.67 & 32.00 & 6.67 & 65.33 & 48.98 & 25 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 31.67 & 26.67 & 6.67 & 65.00 & 41.03 & 20 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash}   & 6.67 & 33.33 & 8.00 & 48.00 & 69.44 & 25 \\
+\modeltag{mistralPastel}{Mistral Small 4}      & 21.33 & 2.67 & 12.00 & 36.00 & 7.41 & 25 \\
+\modeltag{gemmaPastel}{Gemma 4 31B}            & 25.33 & 28.00 & 6.67 & 60.00 & 46.67 & 25 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 20.61 & 27.78 & 9.11 & 57.50 & 45.96 & \\
+\rowcolor{macroRow} \quad Panel Ratio & & & & & 48.31 & \\
+\midrule
+\multicolumn{7}{@{}l}{\blocktag{B. Grade Level}} \\[0.15em]
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna}          & $-2.95$ & $-0.30$ & $-0.19$ & $-3.44$ & 8.74 & 194 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5}   & $-3.35$ & $-0.44$ & $-0.20$ & $-3.99$ & 11.01 & 172 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & $-2.52$ & $-0.18$ & $-0.14$ & $-2.84$ & 6.24 & 160 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash}   & $-2.88$ & $-0.12$ & $-0.02$ & $-3.01$ & 3.95 & 199 \\
+\modeltag{mistralPastel}{Mistral Small 4}      & $-2.13$ & $-0.21$ & $-0.10$ & $-2.45$ & 8.73 & 175 \\
+\modeltag{gemmaPastel}{Gemma 4 31B}            & $-3.42$ & $-0.27$ & $-0.12$ & $-3.81$ & 7.20 & 168 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & $-2.88$ & $-0.25$ & $-0.13$ & $-3.26$ & 7.65 & \\
+\rowcolor{macroRow} \quad Panel Ratio & & & & & 7.80 & \\
+\bottomrule
+\end{tabularx}
+\caption{\emph{Experiment 1} $\vert$ Ladder Shape by Outcome.}
+\label{tab:joint-shape}
+\vspace{0.4em}
+\begin{minipage}{\textwidth}
+\footnotesize
+\emph{Note.} Movement along the explicit-age ladder, split into the six minor
+ages, the step across the statutory boundary, and the stretch above it. Panel A
+is the Refusal Rate within Age Restricted scenarios in percentage points, Panel B
+the Flesch--Kincaid grade level in school grades; a positive sign in A and a
+negative one in B both mean more protective behaviour towards younger users. The
+Panel Ratio divides the averaged step by the averaged range, which is not the
+mean of the six model shares: one year of eight carries 46 to 48\% of the refusal
+movement and 7.7 to 7.8 of the grade-level movement. Mistral Small 4 is the only
+model with no boundary effect. Gemini 3.5 Flash Lite reads 41.0\% here against
+47.4 in Table~\ref{tab:joint-ladders}, the difference being the scenarios
+provider blocking removed at the younger ages.
+\end{minipage}
+\end{table}

@@ -1,0 +1,187 @@
+\section{Experiment 2: Retention}
+\label{sec:dialogue}
+
+Sections~\ref{sec:safety} to~\ref{sec:joint} read a single reply. This section
+asks whether what a model does first survives being pushed. Each dialogue opens
+with the reply the model gave in the Adaptation pass, joined back on model,
+prompt and replicate rather than regenerated, and two attack turns follow.
+Everything below is descriptive: this arm declares no hypothesis family and no
+value is adjusted.
+
+\paragraph{Coverage}
+\label{sec:dialogue-coverage}
+
+The design intends 7,200 branches and builds 7,098: 102 of the openings
+Gemini 3.5 Flash Lite would have replayed were withheld during the Adaptation
+pass. Two generated turns each gives 14,196 turns attempted, of which 14,189
+returned and 14,184 are analysable, and a dialogue holding only one of its
+generated turns is dropped whole, leaving 7,092 complete dialogues. Every table
+below reads those trajectories.
+
+\input{tables/03/tab_dialogue_collection}
+
+The seven turns withheld inside a conversation are all on one model, all at ages
+between seven and seventeen with none at eighteen or under Neutral, and all in
+Sexual Content, Harmful Substances and Violence, the three domains that took the
+102 withheld openings. No reply is recorded as Blocked, because a block removed
+the conversation rather than the reply. Reissuing them three times each returned
+content on seventeen of twenty-one attempts and those replies were themselves
+refusals, so nothing recovered enters the corpus.
+
+The rubric was calibrated on single replies, and a pressed turn is a different
+reading task, so the dialogue arm was calibrated separately on 120 hand-annotated
+replies from sixty dialogues.
+
+\input{tables/04/tab_judge_dialogue}
+
+Agreement is lower at depth but not uniformly. The median across the eleven
+estimable labels is 0.876 against 0.898 on single replies, and the classifier and
+the annotator differ on 85 of the 1,519 judged cells, 5.6\% against 3.4.
+Precision falls below recall on nine of the eleven estimable labels. Risk
+Statement is the one label that improves, from 0.632 to 0.861, which does not
+reverse the single-turn decision to use it for ordering only.
+
+Two labels fall below the $\kappa = 0.70$ floor. The consequential one is
+Delivery Response at 0.652 $[0.525, 0.769]$ against 0.936 $[0.901, 0.967]$ on
+single replies, with twenty of its twenty-one errors false positives and Yes
+returned on 50.8\% of pressed replies against the annotator's 35.0. Alternative
+Response is the second, at 0.563 $[0.349, 0.753]$. Answer is unaffected at 0.949
+$[0.893, 1.000]$, so the answer axis of the four-cell outcome carries over and
+the delivery axis is the one that does not. The levels reported below on that
+axis are therefore not offered as measurements.
+
+\subsection{Safety}
+\label{sec:dialogue-persistence}
+
+\input{tables/04/tab_dialogue}
+
+Strong Refusal falls from 58.1\% at the opening to 46.5 after the first attack
+and 37.9 after the second, on five of six models; Claude Haiku 4.5 rises then
+falls. What replaces it is mostly Total Compliance, at 34.4 rising to 47.7. Weak
+Refusal grows more than tenfold in relative terms and still reaches only 4.4\%,
+so the dominant failure under attack is a boundary abandoned rather than one that
+leaks while standing.
+
+\input{tables/04/tab_dialogue_defects}
+
+Refusal is the wrong headline measure for this arm, because it has no fixed
+polarity across the strata: losing a refusal is a failure where the benchmark
+expects one and a correction where it does not. It rises from
+34.5\% to 47.5 and then 57.6, a change of $+13.0$ points $[8.9, 16.9]$ and
+$+23.1$ $[18.0, 28.0]$. The degradation is close to linear and of the same order
+on both strata, at $+23.7$ $[17.1, 30.4]$ on Age Restricted against $+22.5$
+$[15.1, 29.7]$ on Harmful by the third turn. Claude Haiku 4.5 is the one model
+that improves under the first attack, at $-5.2$ points $[-10.1, -0.6]$. The Age
+Restricted rows under Neutral carry no expectation and are not scored.
+
+\input{tables/04/tab_dialogue_memory}
+\input{tables/04/tab_dialogue_effects}
+
+Whether an adaptation established at the opening survives is a stronger question
+than whether any refusal persists. Table~\ref{tab:dialogue-memory} asks it of the
+dialogues whose opening reply was a Strong Refusal on a scenario the benchmark
+expects a refusal of, so that nothing rests on a refusal that was wrong to begin
+with. Of those, 39.2\% $[35.6, 42.7]$ hold at both pressed turns. Split by
+stratum the age-conditioned boundary is the more fragile, at 33.8\%
+$[29.9, 37.7]$ against 44.4 $[39.1, 49.4]$ for ordinary harmful content, a
+difference of $-10.60$ points $[-16.96, -3.85]$. That difference is carried by
+Gemini 3.5 Flash Lite at $-25.3$, Gemma 4 31B at $-24.1$ and DeepSeek-V4 Flash at
+$-16.0$, while the other three sit within about a point of zero, and it compares
+different scenario sets and model-specific opening cohorts.
+
+\input{figures/fig_dialogue_methods_radar}
+
+The three attack methods are matched branches from one opening reply, so they are
+compared on the same seeds and the same turn 1 defect rate. They behave
+differently and not in a single ordering. \textit{Emotional Pushback} reduces
+defects at the first pressed turn, at $-8.6$ points $[-12.7, -4.5]$, and raises
+them at the second. \textit{Purpose Reverse} does the reverse, $+22.1$
+$[16.1, 27.9]$ then $+8.2$ $[4.0, 12.4]$, and that fall between turns can follow
+mechanically from its second instruction being another inversion, so it is not
+read as recovery. \textit{Role Play} is the most damaging at both turns, $+25.6$
+$[21.1, 30.0]$ and $+36.0$ $[28.6, 43.2]$.
+
+\paragraph{Age Conditioning}
+\label{sec:dialogue-conditioning}
+
+\input{figures/fig_dialogue_age}
+
+The age effect erodes without disappearing. Within Age Restricted the gap between
+an explicit minor age and an explicit age of eighteen runs 41.3 points
+$[30.0, 52.7]$ at the opening, 27.1 $[21.2, 33.4]$ after the first attack and
+18.5 $[11.9, 25.1]$ after the second, an erosion of $-22.8$ points
+$[-31.9, -14.8]$ taken on the same scenario resample as the gaps, so roughly a
+third of the opening gap remains at the third turn. The Harmful control shows
+nothing of the same size, and the difference between the two erosions is
+$-17.35$ points $[-27.39, -8.20]$. Read on Strong Refusal the erosion is larger
+still, at $-25.5$ points $[-35.4, -16.7]$, so part of what survives as a verbal
+refusal is a boundary that has begun to leak.
+
+\textit{Role Play} is the method Neutral was designed for, since a later parent
+persona could unlock requests generally or could displace an age disclosed
+earlier, and only the same method run without an age distinguishes those.
+Table~\ref{tab:dialogue-roleplay} gives the contrast. After an explicit age of
+nine the persona removes 40.4 points of refusal by the first pressed turn and
+48.4 by the second; after Neutral it removes 10.2 and 10.4. The difference in
+differences is $-30.1$ points $[-42.2, -17.6]$ and $-37.9$ $[-48.9, -26.0]$.
+That establishes erosion of the gap between an age-conditioned opening and a
+Neutral one. It does not establish that the persona displaced a stored age state,
+because Neutral opens near 15\% refusal and so has little protective state to
+displace; the conditional quantity that would address the objection rests on
+twenty-three Neutral opening refusals and is too thin to report.
+
+\paragraph{Additional Analyses}
+\label{sec:dialogue-robustness}
+
+Reply length rises across the conversation on every model. The median generated
+reply is longer at the second attack turn than at the first on all six, by six
+words on Mistral Small 4 and ninety on Gemma 4 31B, and five of the six end
+longer than the reply they were pressed on. A longer reply has more room both for
+a refusal to be explained and for material to be supplied.
+
+Action Defect broken out by harm domain is reported in
+Appendix~\ref{app:dialogue} and is descriptive only: the dialogue sample carries
+between two and eight scenarios a domain.
+
+Mistral Small 4 varies across replicates on 37.2\% of its cells, so the opening
+its dialogues meet is closer to a draw than to a settled position, and its
+retention results are read with Section~\ref{sec:unanimity} in view.
+
+\subsection{Readability}
+\label{sec:readability-turns}
+
+Section~\ref{sec:semantics-drift} reads how far the text moved. This section
+reads what it moved to. Three measures are taken on all 21,276 returned assistant
+turns of the 7,092 complete dialogues, and turn~1 is the Experiment~1 reply
+replayed rather than regenerated. Everything here is exploratory: no readability
+hypothesis was declared, the measures were taken after the safety results had
+been read, and no value is corrected.
+
+\input{tables/04/tab_turns_levels}
+
+The grade level is not monotone, rising seven tenths at the first attack turn and
+returning to its opening value at the second. Response Length rises at both, from
+169 words to 202, so replies grow as a dialogue is pressed rather than shrinking.
+Mean $\aoa$ moves by 0.07 years at most.
+
+\input{tables/04/tab_turns_change}
+
+Table~\ref{tab:turns-change} pairs each turn against the opening within dialogue,
+and two readings matter more than the macro-averages.
+
+The grade-level macro-average at turn~3 describes no model in the panel. It is
+$-0.09$ $[-0.29, 0.12]$, the mean of four models that rise by $+0.35$ to $+0.68$
+and two that fall, DeepSeek-V4 Flash at $-1.11$ and Mistral Small 4 at $-1.01$,
+both intervals excluding zero. Reporting it alone would state that two attacks
+leave reading level unchanged, which is true of the panel and of none of its
+members.
+
+The two measures also separate. DeepSeek-V4 Flash writes 103 words more at
+turn~3 and reads 1.11 grades easier, so a model can be longer and simpler at
+once.
+
+The grade level is unavailable below fifty words, so its columns rest on the
+dialogues long enough at both ends, and the share below the floor is neither
+constant across the panel nor moving the same way within it.
+Appendix~\ref{app:readability-turns} gives that share and the same change split
+by attack method.

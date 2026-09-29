@@ -1,0 +1,285 @@
+% ------------------------------------------------------------
+% Methods
+% ------------------------------------------------------------
+
+\chapter{Methods}
+\label{ch:methods}
+
+This chapter describes the benchmark construction, prompt design and model
+selection. The central design principle is to vary the age signal while holding
+the underlying request fixed. Existing child-safety benchmarks commonly use
+different prompts for different age groups, so age, wording and register vary
+together \cite{xingSproutBenchBenchmarkSafe2025,
+muraliEvaluatingLLMSafety2026}. The matched design used here isolates the age
+signal from these changes.
+
+The \emph{dataset} comprises 200 scenarios expanded into 2,600 prompts. The
+\emph{benchmark} combines these prompts with their expected responses and the
+evaluation rubric in Section~\ref{sec:evaluation}. An \emph{experiment} is one
+application of this benchmark to the model panel. Figure~\ref{tikz:pipeline}
+summarises the construction of responses from source datasets for evaluation.
+
+\input{tikz/tikz_pipeline}
+
+
+% ============================================================
+\section{Dataset}
+\label{sec:dataset}
+\label{sec:design}
+\label{sec:data}
+
+
+% ------------------------------------------------------------
+\subsection{Dataset Overview}
+\label{subsec:dataset}
+\label{subsec:types}
+
+The dataset contains 200 scenarios, with twenty scenarios in each of the ten
+harm categories defined in Section~\ref{subsec:taxonomy}. Each scenario is
+assigned one of four types that determine the expected response. Harmful
+scenarios require refusal at every age; Age Restricted scenarios require refusal
+below 18 and compliance from 18; Rights and Benign scenarios require compliance
+at every age. The resulting dataset contains 50 Harmful, 25 Age Restricted,
+75 Rights and 50 Benign scenarios. The full allocation is reported in
+Appendix~\ref{app:dataset}.
+
+Expected responses are fixed before generation. For Age Restricted scenarios,
+the Neutral condition has no expected response because no age is disclosed.
+The remaining three scenario types provide age-invariant controls: Harmful tests
+whether a safety boundary remains stable, while Rights and Benign test whether
+the model remains useful when age should not affect the decision. This prevents
+a model from appearing safer simply by refusing more often
+\cite{khooMinorBenchHandbuiltBenchmark2025,
+xingSproutBenchBenchmarkSafe2025}.
+
+Scenarios are also classified as instructions or information requests. All Age
+Restricted scenarios are instructions because they ask how to perform an
+age-restricted activity rather than whether it is permitted. Across the full
+dataset, there are 119 instructions and 81 information requests. Requests contain
+between five and sixteen words, with a median of ten. Near-duplicate and
+length-boundary checks were run before the dataset was frozen, and flagged items
+were inspected manually.
+
+
+\paragraph{Source datasets.}
+
+Six public safety datasets provide the source material
+(Table~\ref{tab:corpora}). XSTest contributes minimal safe--unsafe contrasts
+\cite{rottgerXSTestTestSuite2024a,PaulXSTestDatasets}; DoNotAnswer provides
+broad fine-grained risk coverage
+\cite{wangDoNotAnswerEvaluatingSafeguards2024,
+LibrAIDonotanswerDatasets2023}; MinorBench contributes child-focused request
+forms \cite{khooMinorBenchHandbuiltBenchmark2025,
+GovtechMinorBenchDatasets2025}; OR-Bench motivates the inclusion of
+over-refusal controls \cite{cuiORBenchOverRefusalBenchmark2025,
+BenchllmOrbenchDatasets2026}; SimpleSafetyTests provides severe and
+unambiguous unsafe requests
+\cite{vidgenSimpleSafetyTestsTestSuite2024a,
+BertievidgenSimpleSafetyTestsDatasets}; and Safe-Child-LLM provides material
+already organised by developmental band
+\cite{jiaoSafeChildLLMDevelopmentalBenchmark2025,
+jiaoChildSafeLLMDatasetChild2025}. The Kuperman norms are used separately for
+the lexical analysis in Section~\ref{subsec:linguistic}
+\cite{kupermanAgeofacquisitionRatings300002012,
+StephanAkkermanEnglishAgeofAcquisitionDatasets}.
+
+Each source is mapped to the benchmark taxonomy through a fixed configuration.
+Labels without a corresponding benchmark category are excluded rather than
+forced into another class. Reading DoNotAnswer at its fine-grained level and
+mapping OR-Bench harassment to Bullying improves coverage of categories that
+are not represented directly in the other sources.
+
+\input{tables/03/tab_corpora}
+
+
+\paragraph{Drafting.}
+\label{subsec:drafting}
+
+After mapping and deduplication, the source pool contains 1,815 usable records.
+Coverage is uneven across categories, so source records are used as drafting
+material rather than sampled directly. Rights and Age Restricted scenarios are
+written for this study because the source datasets do not contain the required
+counterparts.
+
+Each request is rewritten as a short first-person question or instruction in the
+present tense. Requests cannot contain an age signal, identify a named
+individual, refer to a school or carer, or ask on behalf of another person.
+These restrictions prevent information other than the experimental age signal
+from changing across conditions.
+
+The rewriting procedure does not preserve source wording. Four final scenarios
+retain a direct source record, three from DoNotAnswer and one from
+Safe-Child-LLM; the remaining 196 are recorded as written for this study. The
+source datasets therefore provide the candidate pool, taxonomy mappings and
+request structures rather than the final benchmark text.
+
+One Abuse \& Hate scenario was revised after initial collection because its
+wording was consistently interpreted as an advertising request rather than the
+intended harmful request. The revised item was recollected for all six models,
+and the superseded responses were retained separately.
+
+
+% ------------------------------------------------------------
+\subsection{Harm Taxonomy}
+\label{subsec:taxonomy}
+
+The taxonomy is based on the child-safety provisions of the Online Safety Act
+2023 \cite{OnlineSafetyAct2025}. Ten categories are used
+(Table~\ref{tab:taxonomy}). Eight derive from the statutory categories after
+merging overlapping provisions: Self-Harm \& Suicide combines the corresponding
+self-harm provisions, Abuse \& Hate combines abuse and hate, and Violence
+combines related forms of violent content. Each scenario receives one category,
+with self-directed harm assigned to Self-Harm \& Suicide, following the
+single-category structure used in SafeDialBench
+\cite{caoSafeDialBenchFineGrainedSafety2026}.
+
+Body Image and Emotional Dependency are included as additional non-statutory
+categories because both recur in child-safety literature but are not represented
+directly by the Act
+\cite{yuYouthCenteredGenAIRisks2025,cathryn_iImprovingTeenSafety2025}.
+Body Image remains separate from Eating Disorders because appearance-related
+harm does not necessarily meet the eating-disorder threshold.
+
+Education, academic pressure and family pressure are not treated as harm
+categories. They describe the context in which a request occurs rather than its
+content and may themselves reveal age. Educational context is therefore used as
+an age cue rather than a safety category.
+
+The Act provides the taxonomy and a regulatory basis for age-sensitive
+protection; it does not prescribe the correct response to an individual chatbot
+request. Expected responses are defined by the benchmark using this framework
+together with the safety literature and provider policies. The full taxonomy
+crosswalk and scenario allocation are reported in Appendix~\ref{app:dataset}.
+
+\input{tables/03/tab_taxonomy}
+
+
+% ------------------------------------------------------------
+\subsection{Prompts}
+\label{sec:prompts}
+\label{subsec:age-bands}
+
+Three age bands are used: Child, covering the tested ages 7--12; Adolescent,
+13--17; and Adult, 18 and above. These bands retain the distinction between
+younger children and adolescents while preserving 18 as the boundary between
+minor and adult conditions discussed in Section~\ref{sec:age_assurance}.
+
+Eight explicit ages are evaluated: 7, 9, 11, 13, 15, 17, 18 and 21. The first
+six provide three observations within each minor band. Ages 17 and 18 isolate
+the statutory boundary used by the Age Restricted scenarios, while age 21
+provides a second adult reference away from that boundary. This adult comparison
+is absent from several child-safety benchmarks and is required here to
+distinguish age-specific protection from a general tendency to refuse
+\cite{jiaoSafeChildLLMDevelopmentalBenchmark2025,
+khooMinorBenchHandbuiltBenchmark2025,
+xingSproutBenchBenchmarkSafe2025}.
+
+Each scenario is expanded into thirteen conditions
+(Table~\ref{tab:conditions}): one Neutral condition, eight explicit-age
+conditions and four implicit-cue conditions. Every prompt contains an opening
+sentence followed by the same canonical request. The request itself is
+byte-identical across all thirteen conditions. Neutral uses the sentence
+\emph{I have a question} rather than omitting the opening clause, so its
+structure remains comparable with the age-conditioned prompts.
+
+Explicit conditions state the age directly using the same sentence template.
+Implicit conditions instead use contextual cues associated with minority or
+adulthood. Two cue families are used: \emph{People}, describing whom the user is
+interacting with, and \emph{Routine}, describing the context of the user's day.
+Each family has a minor-associated and adult-associated variant. The cue arm
+distinguishes minor from adult rather than individual age bands because no
+candidate contextual phrase maps cleanly onto adolescence alone.
+
+Implicit cues are not taken as evidence that the model inferred an age. They also
+change a small amount of social context, for example \emph{classmates} versus
+\emph{colleagues}. Explicit ages therefore provide the primary controlled
+comparison, while implicit cues provide a weaker and more naturalistic test.
+The two are analysed separately, consistent with evidence that explicit and
+implicit demographic information can produce different responses
+\cite{giorgiExplicitImplicitLarge2024}. Throughout the thesis, these conditions
+are consequently described as minor-associated and adult-associated cues rather
+than inferred ages.
+
+Cue variants are generated for every scenario type. In Age Restricted scenarios,
+they test whether indirect age information changes behaviour where the expected
+response depends on age. In Harmful, Rights and Benign scenarios they act as
+controls for changes caused by the cue wording itself. Neutral provides the
+common baseline \cite{benkiraneHowCanWe2025}.
+
+The age signal always comes from the user rather than from a system instruction,
+following the conversational disclosure setting studied by Figueira et al.\
+\cite{figueiraActionsSpeakLouder2026}. Linguistic register is held constant
+across conditions so that any measured difference is not attributable to
+rewriting the request for a different reader
+\cite{hassanEvaluatingLLMsGenerating2025,
+muraliEvaluatingLLMSafety2026}. Expanding 200 scenarios across thirteen
+conditions produces 2,600 prompts.
+
+\input{cases/case_conditions}
+
+\input{algorithms/alg_prompts}
+
+
+% ============================================================
+\section{Models}
+\label{sec:models}
+
+
+% ------------------------------------------------------------
+\subsection{Model Selection}
+
+Six general-purpose models from five providers are evaluated, comprising three
+closed-weight and three open-weight systems
+(Table~\ref{tab:models}). The panel was selected for availability, stable model
+identifiers, general-purpose instruction following and inference cost. Models
+without stable version identifiers were excluded because their behaviour could
+change during collection
+\cite{dhb-msftAnthropicModelsMicrosoft,
+dhb-msftUnderstandingAIFunctionality,
+dhb-msftOverviewAISubprocessors,
+dhb-msftConnectMistralsAI}.
+
+The closed-weight models are GPT-5.6 Luna
+\cite{GPT56LunaModel,ModelGuidanceOpenAI}, Claude Haiku 4.5
+\cite{IntroducingClaudeHaiku,ClaudeHaiku}, and Gemini 3.5 Flash Lite
+\cite{IntroducingGemini362026,Gemini35FlashLitec}. The open-weight models are
+DeepSeek-V4 Flash \cite{deepseekai2026deepseekv4,DeepSeekV4Preview},
+Mistral Small 4
+\cite{IntroducingMistralSmall,
+MistralaiMistralSmall4119B2603Hugging2026,MistralSmall4},
+and Gemma 4 31B \cite{Gemma4,gemmateam2026gemma4}. Their architecture,
+parameter count, context length and release information are reported in
+Table~\ref{tab:models}.
+
+Models with mandatory extended reasoning or unstable identifiers were avoided
+where possible because the study compares response content, readability and
+length under common inference settings. Gemini 3.5 Flash Lite was selected over
+Gemini 3.5 Flash after preliminary testing showed substantially fewer responses
+reaching the pilot output limit.
+
+\input{tables/03/tab_models}
+
+
+% ------------------------------------------------------------
+\subsection{Decoding and Runtime Settings}
+\label{subsec:decoding}
+
+Generation settings were fixed before collection. Where supported, models used
+temperature $1.0$, \texttt{top\_p}=1 and a maximum output of 4,096 tokens.
+GPT-5.6 Luna does not expose temperature or \texttt{top\_p}, while Gemini 3.5
+Flash Lite uses provider defaults for these settings
+\cite{Gemini35FlashLitec}. Optional reasoning was disabled where supported;
+Gemini 3.5 Flash Lite used its minimum reasoning setting because reasoning
+cannot be fully disabled.
+
+Each model generated three independent responses for every scenario-condition
+cell. Replicates are averaged within cell before model-level comparisons, as
+defined in Section~\ref{sec:metrics}. A provider-withheld response is recorded
+as blocked and excluded from response-level analyses rather than treated as a
+model refusal. Blocking is reported separately in Section~\ref{sec:blocking}.
+
+Generation used either provider batch queues or live requests according to the
+available interface. Both routes were constructed from the same prompt and
+model configuration. Each record stores the model identifier, prompt, decoding
+settings, timestamp and software version. No returned response reached the
+The generation cap does not enforce the 4,096-token output limit, so response-length measurements are inaccurate.

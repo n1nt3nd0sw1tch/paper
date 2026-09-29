@@ -1,0 +1,35 @@
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lrlrrrr@{}}
+\toprule
+ & \multicolumn{2}{c}{\textbf{Agreement}} & \multicolumn{2}{c}{\textbf{Detection}}
+ & \multicolumn{2}{c}{\textbf{Rate (\%)}} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(l){6-7}
+\textbf{Label} & \textbf{$\kappa$} & \textbf{95\% CI} & \textbf{Precision} &
+\textbf{Recall} & \textbf{Human} & \textbf{Judge} \\
+\midrule
+Answer & 0.978 & $[0.955,0.995]$ & 0.98 & 0.98 & 18.3 & 18.3 \\
+Delivery Response & 0.936 & $[0.901,0.967]$ & 0.98 & 0.99 & 75.3 & 76.7 \\
+Alternative Response & 0.635 & $[0.516,0.749]$ & 0.73 & 0.94 & 45.7 & 58.9 \\
+\addlinespace
+Risk Statement & 0.632 & $[0.562,0.697]$ & 0.62 & 0.87 & 22.2 & 31.0 \\
+Legal Statement & 0.849 & $[0.789,0.901]$ & 0.89 & 0.86 & 17.7 & 17.0 \\
+Eligibility Statement & 0.702 & $[0.487,0.874]$ & 0.65 & 0.79 & 2.3 & 2.8 \\
+\addlinespace
+Social Signpost & 0.876 & $[0.836,0.913]$ & 0.91 & 0.97 & 52.5 & 56.0 \\
+Expert Signpost & 0.920 & $[0.887,0.950]$ & 0.94 & 0.98 & 47.7 & 49.7 \\
+Service Signpost & 0.991 & $[0.978,1.000]$ & 0.99 & 1.00 & 26.2 & 26.5 \\
+\addlinespace
+System Identity & 0.964 & $[0.918,1.000]$ & 0.94 & 1.00 & 7.3 & 7.8 \\
+Boundary Identity & 0.615 & $[0.372,0.795]$ & 0.59 & 0.67 & 2.5 & 2.8 \\
+Limitation Identity & 1.000 & $[1.000,1.000]$ & 1.00 & 1.00 & 4.7 & 4.7 \\
+Companion Identity & --- & --- & --- & --- & 0.0 & 0.0 \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Experiment 1} $\vert$ Classifier Agreement per Label.}
+\label{tab:judge-agreement}
+\end{table}

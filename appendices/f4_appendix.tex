@@ -1,0 +1,831 @@
+% blockTint and \blocktag are declared in tables/03/tab_fields.tex, which is
+% input from Chapter 3 and therefore before this appendix. \providecommand and
+% a repeated \definecolor make this file safe on its own as well.
+\definecolor{blockTint}{HTML}{BAD1E8}
+\providecommand{\blocktag}[1]{%
+    \begingroup
+    \setlength{\fboxsep}{3.2pt}%
+    \colorbox{blockTint}{%
+        \strut
+        \textit{#1}%
+    }%
+    \endgroup
+}
+
+% ------------------------------------------------------------
+% ------------------------------------------------------------
+\definecolor{macroColour}{HTML}{6699CC}
+\definecolor{macroRow}{HTML}{BAD1E8}
+
+\section{Experiment 2}
+\label{app:dialogue}
+
+This section provides additional results for Experiment 2.
+Tables~\ref{tab:dialogue-yield}--\ref{tab:dialogue-leakage} report collection
+coverage and delivery among refusals.
+Tables~\ref{tab:dialogue-retention}--\ref{tab:dialogue-contrasts} report
+retention, outcome trajectories, directional failures and differences between
+attack methods.
+Tables~\ref{tab:dialogue-ladder}--\ref{tab:dialogue-memory-gap} report age
+conditioning, the 17--18 boundary and adjusted safety-memory estimates.
+Table~\ref{tab:dialogue-domains} reports Action Defect by harm domain.
+
+\subsection{Safety}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+\textbf{Step} & \textbf{$n$} & \textbf{Share of Design (\%)} \\
+\midrule
+Branches Intended By The Design & 7200 & 100.00 \\
+Branches Built On A Returned Opening & 7098 & 98.58 \\
+Later Turns Attempted & 14196 & 98.58 \\
+Later Turns Returned & 14189 & 98.53 \\
+Later Turns Classified & 14184 & 98.50 \\
+Trajectories Complete At Both Later Turns & 7092 & 98.50 \\
+Replies In Complete Trajectories & 14184 & 98.50 \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Experiment 2} $\vert$ Dialogue Yield by Step.}
+\label{tab:dialogue-yield}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}llrr@{}}
+\toprule
+ & & \multicolumn{2}{c}{\textbf{Not Built}} \\
+\cmidrule(l){3-4}
+\textbf{Scenario} & \textbf{Age} & \textbf{Seeds} & \textbf{Branches} \\
+\midrule
+\multicolumn{4}{@{}l}{\itshape Every cell belongs to Gemini 3.5 Flash Lite; the other five models returned every opening} \\[0.15em]
+Age Restricted & 7 & 5 & 15 \\
+Age Restricted & 9 & 5 & 15 \\
+Age Restricted & 11 & 5 & 15 \\
+Age Restricted & 13 & 5 & 15 \\
+Age Restricted & 15 & 5 & 15 \\
+Age Restricted & 17 & 1 & 3 \\
+Harmful & 7 & 1 & 3 \\
+Harmful & 9 & 2 & 6 \\
+Harmful & 11 & 2 & 6 \\
+Harmful & 13 & 1 & 3 \\
+Harmful & 15 & 1 & 3 \\
+Harmful & 17 & 1 & 3 \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Experiment 2} $\vert$ Openings Not Built by Model.}
+\label{tab:dialogue-openings}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Method} & \textbf{Age} \\
+\midrule
+\multicolumn{2}{@{}l}{\itshape Each row is one withheld reply, all seven from Gemini 3.5 Flash Lite} \\[0.15em]
+\multicolumn{2}{@{}l}{\itshape Turn 2} \\[0.1em]
+Purpose Reverse & 7 \\
+Purpose Reverse & 17 \\
+Role Play & 17 \\
+\addlinespace
+\multicolumn{2}{@{}l}{\itshape Turn 3} \\[0.1em]
+Purpose Reverse & 13 \\
+Purpose Reverse & 17 \\
+Role Play & 9 \\
+Role Play & 11 \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Experiment 2} $\vert$ Later Turns Withheld by Model.}
+\label{tab:dialogue-withheld}
+\end{table}
+
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+ & \multicolumn{2}{c}{\textbf{Weak Refusal Share (\%)}} & \multicolumn{2}{c}{\textbf{Delivery Among Refusals (\%)}} \\
+\cmidrule(lr){2-3}\cmidrule(l){4-5}
+\textbf{Model} & \textbf{Turn 2} & \textbf{Turn 3} & \textbf{Turn 2} & \textbf{Turn 3} \\
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 3.64 & 10.30 & 4.19 & 16.74 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 0.30 & 2.66 & 0.32 & 3.65 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 0.26 & 5.35 & 0.58 & 7.65 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 2.54 & 7.25 & 3.68 & 17.50 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 0.88 & 1.58 & 2.86 & 4.77 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 0.22 & 3.85 & 0.26 & 5.33 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 1.30 & 5.17 & 1.98 & 9.27 \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Experiment 2} $\vert$ Delivery Among Refusals by Turn.}
+\label{tab:dialogue-leakage}
+\end{table}
+
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+ & & \multicolumn{3}{c}{\textbf{Still Refusing (\%)}} & \multicolumn{3}{c}{\textbf{After a Lapse at Turn 2}} \\
+\cmidrule(lr){3-5}\cmidrule(l){6-8}
+\textbf{Model} & \textbf{Dialogues} & \textbf{Turn 2} & \textbf{Turn 3} & \textbf{Both} & \textbf{Eligible} & \textbf{$n$} & \textbf{Refusing at 3 (\%)} \\
+\midrule
+\multicolumn{8}{@{}l}{\itshape Turn 1 is 100.0 for every model, since the cohort is every dialogue whose opening reply was a refusal} \\[0.15em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 711 & 75.64 & 58.28 & 51.54 & 145 & 34 & 39.23 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 726 & 90.20 & 77.72 & 74.05 & 50 & 24 & 32.85 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 687 & 64.09 & 70.32 & 47.75 & 215 & 35 & 71.17 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 741 & 55.26 & 44.75 & 37.64 & 280 & 42 & 23.34 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 603 & 32.51 & 19.29 & 8.24 & 391 & 38 & 17.25 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 687 & 65.26 & 69.06 & 44.24 & 212 & 35 & 78.88 \\
+\midrule
+\rowcolor{macroRow} Macro-Average &  & 63.83 & 56.57 & 43.91 &  &  & 43.79 \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Experiment 2} $\vert$ Answer Retention by Model.}
+\label{tab:dialogue-retention}
+\end{table}
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTleft}{\fill}\setlength{\LTright}{\fill}
+\begin{longtable}{@{}l r r r r@{}}
+\toprule
+ & \multicolumn{4}{c}{\textbf{Outcome (\%)}} \\
+\cmidrule(l){2-5}
+\textbf{Model} & \textbf{Strong Refusal} & \textbf{Weak Refusal} & \textbf{Minimal Compliance} & \textbf{Total Compliance} \\
+\midrule
+\endfirsthead
+\toprule
+ & \multicolumn{4}{c}{\textbf{Outcome (\%)}} \\
+\cmidrule(l){2-5}
+\textbf{Model} & \textbf{Strong Refusal} & \textbf{Weak Refusal} & \textbf{Minimal Compliance} & \textbf{Total Compliance} \\
+\midrule
+\endhead
+\endfoot
+\bottomrule
+\caption{\emph{Experiment 2} $\vert$ Outcome Distribution by Turn and Stratum.}
+\label{tab:dialogue-failure}
+\endlastfoot
+\multicolumn{5}{@{}l}{\blocktag{A. Age Restricted}} \\[0.15em]
+\midrule
+\multicolumn{5}{@{}l}{\itshape Turn 2} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 72.50 & 1.17 & 3.89 & 22.44 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 92.36 & 0.61 & 1.36 & 5.67 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 49.37 & 0.31 & 6.94 & 43.38 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 44.26 & 1.20 & 2.59 & 51.94 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 30.58 & 1.75 & 21.73 & 45.94 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 53.40 & 0.00 & 7.52 & 39.08 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 57.08 & 0.84 & 7.34 & 34.74 \\
+\midrule
+\multicolumn{5}{@{}l}{\itshape Turn 3} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 45.33 & 9.50 & 4.44 & 40.72 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 74.22 & 1.72 & 4.00 & 20.06 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 55.17 & 3.44 & 15.16 & 26.24 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 29.68 & 7.22 & 1.71 & 61.39 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 18.36 & 2.84 & 14.88 & 63.92 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 55.29 & 4.25 & 8.66 & 31.80 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 46.34 & 4.83 & 8.14 & 40.69 \\
+\midrule
+\multicolumn{5}{@{}l}{\blocktag{B. Harmful}} \\[0.15em]
+\midrule
+\multicolumn{5}{@{}l}{\itshape Turn 2} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 73.16 & 6.19 & 7.36 & 13.28 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 87.55 & 0.00 & 4.68 & 7.76 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 79.21 & 0.00 & 3.88 & 16.91 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 65.10 & 3.54 & 3.46 & 27.89 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 33.17 & 0.00 & 37.79 & 29.04 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 74.31 & 0.43 & 5.25 & 20.01 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 68.75 & 1.69 & 10.41 & 19.15 \\
+\midrule
+\multicolumn{5}{@{}l}{\itshape Turn 3} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 50.64 & 11.53 & 1.77 & 36.06 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 75.82 & 3.67 & 4.44 & 16.08 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 74.14 & 4.78 & 6.28 & 14.80 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 47.12 & 7.45 & 4.07 & 41.37 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 16.16 & 0.29 & 32.08 & 51.46 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 72.19 & 3.38 & 2.58 & 21.85 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 56.01 & 5.18 & 8.54 & 30.27 \\
+\midrule
+\multicolumn{5}{@{}l}{\blocktag{C. All Scenarios}} \\[0.15em]
+\midrule
+\multicolumn{5}{@{}l}{\itshape Turn 2} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 72.81 & 3.55 & 5.53 & 18.10 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 89.90 & 0.30 & 3.06 & 6.74 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 64.67 & 0.15 & 5.37 & 29.81 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 53.47 & 2.24 & 2.98 & 41.32 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 31.88 & 0.88 & 29.76 & 37.49 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 64.96 & 0.23 & 6.27 & 28.54 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 62.95 & 1.22 & 8.83 & 27.00 \\
+\midrule
+\multicolumn{5}{@{}l}{\itshape Turn 3} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 47.85 & 10.46 & 3.18 & 38.51 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 75.04 & 2.72 & 4.23 & 18.02 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 64.90 & 4.13 & 10.60 & 20.37 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 37.38 & 7.32 & 2.75 & 52.54 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 17.26 & 1.56 & 23.48 & 57.69 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 64.63 & 3.77 & 5.30 & 26.30 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 51.18 & 4.99 & 8.26 & 35.57 \\
+\end{longtable}
+}
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTleft}{\fill}\setlength{\LTright}{\fill}
+\begin{longtable}{@{}l r r r r@{}}
+\toprule
+ & \multicolumn{4}{c}{\textbf{Alignment at Turns 1 to 3 (\%)}} \\
+\cmidrule(l){2-5}
+\textbf{Model} & \textbf{A A A} & \textbf{A D D} & \textbf{A D A} & \textbf{A A D} \\
+\midrule
+\endfirsthead
+\toprule
+ & \multicolumn{4}{c}{\textbf{Alignment at Turns 1 to 3 (\%)}} \\
+\cmidrule(l){2-5}
+\textbf{Model} & \textbf{A A A} & \textbf{A D D} & \textbf{A D A} & \textbf{A A D} \\
+\midrule
+\endhead
+\endfoot
+\bottomrule
+\caption{\emph{Experiment 2} $\vert$ Protective Trajectories by Method.}
+\label{tab:dialogue-trajectories}
+\endlastfoot
+\multicolumn{5}{@{}l}{\blocktag{A. All Scenarios}} \\[0.15em]
+\midrule
+\multicolumn{5}{@{}l}{\itshape Emotional Pushback} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 28.50 & 4.50 & 0.00 & 67.00 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 73.37 & 0.00 & 0.00 & 26.63 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 68.26 & 0.00 & 0.00 & 31.74 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 54.23 & 3.08 & 0.76 & 41.94 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 14.51 & 25.59 & 3.82 & 56.09 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 60.11 & 0.33 & 0.00 & 39.56 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 49.83 & 5.58 & 0.76 & 43.83 \\
+\midrule
+\addlinespace
+\multicolumn{5}{@{}l}{\itshape Purpose Reverse} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 74.19 & 10.13 & 11.29 & 4.39 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 100.00 & 0.00 & 0.00 & 0.00 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 31.58 & 12.78 & 49.02 & 6.62 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 25.83 & 54.86 & 15.68 & 3.63 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 3.78 & 65.42 & 19.56 & 11.24 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 28.57 & 6.14 & 65.29 & 0.00 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 43.99 & 24.89 & 26.81 & 4.31 \\
+\midrule
+\addlinespace
+\multicolumn{5}{@{}l}{\itshape Role Play} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 18.30 & 44.38 & 11.26 & 26.07 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 43.18 & 21.74 & 8.57 & 26.52 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 32.77 & 34.28 & 12.67 & 20.29 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 11.89 & 61.45 & 3.76 & 22.89 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 3.62 & 83.49 & 6.50 & 6.39 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 32.02 & 25.48 & 7.90 & 34.60 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 23.63 & 45.13 & 8.44 & 22.79 \\
+\midrule
+\multicolumn{5}{@{}l}{\blocktag{B. Age Restricted}} \\[0.15em]
+\midrule
+\multicolumn{5}{@{}l}{\itshape Emotional Pushback} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 25.17 & 0.00 & 0.00 & 74.83 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 77.17 & 0.00 & 0.00 & 22.83 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 69.74 & 0.00 & 0.00 & 30.26 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 55.56 & 0.83 & 0.83 & 42.78 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 19.65 & 20.18 & 5.26 & 54.91 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 46.08 & 0.00 & 0.00 & 53.92 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 48.89 & 3.50 & 1.02 & 46.59 \\
+\midrule
+\addlinespace
+\multicolumn{5}{@{}l}{\itshape Purpose Reverse} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 81.67 & 5.83 & 9.17 & 3.33 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 100.00 & 0.00 & 0.00 & 0.00 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 15.26 & 23.60 & 52.81 & 8.33 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 13.06 & 68.06 & 16.11 & 2.78 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 3.07 & 62.02 & 23.60 & 11.32 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 19.02 & 10.78 & 70.20 & 0.00 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 38.68 & 28.38 & 28.65 & 4.29 \\
+\midrule
+\addlinespace
+\multicolumn{5}{@{}l}{\itshape Role Play} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 13.33 & 60.83 & 6.67 & 19.17 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 41.33 & 18.75 & 4.17 & 35.75 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 6.67 & 62.96 & 18.70 & 11.67 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 2.08 & 80.00 & 1.39 & 16.53 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 0.88 & 94.56 & 2.63 & 1.93 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 15.69 & 43.92 & 14.90 & 25.49 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 13.33 & 60.17 & 8.08 & 18.42 \\
+\midrule
+\multicolumn{5}{@{}l}{\blocktag{C. Harmful}} \\[0.15em]
+\midrule
+\multicolumn{5}{@{}l}{\itshape Emotional Pushback} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 32.21 & 9.49 & 0.00 & 58.30 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 69.75 & 0.00 & 0.00 & 30.25 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 66.85 & 0.00 & 0.00 & 33.15 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 52.55 & 5.92 & 0.66 & 40.87 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 9.37 & 31.00 & 2.37 & 57.27 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 71.46 & 0.60 & 0.00 & 27.94 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 50.37 & 7.83 & 0.50 & 41.30 \\
+\midrule
+\addlinespace
+\multicolumn{5}{@{}l}{\itshape Purpose Reverse} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 65.87 & 14.91 & 13.66 & 5.56 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 100.00 & 0.00 & 0.00 & 0.00 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 47.08 & 2.50 & 45.42 & 5.00 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 41.97 & 38.20 & 15.13 & 4.70 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 4.48 & 68.82 & 15.53 & 11.17 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 36.31 & 2.38 & 61.31 & 0.00 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 49.29 & 21.14 & 25.17 & 4.40 \\
+\midrule
+\addlinespace
+\multicolumn{5}{@{}l}{\itshape Role Play} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 23.81 & 26.09 & 16.37 & 33.73 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 44.94 & 24.58 & 12.76 & 17.72 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 56.27 & 8.46 & 7.23 & 28.04 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 24.29 & 38.03 & 6.76 & 30.93 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 6.37 & 72.41 & 10.38 & 10.85 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 45.25 & 10.54 & 2.23 & 41.98 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 33.49 & 30.02 & 9.29 & 27.21 \\
+\end{longtable}
+}
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTleft}{\fill}\setlength{\LTright}{\fill}
+\begin{longtable}{@{}l r r r r r@{}}
+\toprule
+ & \multicolumn{3}{c}{\textbf{Rate (\%)}} & \multicolumn{2}{c}{\textbf{Change from Turn 1 (pp)}} \\
+\cmidrule(lr){2-4}\cmidrule(l){5-6}
+\textbf{Model} & \textbf{Turn 1} & \textbf{Turn 2} & \textbf{Turn 3} & \textbf{Turn 2} & \textbf{Turn 3} \\
+\midrule
+\endfirsthead
+\toprule
+ & \multicolumn{3}{c}{\textbf{Rate (\%)}} & \multicolumn{2}{c}{\textbf{Change from Turn 1 (pp)}} \\
+\cmidrule(lr){2-4}\cmidrule(l){5-6}
+\textbf{Model} & \textbf{Turn 1} & \textbf{Turn 2} & \textbf{Turn 3} & \textbf{Turn 2} & \textbf{Turn 3} \\
+\midrule
+\endhead
+\endfoot
+\bottomrule
+\caption{\emph{Experiment 2} $\vert$ Directional Failures by Turn.}
+\label{tab:dialogue-directional}
+\endlastfoot
+\multicolumn{6}{@{}l}{\blocktag{A. Age Restricted}} \\[0.15em]
+\midrule
+\multicolumn{6}{@{}l}{\itshape Over-Permissive} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 30.00 & 37.11 & 60.67 & $+7.11$ $[{-}1.8, 15.8]$ & $+30.67$ $[19.1, 41.8]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 30.67 & 23.33 & 36.00 & $-7.33$ $[{-}14.7, {-}0.7]$ & $+5.33$ $[{-}5.6, 15.8]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 36.93 & 56.96 & 58.59 & $+20.03$ $[7.3, 32.2]$ & $+21.66$ $[12.5, 31.5]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 34.00 & 60.22 & 73.33 & $+26.22$ $[16.7, 35.3]$ & $+39.33$ $[30.2, 48.4]$ \\
+\modeltag{mistralPastel}{Mistral Small 4} & 54.00 & 76.22 & 88.67 & $+22.22$ $[12.9, 31.8]$ & $+34.67$ $[22.9, 46.4]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 46.67 & 60.00 & 62.89 & $+13.33$ $[2.0, 24.9]$ & $+16.22$ $[5.6, 26.9]$ \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 38.71 & 52.31 & 63.36 & $+13.60$ $[6.0, 21.1]$ & $+24.65$ $[16.4, 33.0]$ \\
+\midrule
+\addlinespace
+\multicolumn{6}{@{}l}{\itshape Over-Restrictive} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 24.00 & 34.67 & 26.67 & $+10.67$ $[0.0, 22.7]$ & $+2.67$ $[{-}9.3, 14.7]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 20.00 & 58.67 & 62.67 & $+38.67$ $[28.0, 49.3]$ & $+42.67$ $[26.7, 57.3]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 20.00 & 32.00 & 46.67 & $+12.00$ $[{-}1.3, 24.0]$ & $+26.67$ $[16.0, 37.3]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 28.00 & 18.67 & 24.00 & $-9.33$ $[{-}20.0, 0.0]$ & $-4.00$ $[{-}17.3, 8.0]$ \\
+\modeltag{mistralPastel}{Mistral Small 4} & 36.00 & 26.67 & 28.00 & $-9.33$ $[{-}28.0, 8.0]$ & $-8.00$ $[{-}26.7, 9.3]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 8.00 & 18.67 & 45.33 & $+10.67$ $[5.3, 17.3]$ & $+37.33$ $[25.3, 48.0]$ \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 22.67 & 31.56 & 38.89 & $+8.89$ $[2.0, 15.3]$ & $+16.22$ $[7.3, 24.2]$ \\
+\midrule
+\multicolumn{6}{@{}l}{\blocktag{B. Harmful}} \\[0.15em]
+\midrule
+\multicolumn{6}{@{}l}{\itshape Over-Permissive} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 38.00 & 47.33 & 61.67 & $+9.33$ $[2.3, 17.0]$ & $+23.67$ $[13.2, 34.5]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 34.00 & 24.33 & 34.17 & $-9.67$ $[{-}16.8, {-}3.2]$ & $+0.17$ $[{-}8.7, 9.0]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 23.00 & 35.30 & 39.57 & $+12.30$ $[5.2, 19.9]$ & $+16.57$ $[10.6, 22.5]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 33.00 & 51.33 & 65.00 & $+18.33$ $[11.3, 25.2]$ & $+32.00$ $[22.5, 41.3]$ \\
+\modeltag{mistralPastel}{Mistral Small 4} & 40.00 & 77.00 & 88.00 & $+37.00$ $[27.2, 46.7]$ & $+48.00$ $[35.5, 60.0]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 28.50 & 40.00 & 43.17 & $+11.50$ $[3.8, 19.0]$ & $+14.67$ $[7.8, 21.0]$ \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 32.75 & 45.88 & 55.26 & $+13.13$ $[7.7, 18.3]$ & $+22.51$ $[15.1, 29.7]$ \\
+\end{longtable}
+}
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTleft}{\fill}\setlength{\LTright}{\fill}
+\begin{longtable}{@{}l r r r@{}}
+\toprule
+ & \multicolumn{3}{c}{\textbf{$\Delta$ Action Defect (pp)}} \\
+\cmidrule(l){2-4}
+\textbf{Model} & \textbf{Pushback $-$ Reverse} & \textbf{Pushback $-$ Role Play} & \textbf{Reverse $-$ Role Play} \\
+\midrule
+\endfirsthead
+\toprule
+ & \multicolumn{3}{c}{\textbf{$\Delta$ Action Defect (pp)}} \\
+\cmidrule(l){2-4}
+\textbf{Model} & \textbf{Pushback $-$ Reverse} & \textbf{Pushback $-$ Role Play} & \textbf{Reverse $-$ Role Play} \\
+\midrule
+\endhead
+\endfoot
+\bottomrule
+\caption{\emph{Experiment 2} $\vert$ Paired Contrasts by Attack Method.}
+\label{tab:dialogue-contrasts}
+\endlastfoot
+\multicolumn{4}{@{}l}{\blocktag{A. All Scenarios}} \\[0.15em]
+\midrule
+\multicolumn{4}{@{}l}{\itshape Turn 2} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & $-15.29$ $[{-}21.2, {-}9.5]$ & $-39.93$ $[{-}48.1, {-}31.5]$ & $-24.64$ $[{-}32.4, {-}16.8]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & $+3.61$ $[{-}2.6, 10.6]$ & $-25.57$ $[{-}33.8, {-}17.6]$ & $-29.18$ $[{-}38.5, {-}20.2]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & $-39.15$ $[{-}50.5, {-}26.9]$ & $-28.65$ $[{-}37.5, {-}19.1]$ & $+10.50$ $[0.1, 20.7]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & $-47.36$ $[{-}55.1, {-}39.4]$ & $-43.57$ $[{-}51.4, {-}35.5]$ & $+3.79$ $[{-}3.9, 11.3]$ \\
+\modeltag{mistralPastel}{Mistral Small 4} & $-31.43$ $[{-}39.8, {-}23.5]$ & $-37.14$ $[{-}45.4, {-}29.0]$ & $-5.71$ $[{-}10.8, {-}0.7]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & $-54.36$ $[{-}62.9, {-}45.5]$ & $-30.11$ $[{-}38.2, {-}22.1]$ & $+24.25$ $[12.3, 36.5]$ \\
+\midrule
+\rowcolor{macroRow} Macro-Average & $-30.66$ $[{-}35.3, {-}26.0]$ & $-34.16$ $[{-}38.7, {-}29.5]$ & $-3.50$ $[{-}8.7, 1.8]$ \\
+\midrule
+\addlinespace
+\multicolumn{4}{@{}l}{\itshape Turn 3} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & $+42.11$ $[34.1, 50.0]$ & $+1.43$ $[{-}7.6, 10.7]$ & $-40.68$ $[{-}49.4, {-}31.8]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & $+31.68$ $[23.1, 40.4]$ & $-15.04$ $[{-}23.9, {-}6.3]$ & $-46.71$ $[{-}55.5, {-}37.6]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & $+17.17$ $[8.6, 25.7]$ & $-9.20$ $[{-}20.3, 2.1]$ & $-26.36$ $[{-}35.9, {-}17.5]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & $-5.96$ $[{-}14.7, 3.1]$ & $-25.54$ $[{-}34.0, {-}16.5]$ & $-19.57$ $[{-}27.5, {-}12.0]$ \\
+\modeltag{mistralPastel}{Mistral Small 4} & $+5.46$ $[0.7, 10.5]$ & $-0.32$ $[{-}5.0, 4.8]$ & $-5.79$ $[{-}10.9, {-}0.9]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & $+9.46$ $[{-}1.8, 20.6]$ & $-17.79$ $[{-}29.5, {-}5.5]$ & $-27.25$ $[{-}38.0, {-}16.8]$ \\
+\midrule
+\rowcolor{macroRow} Macro-Average & $+16.65$ $[12.1, 21.3]$ & $-11.07$ $[{-}17.9, {-}4.0]$ & $-27.73$ $[{-}33.0, {-}22.6]$ \\
+\midrule
+\multicolumn{4}{@{}l}{\blocktag{B. Age Restricted}} \\[0.15em]
+\midrule
+\multicolumn{4}{@{}l}{\itshape Turn 2} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & $-16.57$ $[{-}26.3, {-}7.4]$ & $-50.86$ $[{-}62.3, {-}38.9]$ & $-34.29$ $[{-}44.6, {-}24.6]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & $-2.29$ $[{-}10.3, 4.6]$ & $-21.14$ $[{-}32.0, {-}10.9]$ & $-18.86$ $[{-}29.1, {-}9.1]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & $-38.00$ $[{-}54.7, {-}18.2]$ & $-40.19$ $[{-}53.0, {-}24.6]$ & $-2.19$ $[{-}13.7, 7.8]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & $-57.71$ $[{-}66.9, {-}48.0]$ & $-57.14$ $[{-}66.3, {-}48.0]$ & $+0.57$ $[{-}8.6, 9.1]$ \\
+\modeltag{mistralPastel}{Mistral Small 4} & $-26.86$ $[{-}36.0, {-}17.7]$ & $-38.29$ $[{-}48.6, {-}27.4]$ & $-11.43$ $[{-}17.7, {-}5.7]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & $-53.71$ $[{-}62.3, {-}45.1]$ & $-41.71$ $[{-}52.6, {-}30.9]$ & $+12.00$ $[1.7, 24.0]$ \\
+\midrule
+\rowcolor{macroRow} Macro-Average & $-32.52$ $[{-}37.1, {-}27.5]$ & $-41.56$ $[{-}47.7, {-}35.3]$ & $-9.03$ $[{-}13.1, {-}5.0]$ \\
+\midrule
+\addlinespace
+\multicolumn{4}{@{}l}{\itshape Turn 3} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & $+49.71$ $[41.1, 59.4]$ & $-1.14$ $[{-}10.9, 8.0]$ & $-50.86$ $[{-}60.6, {-}41.7]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & $+22.86$ $[12.0, 33.7]$ & $-20.57$ $[{-}30.9, {-}10.3]$ & $-43.43$ $[{-}54.9, {-}31.4]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & $+13.33$ $[{-}0.1, 27.4]$ & $-16.19$ $[{-}27.4, {-}4.3]$ & $-29.52$ $[{-}41.5, {-}18.3]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & $-15.43$ $[{-}25.7, {-}5.7]$ & $-32.57$ $[{-}41.1, {-}24.0]$ & $-17.14$ $[{-}26.3, {-}8.6]$ \\
+\modeltag{mistralPastel}{Mistral Small 4} & $+3.43$ $[{-}4.0, 10.9]$ & $-5.14$ $[{-}10.9, 0.0]$ & $-8.57$ $[{-}14.9, {-}2.9]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & $+3.43$ $[{-}14.9, 22.9]$ & $-16.57$ $[{-}30.9, {-}0.6]$ & $-20.00$ $[{-}35.4, {-}5.7]$ \\
+\midrule
+\rowcolor{macroRow} Macro-Average & $+12.89$ $[7.6, 18.6]$ & $-15.37$ $[{-}21.1, {-}9.6]$ & $-28.25$ $[{-}34.1, {-}22.7]$ \\
+\midrule
+\multicolumn{4}{@{}l}{\blocktag{C. Harmful}} \\[0.15em]
+\midrule
+\multicolumn{4}{@{}l}{\itshape Turn 2} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & $-14.00$ $[{-}21.5, {-}7.0]$ & $-29.00$ $[{-}39.5, {-}19.0]$ & $-15.00$ $[{-}26.0, {-}4.0]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & $+9.50$ $[0.0, 21.0]$ & $-30.00$ $[{-}42.0, {-}18.5]$ & $-39.50$ $[{-}54.0, {-}25.0]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & $-40.30$ $[{-}55.3, {-}25.4]$ & $-17.10$ $[{-}27.7, {-}8.1]$ & $+23.20$ $[7.2, 40.0]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & $-37.00$ $[{-}48.5, {-}25.5]$ & $-30.00$ $[{-}41.0, {-}19.5]$ & $+7.00$ $[{-}5.0, 19.0]$ \\
+\modeltag{mistralPastel}{Mistral Small 4} & $-36.00$ $[{-}49.5, {-}23.5]$ & $-36.00$ $[{-}48.5, {-}24.0]$ & $+0.00$ $[{-}7.5, 7.0]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & $-55.00$ $[{-}70.0, {-}39.5]$ & $-18.50$ $[{-}29.0, {-}9.0]$ & $+36.50$ $[15.5, 56.5]$ \\
+\midrule
+\rowcolor{macroRow} Macro-Average & $-28.80$ $[{-}36.6, {-}20.7]$ & $-26.77$ $[{-}32.7, {-}21.2]$ & $+2.03$ $[{-}7.0, 11.4]$ \\
+\midrule
+\addlinespace
+\multicolumn{4}{@{}l}{\itshape Turn 3} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & $+34.50$ $[22.5, 47.0]$ & $+4.00$ $[{-}11.0, 20.5]$ & $-30.50$ $[{-}45.0, {-}17.0]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & $+40.50$ $[28.5, 53.0]$ & $-9.50$ $[{-}24.0, 4.5]$ & $-50.00$ $[{-}63.5, {-}36.0]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & $+21.00$ $[11.0, 31.5]$ & $-2.20$ $[{-}21.2, 16.3]$ & $-23.20$ $[{-}38.1, {-}9.7]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & $+3.50$ $[{-}10.0, 18.0]$ & $-18.50$ $[{-}33.5, {-}3.0]$ & $-22.00$ $[{-}35.0, {-}10.0]$ \\
+\modeltag{mistralPastel}{Mistral Small 4} & $+7.50$ $[2.0, 13.5]$ & $+4.50$ $[{-}2.5, 13.0]$ & $-3.00$ $[{-}11.0, 5.0]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & $+15.50$ $[3.5, 27.0]$ & $-19.00$ $[{-}37.0, {-}0.5]$ & $-34.50$ $[{-}49.0, {-}20.5]$ \\
+\midrule
+\rowcolor{macroRow} Macro-Average & $+20.42$ $[13.7, 27.8]$ & $-6.78$ $[{-}19.1, 6.2]$ & $-27.20$ $[{-}36.1, {-}18.9]$ \\
+\end{longtable}
+}
+
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTleft}{\fill}\setlength{\LTright}{\fill}
+\begin{longtable}{@{}l r r r r r r r@{}}
+\toprule
+ & \multicolumn{7}{c}{\textbf{Age (\%)}} \\
+\cmidrule(l){2-8}
+\textbf{Model} & \textbf{7} & \textbf{9} & \textbf{11} & \textbf{13} & \textbf{15} & \textbf{17} & \textbf{18} \\
+\midrule
+\endfirsthead
+\toprule
+ & \multicolumn{7}{c}{\textbf{Age (\%)}} \\
+\cmidrule(l){2-8}
+\textbf{Model} & \textbf{7} & \textbf{9} & \textbf{11} & \textbf{13} & \textbf{15} & \textbf{17} & \textbf{18} \\
+\midrule
+\endhead
+\endfoot
+\bottomrule
+\caption{\emph{Experiment 2} $\vert$ Refusal Rate by Age.}
+\label{tab:dialogue-ladder}
+\endlastfoot
+\multicolumn{8}{@{}l}{\itshape Gemini 3.5 Flash Lite rests on 20 of the 25 Age Restricted scenarios and every other model on all 25} \\[0.15em]
+\midrule
+\multicolumn{8}{@{}l}{\blocktag{A. Refusal}} \\[0.15em]
+\midrule
+\multicolumn{8}{@{}l}{\itshape Turn 1} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 72.00 & 76.00 & 72.00 & 68.00 & 64.00 & 68.00 & 20.00 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 72.00 & 76.00 & 80.00 & 68.00 & 68.00 & 52.00 & 20.00 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 75.00 & 70.00 & 65.00 & 60.00 & 50.00 & 45.00 & 20.00 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 72.00 & 60.00 & 68.00 & 76.00 & 60.00 & 64.00 & 28.00 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 48.00 & 52.00 & 48.00 & 48.00 & 40.00 & 40.00 & 24.00 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 64.00 & 60.00 & 56.00 & 52.00 & 48.00 & 40.00 & 8.00 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 67.17 & 65.67 & 64.83 & 62.00 & 55.00 & 51.50 & 20.00 \\
+\midrule
+\multicolumn{8}{@{}l}{\itshape Turn 2} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 60.00 & 58.67 & 68.00 & 73.33 & 65.33 & 66.67 & 29.33 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 73.33 & 77.33 & 84.00 & 82.67 & 80.00 & 69.33 & 44.00 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 43.33 & 44.17 & 42.50 & 48.33 & 36.67 & 28.33 & 15.00 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 34.67 & 41.33 & 41.33 & 46.67 & 41.33 & 40.00 & 16.00 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 29.33 & 26.67 & 22.67 & 25.33 & 18.67 & 25.33 & 14.67 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 44.00 & 44.00 & 45.33 & 44.00 & 37.33 & 28.00 & 10.67 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 47.44 & 48.69 & 50.64 & 53.39 & 46.56 & 42.94 & 21.61 \\
+\midrule
+\multicolumn{8}{@{}l}{\itshape Turn 3} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 41.33 & 44.00 & 50.67 & 50.67 & 53.33 & 48.00 & 21.33 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 64.00 & 66.67 & 69.33 & 72.00 & 66.67 & 60.00 & 46.67 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 40.00 & 50.00 & 50.83 & 41.67 & 43.33 & 38.33 & 25.00 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 32.00 & 34.67 & 32.00 & 33.33 & 32.00 & 34.67 & 18.67 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 12.00 & 20.00 & 13.33 & 8.00 & 9.33 & 12.00 & 9.33 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 40.00 & 49.33 & 44.00 & 42.67 & 41.33 & 34.67 & 16.00 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 38.22 & 44.11 & 43.36 & 41.39 & 41.00 & 37.94 & 22.83 \\
+\midrule
+\multicolumn{8}{@{}l}{\blocktag{B. Strong Refusal}} \\[0.15em]
+\midrule
+\multicolumn{8}{@{}l}{\itshape Turn 1} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 72.00 & 76.00 & 72.00 & 68.00 & 64.00 & 68.00 & 16.00 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 72.00 & 76.00 & 80.00 & 68.00 & 68.00 & 52.00 & 20.00 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 75.00 & 70.00 & 65.00 & 60.00 & 50.00 & 45.00 & 20.00 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 72.00 & 60.00 & 68.00 & 76.00 & 60.00 & 60.00 & 24.00 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 48.00 & 52.00 & 48.00 & 48.00 & 40.00 & 40.00 & 24.00 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 64.00 & 60.00 & 56.00 & 52.00 & 48.00 & 40.00 & 8.00 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 67.17 & 65.67 & 64.83 & 62.00 & 55.00 & 50.83 & 18.67 \\
+\midrule
+\multicolumn{8}{@{}l}{\itshape Turn 2} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 60.00 & 57.33 & 65.33 & 69.33 & 62.67 & 62.67 & 18.67 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 73.33 & 77.33 & 84.00 & 81.33 & 77.33 & 66.67 & 38.67 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 43.33 & 44.17 & 42.50 & 46.67 & 36.67 & 28.33 & 13.33 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 33.33 & 41.33 & 41.33 & 42.67 & 40.00 & 40.00 & 13.33 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 28.00 & 26.67 & 22.67 & 25.33 & 18.67 & 21.33 & 14.67 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 44.00 & 44.00 & 45.33 & 44.00 & 37.33 & 25.33 & 10.67 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 47.00 & 48.47 & 50.19 & 51.56 & 45.44 & 40.72 & 18.22 \\
+\midrule
+\multicolumn{8}{@{}l}{\itshape Turn 3} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 36.00 & 36.00 & 46.67 & 37.33 & 42.67 & 37.33 & 18.67 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 62.67 & 64.00 & 65.33 & 70.67 & 64.00 & 57.33 & 45.33 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 35.00 & 46.67 & 49.17 & 35.00 & 40.00 & 28.33 & 18.33 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 28.00 & 30.67 & 20.00 & 25.33 & 25.33 & 30.67 & 14.67 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 12.00 & 16.00 & 12.00 & 8.00 & 9.33 & 10.67 & 6.67 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 36.00 & 44.00 & 37.33 & 37.33 & 37.33 & 30.67 & 14.67 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 34.94 & 39.56 & 38.42 & 35.61 & 36.44 & 32.50 & 19.72 \\
+\end{longtable}
+}
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTleft}{\fill}\setlength{\LTright}{\fill}
+\begin{longtable}{@{}l r r r r r@{}}
+\toprule
+ & & \multicolumn{2}{c}{\textbf{Age (\%)}} & \multicolumn{2}{c}{\textbf{Difference (pp)}} \\
+\cmidrule(lr){3-4}\cmidrule(l){5-6}
+\textbf{Model} & \textbf{$n$} & \textbf{17} & \textbf{18} & \textbf{17 $-$ 18} & \textbf{Erosion} \\
+\midrule
+\endfirsthead
+\toprule
+ & & \multicolumn{2}{c}{\textbf{Age (\%)}} & \multicolumn{2}{c}{\textbf{Difference (pp)}} \\
+\cmidrule(lr){3-4}\cmidrule(l){5-6}
+\textbf{Model} & \textbf{$n$} & \textbf{17} & \textbf{18} & \textbf{17 $-$ 18} & \textbf{Erosion} \\
+\midrule
+\endhead
+\endfoot
+\bottomrule
+\caption{\emph{Experiment 2} $\vert$ Refusal Rate at the Statutory Boundary.}
+\label{tab:dialogue-boundary}
+\endlastfoot
+\multicolumn{6}{@{}l}{\blocktag{A. Refusal}} \\[0.15em]
+\midrule
+\multicolumn{6}{@{}l}{\itshape Turn 1} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 25 & 68.00 & 20.00 & $+48.00$ $[28.0, 68.0]$ &  \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 25 & 52.00 & 20.00 & $+32.00$ $[16.0, 52.0]$ &  \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 24 & 50.00 & 20.83 & $+29.17$ $[12.5, 50.0]$ &  \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 25 & 64.00 & 28.00 & $+36.00$ $[16.0, 56.0]$ &  \\
+\modeltag{mistralPastel}{Mistral Small 4} & 25 & 40.00 & 24.00 & $+16.00$ $[4.0, 32.0]$ &  \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 25 & 40.00 & 8.00 & $+32.00$ $[16.0, 52.0]$ &  \\
+\midrule
+\rowcolor{macroRow} Macro-Average &  & 52.33 & 20.14 & $+32.19$ $[21.3, 43.9]$ &  \\
+\midrule
+\multicolumn{6}{@{}l}{\itshape Turn 2} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 25 & 66.67 & 29.33 & $+37.33$ $[24.0, 50.7]$ & $-10.67$ $[{-}32.0, 9.3]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 25 & 69.33 & 44.00 & $+25.33$ $[16.0, 36.0]$ & $-6.67$ $[{-}24.0, 9.3]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 24 & 33.33 & 15.28 & $+18.06$ $[11.1, 26.4]$ & $-11.11$ $[{-}30.6, 6.9]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 25 & 40.00 & 16.00 & $+24.00$ $[10.7, 37.3]$ & $-12.00$ $[{-}26.7, 2.7]$ \\
+\modeltag{mistralPastel}{Mistral Small 4} & 25 & 25.33 & 14.67 & $+10.67$ $[1.3, 20.0]$ & $-5.33$ $[{-}24.0, 10.7]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 25 & 28.00 & 10.67 & $+17.33$ $[8.0, 26.7]$ & $-14.67$ $[{-}30.7, {-}0.0]$ \\
+\midrule
+\rowcolor{macroRow} Macro-Average &  & 43.78 & 21.66 & $+22.12$ $[15.8, 28.9]$ & $-10.07$ $[{-}20.0, {-}0.9]$ \\
+\midrule
+\multicolumn{6}{@{}l}{\itshape Turn 3} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 25 & 48.00 & 21.33 & $+26.67$ $[13.3, 41.3]$ & $-21.33$ $[{-}36.0, {-}9.3]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 25 & 60.00 & 46.67 & $+13.33$ $[4.0, 22.7]$ & $-18.67$ $[{-}38.7, {-}0.0]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 24 & 40.97 & 25.00 & $+15.97$ $[0.7, 31.2]$ & $-13.19$ $[{-}27.1, {-}0.0]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 25 & 34.67 & 18.67 & $+16.00$ $[5.3, 28.0]$ & $-20.00$ $[{-}34.7, {-}5.3]$ \\
+\modeltag{mistralPastel}{Mistral Small 4} & 25 & 12.00 & 9.33 & $+2.67$ $[{-}5.3, 10.7]$ & $-13.33$ $[{-}32.0, 2.7]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 25 & 34.67 & 16.00 & $+18.67$ $[6.7, 32.0]$ & $-13.33$ $[{-}29.3, 1.3]$ \\
+\midrule
+\rowcolor{macroRow} Macro-Average &  & 38.38 & 22.83 & $+15.55$ $[8.8, 22.6]$ & $-16.64$ $[{-}26.4, {-}8.1]$ \\
+\midrule
+\multicolumn{6}{@{}l}{\blocktag{B. Strong Refusal}} \\[0.15em]
+\midrule
+\multicolumn{6}{@{}l}{\itshape Turn 1} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 25 & 68.00 & 16.00 & $+52.00$ $[32.0, 72.0]$ &  \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 25 & 52.00 & 20.00 & $+32.00$ $[16.0, 52.0]$ &  \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 24 & 50.00 & 20.83 & $+29.17$ $[12.5, 50.0]$ &  \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 25 & 60.00 & 24.00 & $+36.00$ $[16.0, 56.0]$ &  \\
+\modeltag{mistralPastel}{Mistral Small 4} & 25 & 40.00 & 24.00 & $+16.00$ $[4.0, 32.0]$ &  \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 25 & 40.00 & 8.00 & $+32.00$ $[16.0, 52.0]$ &  \\
+\midrule
+\rowcolor{macroRow} Macro-Average &  & 51.67 & 18.81 & $+32.86$ $[22.0, 44.6]$ &  \\
+\midrule
+\multicolumn{6}{@{}l}{\itshape Turn 2} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 25 & 62.67 & 18.67 & $+44.00$ $[29.3, 58.7]$ & $-8.00$ $[{-}24.0, 8.0]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 25 & 66.67 & 38.67 & $+28.00$ $[16.0, 41.3]$ & $-4.00$ $[{-}18.7, 9.3]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 24 & 33.33 & 13.89 & $+19.44$ $[12.5, 27.8]$ & $-9.72$ $[{-}29.2, 8.3]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 25 & 40.00 & 13.33 & $+26.67$ $[14.7, 40.0]$ & $-9.33$ $[{-}28.0, 9.3]$ \\
+\modeltag{mistralPastel}{Mistral Small 4} & 25 & 21.33 & 14.67 & $+6.67$ $[{-}1.3, 14.7]$ & $-9.33$ $[{-}28.0, 6.7]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 25 & 25.33 & 10.67 & $+14.67$ $[4.0, 25.3]$ & $-17.33$ $[{-}32.0, {-}2.7]$ \\
+\midrule
+\rowcolor{macroRow} Macro-Average &  & 41.56 & 18.31 & $+23.24$ $[15.8, 30.9]$ & $-9.62$ $[{-}18.5, {-}1.2]$ \\
+\midrule
+\multicolumn{6}{@{}l}{\itshape Turn 3} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 25 & 37.33 & 18.67 & $+18.67$ $[8.0, 29.3]$ & $-33.33$ $[{-}48.0, {-}18.7]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 25 & 57.33 & 45.33 & $+12.00$ $[2.7, 21.3]$ & $-20.00$ $[{-}38.7, {-}2.7]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 24 & 32.64 & 18.06 & $+14.58$ $[2.1, 27.8]$ & $-14.58$ $[{-}29.2, {-}1.4]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 25 & 30.67 & 14.67 & $+16.00$ $[5.3, 26.7]$ & $-20.00$ $[{-}38.7, 0.0]$ \\
+\modeltag{mistralPastel}{Mistral Small 4} & 25 & 10.67 & 6.67 & $+4.00$ $[{-}2.7, 12.0]$ & $-12.00$ $[{-}30.7, 5.3]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 25 & 30.67 & 14.67 & $+16.00$ $[5.3, 28.0]$ & $-16.00$ $[{-}32.0, {-}1.3]$ \\
+\midrule
+\rowcolor{macroRow} Macro-Average &  & 33.22 & 19.68 & $+13.54$ $[7.8, 20.3]$ & $-19.32$ $[{-}29.9, {-}9.9]$ \\
+\end{longtable}
+}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lr@{}}
+\toprule
+\textbf{Model} & \textbf{Erosion Difference (pp)} \\
+\midrule
+\multicolumn{2}{@{}l}{\blocktag{A. Refusal}} \\[0.15em]
+\midrule
+\multicolumn{2}{@{}l}{\itshape Turn 2} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & $-20.89$ $[{-}40.6, {-}1.8]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & $-10.89$ $[{-}30.4, 8.9]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & $-22.79$ $[{-}38.7, {-}7.8]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & $+7.33$ $[{-}9.6, 25.0]$ \\
+\modeltag{mistralPastel}{Mistral Small 4} & $-9.78$ $[{-}30.9, 11.6]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & $-17.78$ $[{-}34.0, {-}2.7]$ \\
+\midrule
+\rowcolor{macroRow} Macro-Average & $-12.46$ $[{-}22.9, {-}2.5]$ \\
+\midrule
+\multicolumn{2}{@{}l}{\itshape Turn 3} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & $-27.78$ $[{-}46.2, {-}10.2]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & $-16.00$ $[{-}38.3, 6.5]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & $-20.09$ $[{-}35.3, {-}5.8]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & $-11.78$ $[{-}30.6, 6.9]$ \\
+\modeltag{mistralPastel}{Mistral Small 4} & $-17.11$ $[{-}39.7, 5.0]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & $-11.33$ $[{-}26.9, 3.3]$ \\
+\midrule
+\rowcolor{macroRow} Macro-Average & $-17.35$ $[{-}27.4, {-}8.2]$ \\
+\midrule
+\multicolumn{2}{@{}l}{\blocktag{B. Strong Refusal}} \\[0.15em]
+\midrule
+\multicolumn{2}{@{}l}{\itshape Turn 2} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & $-16.44$ $[{-}32.1, {-}1.5]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & $-6.44$ $[{-}24.9, 12.4]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & $-21.19$ $[{-}37.6, {-}5.7]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & $+4.44$ $[{-}12.9, 22.2]$ \\
+\modeltag{mistralPastel}{Mistral Small 4} & $-10.67$ $[{-}31.8, 10.7]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & $-14.00$ $[{-}31.5, 3.4]$ \\
+\midrule
+\rowcolor{macroRow} Macro-Average & $-10.72$ $[{-}20.3, {-}1.2]$ \\
+\midrule
+\multicolumn{2}{@{}l}{\itshape Turn 3} \\[0.1em]
+\modeltag{openaiPastel}{GPT-5.6 Luna} & $-38.00$ $[{-}56.2, {-}19.2]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & $-17.78$ $[{-}40.2, 4.6]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & $-20.20$ $[{-}36.1, {-}5.1]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & $-15.78$ $[{-}35.5, 4.2]$ \\
+\modeltag{mistralPastel}{Mistral Small 4} & $-15.33$ $[{-}37.8, 6.4]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & $-10.67$ $[{-}27.9, 6.0]$ \\
+\midrule
+\rowcolor{macroRow} Macro-Average & $-19.63$ $[{-}30.7, {-}9.3]$ \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Experiment 2} $\vert$ Neutral-Adjusted Erosion by Turn.}
+\label{tab:dialogue-adjusted}
+\end{table}
+
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lr@{}}
+\toprule
+\textbf{Model} & \textbf{Age Restricted $-$ Harmful (pp)} \\
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna} & $-0.57$ $[{-}13.6, 12.9]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & $+1.27$ $[{-}9.6, 12.4]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & $-25.31$ $[{-}36.5, {-}13.7]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & $-16.04$ $[{-}24.7, {-}6.9]$ \\
+\modeltag{mistralPastel}{Mistral Small 4} & $+1.13$ $[{-}3.7, 6.3]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & $-24.08$ $[{-}37.2, {-}10.7]$ \\
+\midrule
+\rowcolor{macroRow} Macro-Average & $-10.60$ $[{-}17.0, {-}3.9]$ \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Experiment 2} $\vert$ Safety Memory Gap by Model.}
+\label{tab:dialogue-memory-gap}
+\end{table}
+
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+ & & \multicolumn{3}{c}{\textbf{Action Defect (\%)}} & \multicolumn{2}{c}{\textbf{Change (pp)}} \\
+\cmidrule(lr){3-5}\cmidrule(l){6-7}
+\textbf{Domain} & \textbf{$n$} & \textbf{Turn 1} & \textbf{Turn 2} & \textbf{Turn 3} & \textbf{Turn 2} & \textbf{Turn 3} \\
+\midrule
+Abuse \& Hate & 3 & 20.14 & 33.10 & 50.00 & $+12.96$ & $+29.86$ \\
+Body Image & 8 & 36.16 & 48.12 & 61.06 & $+11.95$ & $+24.90$ \\
+Bullying & 3 & 23.61 & 46.06 & 47.69 & $+22.45$ & $+24.07$ \\
+Dangerous Challenges & 8 & 35.57 & 47.22 & 56.55 & $+11.66$ & $+20.98$ \\
+Eating Disorders & 2 & 51.04 & 55.90 & 64.58 & $+4.86$ & $+13.54$ \\
+Emotional Dependency & 3 & 97.92 & 87.50 & 91.44 & $-10.42$ & $-6.48$ \\
+Harmful Substances & 7 & 23.44 & 43.81 & 55.00 & $+20.37$ & $+31.56$ \\
+Self-Harm \& Suicide & 2 & 19.79 & 29.17 & 38.54 & $+9.38$ & $+18.75$ \\
+Sexual Content & 7 & 13.38 & 33.88 & 47.52 & $+20.50$ & $+34.14$ \\
+Violence & 7 & 46.79 & 57.10 & 64.15 & $+10.31$ & $+17.36$ \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Experiment 2} $\vert$ Action Defect by Harm Domain.}
+\label{tab:dialogue-domains}
+\end{table}
+
+
+\subsection{Readability}
+\label{app:readability-turns}
+
+\input{tables/04/tab_turns_method}
+
+Tables~\ref{tab:turns-method} and~\ref{tab:turns-floor} provide additional readability results by attack method and measurement coverage across dialogue turns.
+
+\input{tables/04/tab_turns_floor}

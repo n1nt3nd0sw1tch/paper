@@ -1,0 +1,46 @@
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{
+    @{} L{3.6cm}
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}p{2.2cm}
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X @{}
+}
+\toprule
+ & \multicolumn{4}{c}{\textbf{Age Restricted}} & \multicolumn{3}{c}{\textbf{Separation by Comparison Type}} \\
+\cmidrule(lr){2-5}\cmidrule(l){6-8}
+\textbf{Contrast} & \textbf{Between} & \textbf{Within} & \textbf{Separation} &
+\textbf{95\% CI} & \textbf{Benign} & \textbf{Rights} & \textbf{Harmful} \\
+\midrule
+Neutral vs Minor & 0.659 & 0.849 & 0.189 & $[0.164,0.216]$ & 0.095 & 0.122 & 0.124 \\
+Minor vs Adult & 0.703 & 0.852 & 0.149 & $[0.129,0.171]$ & 0.076 & 0.095 & 0.101 \\
+Explicit vs Implicit & 0.702 & 0.842 & 0.140 & $[0.122,0.159]$ & 0.073 & 0.072 & 0.102 \\
+Age 17 vs Age 18 & 0.780 & 0.859 & 0.079 & $[0.058,0.104]$ & 0.018 & 0.029 & 0.027 \\
+Neutral vs Cue & 0.815 & 0.862 & 0.047 & $[0.028,0.069]$ & 0.027 & 0.049 & 0.039 \\
+Cue Minor vs Cue Adult & 0.817 & 0.863 & 0.046 & $[0.027,0.069]$ & 0.030 & 0.060 & 0.032 \\
+\bottomrule
+\end{tabularx}
+\caption{\emph{Experiment 1} $\vert$ Semantic Separation by Contrast.}
+\label{tab:semantic-separation}
+\vspace{0.4em}
+\begin{minipage}{\textwidth}
+\footnotesize
+\emph{Note.} Mean cosine similarity of replies across the two conditions
+(Between) and within one condition (Within), over 175 scenarios: 25 Age
+Restricted and 50 in each comparison type. Separation is Within less Between, so
+a larger value is a wider gap between the conditions. Minor and Adult are
+explicit ages and Cue an implicit cue, so Explicit vs Implicit contrasts an
+explicit minor age against a minor cue. Age Restricted separates most on every
+contrast, and the two contrasts that vary only an implicit cue separate least,
+which matches the safety result of Section~\ref{sec:safety}. Exploratory, and
+specified after the confirmatory results were read.
+\end{minipage}
+\end{table}

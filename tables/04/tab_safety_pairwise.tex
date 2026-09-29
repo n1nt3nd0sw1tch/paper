@@ -1,0 +1,63 @@
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{
+    @{}
+    L{2.0cm}
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    L{1.5cm}
+    @{}
+}
+\toprule
+& \multicolumn{6}{c}{\textbf{Model}} & & \\
+\cmidrule(lr){2-7}
+\textbf{Contrast} &
+\cellcolor{openaiPastel}\textbf{GPT-5.6 Luna} &
+\cellcolor{anthropicPastel}\textbf{Claude Haiku 4.5} &
+\cellcolor{geminiPastel}\textbf{Gemini 3.5 Flash Lite} &
+\cellcolor{deepseekPastel}\textbf{DeepSeek-V4 Flash} &
+\cellcolor{mistralPastel}\textbf{Mistral Small 4} &
+\cellcolor{gemmaPastel}\textbf{Gemma 4 31B} &
+\cellcolor{macroRow}\textbf{Macro} &
+\textbf{Survive} \\
+\midrule
+\multicolumn{9}{@{}l}{\blocktag{A. Adjacent Ages}} \\[0.15em]
+\midrule
+7 vs 9 & $-1.3$ & $+1.3$ & $+3.3$ & $+0.0$ & $-2.7$ & $+4.0$ & \cellcolor{macroRow}$+0.8$ & 0 of 6 \\
+9 vs 11 & $+8.0$ & $+1.3$ & $+5.0$ & $-1.3$ & $+9.3$ & $+0.0$ & \cellcolor{macroRow}$+3.7$ & 0 of 6 \\
+11 vs 13 & $+1.3$ & $+2.7$ & $+6.7$ & $-2.7$ & $+1.3$ & $+2.7$ & \cellcolor{macroRow}$+2.0$ & 0 of 6 \\
+13 vs 15 & $+5.3$ & $+5.3$ & $+8.3$ & $+9.3$ & $+1.3$ & $+6.7$ & \cellcolor{macroRow}$+6.1$ & 0 of 6 \\
+15 vs 17 & $-1.3$ & $+16.0$ & $+8.3$ & $+1.3$ & $+12.0$ & $+12.0$ & \cellcolor{macroRow}$+8.1$ & 0 of 6 \\
+17 vs 18 & $\mathbf{+44.0}$ & $+32.0$ & $+29.2$ & $\mathbf{+33.3}$ & $+2.7$ & $\mathbf{+28.0}$ & \cellcolor{macroRow}$+28.2$ & 3 of 6 \\
+18 vs 21 & $+14.7$ & $+6.7$ & $+5.3$ & $+8.0$ & $+12.0$ & $+6.7$ & \cellcolor{macroRow}$+8.9$ & 0 of 6 \\
+\midrule
+\multicolumn{9}{@{}l}{\blocktag{B. Wider Steps}} \\[0.15em]
+\midrule
+7 vs 11 & $+6.7$ & $+2.7$ & $+8.3$ & $-1.3$ & $+6.7$ & $+4.0$ & \cellcolor{macroRow}$+4.5$ & 0 of 6 \\
+11 vs 15 & $+6.7$ & $+8.0$ & $+15.0$ & $+6.7$ & $+2.7$ & $+9.3$ & \cellcolor{macroRow}$+8.1$ & 0 of 6 \\
+11 vs 17 & $+5.3$ & $+24.0$ & $+23.3$ & $+8.0$ & $+14.7$ & $+21.3$ & \cellcolor{macroRow}$+16.1$ & 0 of 6 \\
+\bottomrule
+\end{tabularx}
+\caption{\emph{Experiment 1} $\vert$ Refusal Rate Between Adjacent Ages.}
+\label{tab:safety-pairwise}
+\vspace{0.4em}
+\begin{minipage}{\textwidth}
+\footnotesize
+\emph{Note.} Pairwise contrasts on the Refusal Rate within Age Restricted
+scenarios, in percentage points, tested by two-sided sign-flip permutation on up
+to 25 paired scenarios and corrected across sixty tests. Panel B spans two or
+more rungs of the ladder. Survive counts the models reaching $q<0.05$; three do,
+all on 17 vs 18. These contrasts were declared after the analysis, so no interval
+is reported and no claim rests on them. Bold marks a surviving cell and the
+shaded column is the Macro-Average.
+\end{minipage}
+\end{table}

@@ -1,0 +1,58 @@
+% Paired change from the opening turn, by model. From scripts/readability.py.
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{
+    @{}
+    L{4.4cm}
+    >{\raggedleft\arraybackslash}p{4.0cm}
+    >{\raggedleft\arraybackslash}p{4.0cm}
+    >{\raggedleft\arraybackslash}p{1.4cm}
+    @{}
+}
+\toprule
+\textbf{Model} & \textbf{Turn 1 to 2} & \textbf{Turn 1 to 3} &
+\textbf{Scenarios} \\
+\midrule
+\multicolumn{4}{@{}l}{\blocktag{A. Grade Level}} \\[0.15em]
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna} &
+$+0.60$ $[0.36, 0.85]$ & $+0.00$ $[-0.27, 0.29]$ & 50 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} &
+$+0.85$ $[0.55, 1.18]$ & $+0.55$ $[0.23, 0.88]$ & 48 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} &
+$+1.21$ $[0.81, 1.63]$ & $+0.68$ $[0.24, 1.15]$ & 42 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} &
+$-0.27$ $[-0.48, -0.04]$ & $-1.11$ $[-1.36, -0.84]$ & 50 \\
+\modeltag{mistralPastel}{Mistral Small 4} &
+$-0.29$ $[-0.60, 0.04]$ & $-1.01$ $[-1.37, -0.63]$ & 50 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} &
+$+0.87$ $[0.64, 1.10]$ & $+0.35$ $[0.04, 0.66]$ & 43 \\
+\midrule
+\rowcolor{macroRow} \textbf{Macro-Average} &
+$+0.50$ $[0.35, 0.65]$ & $-0.09$ $[-0.29, 0.12]$ & \\
+\midrule
+\multicolumn{4}{@{}l}{\blocktag{B. Response Length}} \\[0.15em]
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna} &
+$-21.36$ $[-27.61, -15.65]$ & $-18.15$ $[-25.83, -10.64]$ & 50 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} &
+$+17.21$ $[11.66, 22.82]$ & $+35.73$ $[27.98, 43.53]$ & 50 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} &
+$-14.49$ $[-32.88, 2.88]$ & $-4.94$ $[-26.31, 14.82]$ & 50 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} &
+$+62.09$ $[41.53, 82.17]$ & $+103.07$ $[72.67, 132.66]$ & 50 \\
+\modeltag{mistralPastel}{Mistral Small 4} &
+$+6.60$ $[-6.58, 19.02]$ & $+38.00$ $[19.70, 54.49]$ & 50 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} &
+$-11.56$ $[-21.24, -1.97]$ & $+43.18$ $[25.35, 61.49]$ & 50 \\
+\midrule
+\rowcolor{macroRow} \textbf{Macro-Average} &
+$+6.41$ $[-3.03, 15.43]$ & $+32.81$ $[19.06, 46.26]$ & \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Experiment 2} $\vert$ Readability Change From the Opening Turn.}
+\label{tab:turns-change}
+\end{table}

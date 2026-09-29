@@ -1,0 +1,32 @@
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+& & & \multicolumn{2}{c}{\textbf{Disagreement}} \\
+\cmidrule(l){4-5}
+\textbf{Model} & \textbf{Replies} & \textbf{Judged Cells} & \textbf{$n$} & \textbf{\%} \\
+\midrule
+\multicolumn{5}{@{}l}{\blocktag{A. By Model}} \\[0.15em]
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna}          & 100 & 1,221 & 65 & 5.3 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5}   & 100 & 1,222 & 33 & 2.7 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 100 & 1,224 & 32 & 2.6 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash}   & 100 & 1,225 & 57 & 4.7 \\
+\modeltag{mistralPastel}{Mistral Small 4}      & 100 & 1,239 & 22 & \Best{1.8} \\
+\modeltag{gemmaPastel}{Gemma 4 31B}            & 100 & 1,220 & 38 & 3.1 \\
+\midrule
+\multicolumn{5}{@{}l}{\blocktag{B. By Scenario Type}} \\[0.15em]
+\midrule
+Benign         & 150 & 1,806 & 35 & \Best{1.9} \\
+Rights         & 228 & 2,748 & 100 & 3.6 \\
+Age Restricted & 72 & 890 & 32 & 3.6 \\
+Harmful        & 150 & 1,907 & 80 & 4.2 \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Experiment 1} $\vert$ Classifier Agreement per Model.}
+\label{tab:judge-model}
+\end{table}

@@ -1,0 +1,211 @@
+% ------------------------------------------------------------
+% APPENDIX C  Dataset
+% ------------------------------------------------------------
+\chapter{Dataset}
+\label{app:dataset}
+
+This chapter reports the harm taxonomy and scenario allocation used to
+construct the benchmark.
+
+\section{Harm Taxonomy}
+\label{app:crosswalk}
+
+The taxonomy is based on the Online Safety Act 2023
+\cite{OnlineSafetyAct2025} and supplemented by Body Image and Emotional
+Dependency. Table~\ref{tab:crosswalk} compares its categories with prior
+child-safety taxonomies, while Table~\ref{tab:allocation} gives the allocation
+of the 200 benchmark scenarios.
+
+% ---- statutory extract styling -------------------------------------------
+\definecolor{statnavy}{HTML}{1F3A5F}
+\definecolor{statrule}{HTML}{4A6E9E}
+\definecolor{statfill}{HTML}{E8EEF6}
+\definecolor{statink}{HTML}{16283F}
+\definecolor{stathighlight}{HTML}{A8C6E8}
+
+\newtcolorbox{statutecase}[1]{%
+    enhanced,
+    breakable,
+    colback=white,
+    colframe=white,
+    frame hidden,
+    boxrule=0pt,
+    coltitle=white,
+    colbacktitle=statnavy,
+    fonttitle=\small\bfseries,
+    title={#1},
+    left=0mm,
+    right=0mm,
+    top=7.5mm,
+    bottom=0mm,
+    before skip=1.4em,
+    after skip=1.4em,
+    attach boxed title to top left={
+        xshift=0mm,
+        yshift=-\tcboxedtitleheight
+    },
+    boxed title style={
+        boxrule=0pt,
+        arc=2.2mm,
+        outer arc=2.2mm,
+        left=3mm,
+        right=3mm,
+        top=1.2mm,
+        bottom=1.2mm
+    }
+}
+
+\newtcolorbox{statblock}{%
+    enhanced,
+    breakable,
+    colback=statfill,
+    colframe=statrule,
+    coltext=statink,
+    before upper={\setstretch{1.12}},
+    boxrule=0pt,
+    leftrule=1.8pt,
+    arc=2.5mm,
+    outer arc=2.5mm,
+    left=3mm,
+    right=2.5mm,
+    top=2.5mm,
+    bottom=2.5mm,
+    before skip=0.3em,
+    after skip=1em
+}
+
+\newcommand{\statfield}[1]{%
+    \par\smallskip
+    \noindent
+    \textcolor{statnavy}{\scriptsize\bfseries #1}%
+    \hspace{0.7em}%
+    \textcolor{statrule}{\leaders\hrule height 0.6pt\hfill\kern0pt}%
+    \par\nobreak\smallskip
+}
+
+
+\newcommand{\statutory}[1]{\begingroup\sethlcolor{stathighlight}\hl{#1}\endgroup}
+
+\newcommand{\slevi}[2]{\par\noindent\hangindent=2.6em\hangafter=1
+  \makebox[2.6em][l]{#1}#2\par}
+\newcommand{\slevii}[2]{\par\noindent\hspace*{2.6em}\hangindent=5.0em\hangafter=1
+  \makebox[2.4em][l]{#1}#2\par}
+\newcommand{\sleviii}[2]{\par\noindent\hspace*{5.0em}\hangindent=8.2em\hangafter=1
+  \makebox[3.2em][l]{#1}#2\par}
+% --------------------------------------------------------------------------
+
+\begin{statutecase}{Online Safety Act 2023, s.61}
+
+\statfield{Primary Priority Content That Is Harmful to Children}
+
+\begin{statblock}
+\small\ttfamily
+\slevi{(1)}{\enquote{Primary priority content that is harmful to children} means content of any of the following kinds.}
+\slevi{(2)}{\statutory{Pornographic content, other than content within subsection (6).}}
+\slevi{(3)}{\statutory{Content which encourages, promotes or provides instructions for suicide.}}
+\slevi{(4)}{\statutory{Content which encourages, promotes or provides instructions for an act of deliberate self-injury.}}
+\slevi{(5)}{\statutory{Content which encourages, promotes or provides instructions for an eating disorder or behaviours associated with an eating disorder.}}
+\slevi{(6)}{Content is within this subsection if it}
+\slevii{(a)}{consists only of text, or}
+\slevii{(b)}{consists only of text accompanied by $[\ldots]$}
+\slevi{(7)}{In this section and section 62 \enquote{injury} includes poisoning.}
+\end{statblock}
+
+\end{statutecase}
+
+\begin{statutecase}{Online Safety Act 2023, s.62}
+
+\statfield{Priority Content That Is Harmful to Children}
+
+\begin{statblock}
+\small\ttfamily
+\slevi{(1)}{\enquote{Priority content that is harmful to children} means content of any of the following kinds.}
+\slevi{(2)}{\statutory{Content which is abusive and which targets any of the following characteristics}}
+\slevii{(a)}{race,}
+\slevii{(b)}{religion,}
+\slevii{(c)}{sex,}
+\slevii{(d)}{sexual orientation,}
+\slevii{(e)}{disability, or}
+\slevii{(f)}{gender reassignment.}
+\slevi{(3)}{\statutory{Content which incites hatred against people $[\ldots]$}}
+\slevi{(4)}{\statutory{Content which encourages, promotes or provides instructions for an act of serious violence against a person.}}
+\slevi{(5)}{\statutory{Bullying content.}}
+\slevi{(6)}{Content which}
+\slevii{(a)}{depicts real or realistic serious violence against a person;}
+\slevii{(b)}{depicts the real or realistic serious injury of a person in graphic detail.}
+\slevi{(7)}{Content which}
+\slevii{(a)}{depicts real or realistic serious violence against an animal;}
+\slevii{(b)}{depicts the real or realistic serious injury of an animal in graphic detail;}
+\slevii{(c)}{realistically depicts serious violence against a fictional creature or the serious injury of a fictional creature in graphic detail.}
+\slevi{(8)}{\statutory{Content which encourages, promotes or provides instructions for a challenge or stunt highly likely to result in serious injury to the person who does it or to someone else.}}
+\slevi{(9)}{\statutory{Content which encourages a person to ingest, inject, inhale or in any other way self-administer}}
+\slevii{(a)}{a physically harmful substance;}
+\slevii{(b)}{a substance in such a quantity as to be physically harmful.}
+\slevi{(12)}{For the purposes of subsection (5) content may, in particular, be \enquote{bullying content} if it is content targeted against a person which}
+\slevii{(a)}{conveys a serious threat;}
+\slevii{(b)}{is humiliating or degrading;}
+\slevii{(c)}{forms part of a campaign of mistreatment.}
+\slevi{(13)}{In subsection (6) \enquote{person} is not limited to a real person.}
+\slevi{(14)}{In subsection (7) \enquote{animal} is not limited to a real animal.}
+\end{statblock}
+
+\end{statutecase}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}L{2.0cm} Y Y Y Y Y@{}}
+\toprule
+\textbf{Harm} &
+\textbf{Rath et al.} \cite{rathLLMSafetyChildren2025} &
+\textbf{MinorBench} \cite{khooMinorBenchHandbuiltBenchmark2025} &
+\textbf{SproutBench} \cite{xingSproutBenchBenchmarkSafe2025} &
+\textbf{Saldana et al.} \cite{cathryn_iImprovingTeenSafety2025} &
+\textbf{SafeDialBench} \cite{caoSafeDialBenchFineGrainedSafety2026} \\
+\midrule
+Abuse \& Hate & Racist Content & Hateful Content & Social Harm & Racist Content & Abuse; Incitement \\
+Bullying & Cyberbullying & --- & Social Harm & Violence & Insults; Threats \\
+Dangerous Challenges & Harmful Challenges & Dangerous Content & Misuse & Self-Harm & --- \\
+Eating Disorders & Extreme Dieting & Self-Harm & Mental Health & Health & Self-Harm \\
+Emotional Dependency & Emotional Health & --- & Over-Reliance & Health & --- \\
+Harmful Substances & Regulated Goods & Substance Use & Misuse & Regulated Goods & --- \\
+Self-Harm \& Suicide & Self-Harm & Self-Harm & Mental Health & Self-Harm & Self-Harm \\
+Sexual Content & Sexual Content; Exploitation & Sexual Content & Grooming & Sexual; Romantic Content & --- \\
+Violence & Violence & Dangerous Content & Social Harm & Violence & Abuse \\
+\bottomrule
+\end{tabularx}
+\caption{\emph{Dataset} $\vert$ Comparison with Child Safety Taxonomies.}
+\label{tab:crosswalk}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}llrrrrr@{}}
+\toprule
+& & \multicolumn{4}{c}{\textbf{Scenario Type}} & \\
+\cmidrule(lr){3-6}
+\textbf{Domain} & \textbf{Tier} & \textbf{Harmful} & \textbf{Age Restricted} &
+\textbf{Rights} & \textbf{Benign} & \textbf{Total} \\
+\midrule
+Abuse \& Hate        & PC  & 5 & 0 & 10 & 5 & 20 \\
+Body Image           & NDC & 5 & 5 &  5 & 5 & 20 \\
+Bullying             & PC  & 5 & 0 & 10 & 5 & 20 \\
+Dangerous Challenges & PC  & 5 & 5 &  5 & 5 & 20 \\
+Eating Disorders     & PPC & 5 & 0 & 10 & 5 & 20 \\
+Emotional Dependency & NDC & 5 & 0 & 10 & 5 & 20 \\
+Harmful Substances   & PC  & 5 & 5 &  5 & 5 & 20 \\
+Self-Harm \& Suicide & PPC & 5 & 0 & 10 & 5 & 20 \\
+Sexual Content       & PPC & 5 & 5 &  5 & 5 & 20 \\
+Violence             & PC  & 5 & 5 &  5 & 5 & 20 \\
+\midrule
+\rowcolor{macroRow} \textbf{Total} & & \textbf{50} & \textbf{25} & \textbf{75} & \textbf{50} & \textbf{200} \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Dataset} $\vert$ Scenario Allocation.}
+\label{tab:allocation}
+\end{table}

@@ -1,0 +1,36 @@
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\textbf{Model} & \textbf{$n$} & \textbf{$\Delta\fkgl$, Minor $-$ Adult} &
+\textbf{95\% CI} & \textbf{$q$} \\
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna}          & 193 & $\mathbf{-1.87}$ & $[-2.05,-1.70]$ & $<0.001$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5}   & 170 & $\mathbf{-2.23}$ & $[-2.39,-2.09]$ & $<0.001$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 158 & $\mathbf{-1.55}$ & $[-1.74,-1.33]$ & $<0.001$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash}   & 197 & $\mathbf{-1.62}$ & $[-1.77,-1.46]$ & $<0.001$ \\
+\modeltag{mistralPastel}{Mistral Small 4}      & 170 & $\mathbf{-1.32}$ & $[-1.48,-1.15]$ & $<0.001$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B}            & 167 & $\mathbf{-2.01}$ & $[-2.16,-1.85]$ & $<0.001$ \\
+\midrule
+\rowcolor{macroRow} Macro-Average & & $-1.77$ & $[-1.89,-1.64]$ & \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Experiment 1} $\vert$ Grade Level by Age.}
+\label{tab:readability-conditioning}
+\vspace{0.4em}
+\begin{minipage}{\textwidth}
+\footnotesize
+\emph{Note.} Flesch--Kincaid grade level at the six minor ages against the two
+adult ages, paired within scenario. A negative effect is a simpler reply to a
+user who gave a minor age. Intervals are percentile bootstrap over ten thousand
+scenario draws and $q$ is Benjamini--Hochberg corrected; every raw permutation
+value is below 0.001. Only scenarios measurable at all eight explicit ages
+enter, which is why $n$ runs from 158 to 197. The Macro-Average is the mean of
+the six model effects, its interval reflects their shared scenarios, and it is
+not a scenario count.
+\end{minipage}
+\end{table}

@@ -1,0 +1,27 @@
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+ & & & \multicolumn{2}{c}{\textbf{Age Restricted}} & \\
+\cmidrule(lr){4-5}
+\textbf{Model} & \textbf{Benign} & \textbf{Rights} & \textbf{Minor} &
+\textbf{Adult} & \textbf{Harmful} \\
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna}          & 99.0 & \Best{100.0} & \Best{70.9} & 83.3 & 57.1 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5}   & 99.1 & 97.0 & 70.7 & 83.3 & 55.0 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 98.8 & 98.7 & 62.3 & 84.0 & \Best{68.9} \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash}   & \Best{99.9} & 99.0 & 66.0 & 75.3 & 62.3 \\
+\modeltag{mistralPastel}{Mistral Small 4}      & 87.8 & 77.7 & 45.6 & 71.3 & 50.6 \\
+\modeltag{gemmaPastel}{Gemma 4 31B}            & 99.6 & 99.0 & 55.1 & \Best{92.7} & 68.7 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 97.4 & 95.2 & 61.7 & 81.7 & 60.4 \\
+\rowcolor{macroRow} \quad 95\% CI & $[96.0,98.4]$ & $[94.1,96.3]$ & $[47.6,75.4]$ & $[71.3,90.6]$ & $[49.9,70.4]$ \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Experiment 1} $\vert$ Action Alignment by Scenario.}
+\label{tab:safety-alignment}
+\end{table}

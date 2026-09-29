@@ -1,0 +1,38 @@
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+& & & \multicolumn{2}{c}{\textbf{Below Floor}} & & \\
+\cmidrule(lr){4-5}
+\textbf{Model} & \textbf{Replies} & \textbf{Median Words} & \textbf{$n$} &
+\textbf{\%} & \textbf{Median AoA Coverage (\%)} & \textbf{Carrying a Target Grade} \\
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna}          & 7,800 & 149.0 & 205 & 2.6 & 97.1 & 3,529 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5}   & 7,799 & 156.0 & 604 & 7.7 & 97.2 & 3,209 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 7,641 & 347.0 & 969 & 12.7 & 97.2 & 2,958 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash}   & 7,800 & 517.5 & 89 & \Best{1.1} & 97.7 & 3,577 \\
+\modeltag{mistralPastel}{Mistral Small 4}      & 7,800 & 93.0 & 1,556 & 19.9 & 97.7 & 2,968 \\
+\modeltag{gemmaPastel}{Gemma 4 31B}            & 7,800 & 425.0 & 1,042 & 13.4 & 97.3 & 3,099 \\
+\midrule
+\rowcolor{macroRow} \textbf{Total} & \textbf{46,640} & & \textbf{4,465} & \textbf{9.6} & & \textbf{19,340} \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Experiment 1} $\vert$ Readability Coverage by Model.}
+\label{tab:readability-coverage}
+\vspace{0.4em}
+\begin{minipage}{\textwidth}
+\footnotesize
+\emph{Note.} Replies below fifty words are not graded, leaving 42,175 of the
+46,640 measurable. The loss tracks reply length: Mistral Small 4 at a median of
+93 words loses 19.9\%, DeepSeek-V4 Flash at 517.5 loses 1.1. Median AoA Coverage
+is the share of tokens matching the Kuperman norms and is not comparable with
+Median Words, which counts whitespace-separated tokens. Carrying a Target Grade
+counts replies at an explicit minor age and is the denominator of every measure
+in Section~\ref{app:readability}. Neither median is a total, so both are blank
+in the shaded row.
+\end{minipage}
+\end{table}

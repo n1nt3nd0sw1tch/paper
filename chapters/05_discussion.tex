@@ -1,0 +1,304 @@
+% ------------------------------------------------------------
+% Chapter 5: Discussion
+%
+% Results says what happened. This chapter says what it means and what it does
+% not mean. Every number is reproduced from Chapter 4 and traces to a frozen
+% table under tables/; nothing is recomputed in prose.
+%
+% The eight divisions are \paragraph and carry \label{sec:...}, so none of them
+% reaches the table of contents. Promote them to \section if an examiner should
+% be able to navigate the chapter.
+% ------------------------------------------------------------
+
+\chapter{Discussion}
+\label{ch:discussion}
+
+\paragraph{What the Experiment Establishes}
+\label{sec:discussion-establishes}
+
+Because the scenario, the phrasing, the sampling parameters and the replicate
+count are constant across conditions, a difference between two conditions is
+attributable to the age signal and to nothing else the experiment manipulated.
+Because the age is supplied rather than inferred from a real interaction
+history, no difference is attributable to a model having worked out who it is
+talking to.
+
+A model that behaves differently towards a user who has written that they are
+twelve has demonstrated age conditioning, not age recognition, and the two are
+separate capabilities with separate failure modes. A deployed service that
+verifies age at the account layer and passes a verified age to the model
+exercises the first; a service that infers age from conversational content
+exercises the second, and this study says nothing about how well it would do
+so. The implicit cue conditions probe that boundary, and what they establish is
+behavioural: a cue moves the reply less than a statement does, and the design
+cannot say whether the cue was less often noticed or noticed and weighted less.
+Section~\ref{sec:discussion-signals} returns to this.
+
+\paragraph{Threshold and Gradient}
+\label{sec:discussion-shape}
+
+The central claim of this thesis is not that models treat minors differently.
+That was expected and would not have needed a benchmark of this size. The claim
+is that the differential treatment has a different shape on different dimensions
+of the same reply.
+
+On safety, the conditioning is concentrated. Refusal on age-restricted requests
+falls by 27.8 percentage points in the single year from seventeen to eighteen,
+which is 48.3\% of the entire movement across the fourteen years the latter
+spans. On linguistic accessibility, it is distributed: the same step accounts for
+between 4.0 and 11.0\% of each model's full range, and on two of the six its
+interval includes zero. One outcome behaves as though a rule is applied at a
+boundary, the other as though a continuous adjustment is made to an estimate of
+the reader.
+
+Two readings are available, and the data distinguish them only partly. Either the
+two behaviours have different origins, a safety boundary reflecting an explicit
+policy encoded during alignment and a linguistic adjustment reflecting a learned
+regularity about how people write for children, or both are gradients and the
+safety gradient is much steeper near eighteen. A pure gradient would not
+ordinarily place half its movement in one of fourteen years, and no adjacent
+step within the minor ages survives correction whereas the boundary step does on
+five models. But a behavioural experiment cannot see a policy, only its shadow,
+Moreover, a sufficiently sharp gradient is observationally close to a threshold.
+
+Mistral Small 4 is the instructive exception. It conditions on age about as
+strongly as the panel when minor and adult ages are compared as blocks, at 22.9
+points, and barely at all across the year the statutes actually name, at 2.7
+points with an interval crossing zero. That is age conditioning without a
+boundary, and it shows that a model can adjust to age and still fail what an
+age-assurance regime is trying to achieve, which is different treatment either
+side of a legal line.
+
+\paragraph{Refusal, Delivery, and Harm}
+\label{sec:discussion-delivery}
+
+The four-cell outcome is the methodological contribution most likely to
+transfer, and its value is clearest in the one model where it changes the
+answer. Read on refusal alone, Mistral Small 4 is the most permissive model on
+the panel at 17.5\%; read on delivery alone, it is the least useful at 65.8. Both
+readings are wrong, because 16.9\% of its replies agree to help and then supply
+nothing. A binary Refusal Rate, which is what most published safety evaluations
+report, scores those replies as compliance and places that model at the
+permissive end of a ranking it does not belong at.
+
+The decomposition should not be oversold in the other direction. The cell it was
+built to expose, the reply that declines and then answers anyway, turned out to
+be rare, at 0.2\% on the macro-average and never above half a point on any
+model. The mismatch that turned out to matter is the opposite one, and it was
+not the one anticipated.
+
+A more serious limit runs through the whole safety analysis. Delivery Response
+records that the material was supplied, not whether it was harmful, so a reply
+answering a restricted question for a fourteen-year-old with a careful, hedged,
+partial answer and one answering it with operational detail are scored
+identically. The directional diagnostic is named for what it counts: delivery
+where a refusal was expected, and stands as an upper bound: the macro-average of
+30.6\% on harmful requests is not a claim that three in ten replies harmed
+anybody. Closing that gap needs a severity judgement the rubric does not make,
+and Chapter~\ref{ch:future} sets out the audit that would supply one.
+
+A second limit is of a different kind, and Section~\ref{sec:semantics} makes it
+visible. The four-cell outcome and the thirteen rubric labels are closed
+vocabularies, so they register only the changes they were built to name, and a
+reply can be rewritten in register, framing, and what it offers and still occupy
+the same cell. Introducing an explicit minor age where Neutral gave none
+separates the text by 0.189 $[0.164, 0.216]$ on age-restricted requests, the
+single step from seventeen to eighteen separates it by 0.079 $[0.058, 0.104]$
+where the same step moves the three control strata by between 0.018 and 0.029,
+and the association between that displacement and whether the classified outcome
+changed is never above $\rho = 0.202$.
+
+The measure has no polarity: a reply rewritten into gentler framing with a
+signpost to a trusted adult and one rewritten into evasion are equally
+displaced. It therefore does not extend the safety claim and is not a second
+measurement of harm. It bears on scope. Age conditioning here is broader than
+any categorical measure in this thesis records, so the rates of
+Section~\ref{sec:safety} describe one visible face of the behaviour, and an
+evaluation built only on category counts will understate how much a disclosed
+age changes.
+
+\paragraph{Explicit and Implicit Age Signals}
+\label{sec:discussion-signals}
+
+The ordering of the signal levels is one of the cleaner results in the thesis
+and one of the easiest to over-interpret. Refusal on age-restricted requests
+sits at 13.5\% under Neutral, 12.9 with an adult-associated cue, 16.7 with an
+explicit adult age, 29.5 with a minor-associated cue and 62.0 with an explicit
+minor age. The two adult-side conditions are indistinguishable from Neutral,
+which is what one would expect if the default assumption is already an adult
+user, and the minor cue moves roughly a third of the way to the explicit minor
+age. The pattern repeats on reading level.
+
+What cannot be said is that the cue was received and then discounted. That
+describes a two-stage process, recognition followed by weighting, and the
+experiment observes only the composite: a model recognising a mention of a
+school timetable as a minority signal on one occasion in three and conditioning
+fully when it does, and a model recognising it every time and conditioning at a
+third of the strength, produce the same aggregate. Separating them requires
+eliciting the model's belief about the user rather than only its behaviour.
+
+The practical implication survives the ambiguity. Real users rarely announce
+their age; they reveal it through what they talk about and how they write, which
+is the implicit condition. If conditioning on a cue is a third of conditioning
+on a statement, the protection a model offers unprompted is materially weaker
+than the protection it offers when told, and an evaluation that only ever states
+the age reports the stronger number.
+
+\paragraph{Heterogeneity Across the Panel}
+\label{sec:discussion-panel}
+
+Six models from five providers do not behave as one model with noise around it,
+and the disagreement is structured. Gemma 4 31B is strongest on the adult side
+of the age-restricted stratum at 92.7\% alignment and among the weakest on the
+minor side at 55.1, applying the boundary more readily in the permissive
+direction than the protective one. GPT-5.6 Luna inverts on the two directional
+diagnostics, worst on the panel for delivery on harmful requests at 36.5\% and
+best for delivery to an explicit minor age at 19.1. Gemini 3.5 Flash Lite is the
+only model whose requests are withheld at the provider layer, and that happens
+exclusively at minor ages.
+
+That last case is a different mechanism reaching a similar end. Seventy-nine
+age-restricted requests were withheld before the model saw them, all at explicit
+minor ages and concentrated at the younger end, and counted end to end that
+model's delivery to an explicit minor age falls from 31.2 to 26.7 per cent. A
+benchmark scoring only returned replies credits the model for restraint it did
+not exercise, and one scoring only end-to-end cannot distinguish a model that
+declined from a request that never reached one. Reporting both is the only
+defensible option, and the practical lesson for benchmark design is that the
+provider stack is part of the model under test.
+
+A macro-average over six models describes this panel and does not estimate a
+population of models, because the panel is fixed rather than sampled. Where the
+six disagree in direction, as at the statutory boundary, the per-model column is
+the result.
+
+\paragraph{Developmental Accessibility as an Operational Construct}
+\label{sec:discussion-accessibility}
+
+The linguistic analysis rests on a mapping from an age to a target grade, and
+its honesty depends on that mapping being operational rather than normative. The
+target is a calibration reference derived from a schooling convention, not a
+claim about what a particular child can read, which varies enormously within any
+age, nor about what a model ought to produce. Age-Alignment Error is an error
+against a stated reference and not a developmental deficiency, so the finding
+that replies sit 2.31 to 2.94 grades from it is a statement about calibration
+rather than about harm.
+
+Within those limits, the result is still meaningful. Reading level moves in the
+right direction on all six models and across every floor threshold tested, and
+it reaches the reference on none of them. A model that adapts directionally but
+under-adapts in magnitude is a recognisable engineering condition and a
+tractable one.
+
+The decomposition corrects a natural assumption. The reduction in grade level is
+carried almost entirely by the syllables-per-word term, at $-1.80$ grades, while
+the sentence-length term contributes $+0.03$ with an interval containing zero
+and a sign that is not stable across the panel. Models writing for an explicit
+minor age choose shorter words; they do not write shorter sentences. The
+intuitive account runs the other way, and the two channels differ in what they
+do: a lexical simplification changes which concepts are nameable, a syntactic
+one how much has to be held in mind at once. Neither has been shown to improve
+comprehension, since a readability formula predicts difficulty from surface
+features and no comprehension study was conducted here.
+
+\paragraph{Implications for Age Assurance}
+\label{sec:discussion-assurance}
+
+The regulatory direction of travel treats knowing the user's age as the
+substantive step, with appropriate treatment following from it. The results here
+suggest that framing is incomplete in a specific and testable way. Supplying the
+age is not the hard part of the problem for these models, which clearly use it.
+The hard part is that what follows from the age is uneven across the dimensions
+on which a young user is actually exposed.
+
+Three consequences follow, and each is narrow. First, an age-assurance
+obligation discharged at the account layer will produce a large behavioural
+change at the statutory boundary and a much smaller one across childhood itself,
+so a regime concerned with a fifteen-year-old rather than with the seventeen to
+eighteen transition is relying on the part of the response surface that moves
+least. Second, an evaluation regime that certifies a model on explicit age will
+overstate the protection available to users who never state one, by roughly a
+factor of three on the evidence here. Third, a compliance test built on Refusal
+Rates alone can be satisfied by a model that agrees and then supplies nothing,
+which is neither safe nor useful, and the four-cell outcome or something like it
+is needed to tell the two apart.
+
+None of this bears on whether age assurance is desirable, which is a policy
+question this thesis does not address, and none of it establishes that any model
+tested breached any obligation. What it supports is narrower: verifying age and
+adapting to age are separate problems, and progress on the first does not entail
+progress on the second.
+
+\paragraph{Strengths and Weaknesses of the Design}
+\label{sec:discussion-design}
+
+The design's principal strength is that it isolates the variable of interest.
+Two hundred scenarios crossed with thirteen conditions and three replicates give
+46,800 requests in which everything but the age signal is held fixed, and the
+pairing is within scenario, so a contrast compares a scenario against itself.
+The inferential machinery is declared before the analysis: families are
+registered, tests are permutation-based on the pairing the design creates,
+intervals resample scenarios rather than replies, planned controls are read
+against a pre-registered margin rather than a failure to reject, and the
+classifier is validated with an admission threshold fixed in advance. That
+covers Sections~\ref{sec:safety} to~\ref{sec:dialogue} and not
+Section~\ref{sec:semantics}, which is the last weakness below.
+
+Six weaknesses are material, and none is fully remediable within this study.
+
+The first is that the classifier is itself a model. Agreement with the annotator
+is strong on the two primary labels of the single-turn corpus and weak on
+several characteristics, and the weak ones are reported descriptively for that
+reason. On the dialogue arm, the second primary label does not hold:
+Section~\ref{subsec:judge} reports Delivery Response below the admission
+threshold at both pressed turns, so the measures of Section~\ref{sec:dialogue}
+that read the delivery axis are the weaker ones. Agreement is also not accuracy,
+since a systematic error shared by classifier and annotator would not appear in
+a $\kappa$. The shared-provider concern is answered as far as it can be, by the
+classifier disagreeing most on the model from its own provider.
+
+The second is the length floor, set out in
+Section~\ref{subsec:readability-floor}. It removes 9.6\% of returned replies
+unevenly, from 1.1\% of DeepSeek-V4 Flash to 19.9\% of Mistral Small 4, so the
+readability sample is not the response corpus and differs from it in a way
+correlated with both the model and the stratum. No sensitivity analysis can
+reconstruct the reading level of a reply too short to have one. The model losing
+most replies to the floor is the one that agrees and then supplies nothing, so
+the two findings are partly the same phenomenon seen twice.
+
+The third is that the main corpus is single-turn, English and synthetic. That is
+why Experiment~2 exists, and its results are now in hand:
+Section~\ref{sec:dialogue} reports the age gap on age-restricted requests
+eroding from 41.3 points at the opening to 18.5 by the third turn, while Action
+Defect rises by 23.1 points over the same two turns. That addresses the
+limitation without removing it, since those results are descriptive rather than
+tested, cover fifty of the two hundred scenarios and two pressed turns rather
+than a sustained conversation, and the delivery axis several of them read does
+not clear the admission threshold at depth. The scenarios are also authored
+rather than observed, so they represent a considered view of what a young user
+might ask rather than a sample of what young users do ask.
+
+The fourth is that the design supplies the age rather than eliciting it, so
+recognition is never measured on the same replies. An absence of behavioural
+change under a cue condition cannot therefore be attributed to a failure to act
+on the signal rather than to a failure to register it. The cue conditions are
+read as the weaker arm for this reason among others, and the explicit ages carry
+any claim that depends on the signal having been received.
+
+The fifth is temporal. Six commercial models were tested over a fixed window
+against provider stacks that change without notice, so a provider shipping an
+age-assurance feature next month invalidates the specific numbers while leaving
+the method intact. That is a condition of empirical work on deployed models
+rather than a defect of this one, but it does mean the contribution is better
+understood as a reusable instrument than as a permanent measurement.
+
+The sixth is that Section~\ref{sec:semantics} was specified after the results it
+sits beside had been read, and it is labelled exploratory throughout. Three
+things limit the damage without repairing it: the measure has no polarity and so
+cannot be tuned toward a favourable direction, its three control strata were
+fixed by the benchmark rather than chosen for this analysis, and a second
+encoder was pinned with the statements that would count as reproduction written
+down before any full-corpus result was seen. Cosine similarity also has no
+interpretable scale, so comparisons are between strata and never against an
+absolute value. None of that makes the section confirmatory. A pre-registered
+replication on a fresh scenario draw would.

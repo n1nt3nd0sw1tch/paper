@@ -1,0 +1,138 @@
+% ------------------------------------------------------------
+% Chapter 7: Limitations and Future Work
+%
+% Carries \label{ch:future}, referenced from Section 3.6.1 where the delivery
+% diagnostic defers the severity question to the audit proposed below.
+%
+% The Ethics Statement follows this chapter as a \chapter*, added to the
+% contents by hand.
+% ------------------------------------------------------------
+
+\chapter{Limitations and Future Work}
+\label{ch:future}
+
+Section~\ref{sec:discussion-design} sets out the limitations that bear on how
+the results should be read. This chapter takes the extensions they imply, in the
+order in which each would change the conclusions most.
+
+\paragraph{Adjudicating Severity}
+\label{sec:future-severity}
+
+The largest gap is that Delivery Response establishes supply and not harm, so
+every directional rate in Section~\ref{sec:safety} is an upper bound. The most
+valuable extension turns that bound into a measurement.
+
+The tractable version is an audit of one domain rather than of the corpus.
+Emotional Dependency is the natural candidate: it carries the lowest refusal
+rate of any harm domain, which under the current instrument cannot distinguish a
+model that is dangerously accommodating from one that is appropriately
+supportive. The audit would classify delivered replies in that domain into a
+small taxonomy separating supportive compliance, which acknowledges the user and
+directs them towards a person in their life, from boundary-weakening compliance,
+which encourages the user to treat the model as a substitute for one. Coding
+should be blind to the model and to the age, with a second coder on a subsample
+to give a reliability figure, and rates reported by model and age with
+scenario-bootstrap intervals. The design already supplies the relevant
+covariate: Social Signpost rises by 41.2 points for an explicit minor age, so
+whether that signpost is protective or perfunctory bears directly on how the
+whole characteristic block is read.
+
+\paragraph{Recognition Against Conditioning}
+\label{sec:future-recognition}
+
+The implicit cue conditions establish that a cue moves behaviour about a third
+as far as a statement does, and cannot say whether that reflects weaker
+recognition or weaker conditioning after recognition. Separating them requires
+eliciting the model's belief rather than only its behaviour: presenting the same
+cue-bearing prompt and asking, in a separate call that does not contaminate the
+response, what the model takes the user's age to be. Recognition accuracy could
+then be crossed with behavioural conditioning and the two components estimated
+separately. The experiment is cheap, since the cue conditions already exist, and
+it addresses the interpretive limit that recurs most often in
+Chapter~\ref{ch:discussion}.
+
+\paragraph{Widening the Instrument}
+\label{sec:future-instrument}
+
+Three extensions widen the benchmark without changing its logic. The corpus is
+English and reading-level formulas are language-specific, so replication in
+another language needs both translated scenarios and an equivalent target-grade
+mapping; whether the boundary effect is a property of the models or of
+English-language regulatory training data is currently untestable. The scenarios
+are authored rather than observed, and pairing a sample of them against
+transcripts of real interactions, under appropriate ethical approval, would
+establish how far the benchmark's picture of what a young user asks matches what
+young users ask. And the length floor removes replies too short to measure, so a
+measure of accessibility that survives on short text would recover the tenth of
+the corpus that formula-based readability cannot reach.
+
+Two smaller items belong on the same list. The reading-level decomposition of
+Section~\ref{subsec:linguistic} was run after the register closed and is
+descriptive; a pre-registered version with the two formula terms declared as a
+family would let it carry inference. And the target-grade mapping is a schooling
+convention rather than a measured reading level, so validating it against
+measured comprehension in the relevant age range would convert Age-Alignment
+Error from an operational error into a developmental one.
+
+\paragraph{What Would Change the Conclusions}
+\label{sec:future-falsify}
+
+It is worth stating what would overturn the central claim rather than extend it.
+If the severity audit found that delivery where a refusal was expected is
+overwhelmingly benign in content, the safety side of the threshold finding would
+survive as a measurement of stated policy and lose most of its force as a
+measurement of exposure. If a recognition probe showed that implicit cues are
+recognised almost perfectly, the gap between cue and statement would be a
+deliberate weighting rather than a perceptual limit, and the deployment
+implication of Section~\ref{sec:discussion-assurance} would need restating.
+
+Experiment~2 has already answered a third such question part way, and the answer
+constrains the claim rather than overturning it. The age gap on age-restricted
+requests erodes from 41.3 points at the opening to 18.5 by the third turn, so
+the boundary effect is a property of a conversation as well as of a first reply,
+and it weakens substantially under two turns of attack without disappearing. A
+sustained conversation rather than two pressed turns could still take it to
+zero, and that is the version of the experiment that would settle it.
+
+% ------------------------------------------------------------
+% Ethics Statement
+% ------------------------------------------------------------
+\chapter*{Ethics Statement}
+\label{sec:ethics}
+\addcontentsline{toc}{chapter}{Ethics Statement}
+
+This study evaluates safety-relevant behaviour in large language model chatbots
+using synthetic, age-conditioned prompts. It involves no human participants, no
+real children, no user accounts and no personal data, which avoids the ethical
+risks of collecting authentic interactions with minors, particularly because
+many consumer chatbots are not intended for use by children. Subject to
+institutional requirements, it therefore does not require human-participant
+ethics approval.
+
+The benchmark is intended to support safety evaluation and nevertheless raises
+ethical considerations. First, the prompts combine age-indicative cues with
+safety-relevant scenarios, and such material could be misused to probe or bypass
+safeguards, especially in open-weight models with weaker content controls. Any
+public release should balance the benefits of independent auditing against the
+risk of enabling misuse.
+
+Second, age is represented as a controlled prompt-level signal rather than an
+attempt to reproduce real children's language or behaviour. The prompts measure
+model sensitivity to manipulated age cues; they do not model behaviour in
+authentic interaction between a child and an AI, and stylistic or contextual
+markers of age may themselves carry assumptions.
+
+Third, the harm taxonomy and output measures are necessarily incomplete. They
+are guided by prior work and regulatory categories, but emerging risks to
+children may not be fully captured, so the taxonomy should be treated as an
+evaluative instrument for this study. The regulatory framework is likewise used
+to structure harm categories and output variables; the results do not constitute
+judgments of legal compliance or non-compliance.
+
+The evaluation also carries environmental costs, because it requires repeated
+model inference, so the number of models, prompts and replications is limited to
+what the research questions need. Finally, the study estimates associations
+between age signals and measurable output properties. It does not establish
+whether models internally represent age as a developmental category, nor does it
+measure effects on children's well-being. Those wider consequences motivate the
+study but remain outside its empirical scope.

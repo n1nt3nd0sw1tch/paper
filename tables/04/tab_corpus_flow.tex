@@ -1,0 +1,26 @@
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+& \multicolumn{2}{c}{\textbf{Blocked}} & \\
+\cmidrule(lr){2-3}
+\textbf{Model} & \textbf{$n$} & \textbf{\%} & \textbf{Returned} \\
+\midrule
+\multicolumn{4}{@{}l}{\itshape Every model was submitted 7,800 requests, 46,800 in all} \\[0.15em]
+\modeltag{openaiPastel}{GPT-5.6 Luna}          & 0 & 0.00 & 7,800 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5}   & 1 & 0.01 & 7,799 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 159 & \Rm{2.04} & 7,641 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash}   & 0 & 0.00 & 7,800 \\
+\modeltag{mistralPastel}{Mistral Small 4}      & 0 & 0.00 & 7,800 \\
+\modeltag{gemmaPastel}{Gemma 4 31B}            & 0 & 0.00 & 7,800 \\
+\midrule
+\rowcolor{macroRow} \textbf{Total} & \textbf{160} & \textbf{0.34} & \textbf{46,640} \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Experiment 1} $\vert$ Corpus Yield by Model.}
+\label{tab:corpus-flow}
+\end{table}

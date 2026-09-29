@@ -1,0 +1,75 @@
+
+{\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\LTleft}{\fill}\setlength{\LTright}{\fill}
+\begin{longtable}{@{}
+    L{4.2cm}
+    >{\raggedleft\arraybackslash}p{1.0cm}
+    >{\raggedleft\arraybackslash}p{1.8cm}
+    >{\raggedleft\arraybackslash}p{3.0cm}
+    @{}}
+\toprule
+\textbf{Model} & \textbf{$n$} & \textbf{$\rho$} & \textbf{95\% CI} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Model} & \textbf{$n$} & \textbf{$\rho$} & \textbf{95\% CI} \\
+\midrule
+\endhead
+\midrule
+\endfoot
+\bottomrule
+\caption{\emph{Experiment 1} $\vert$ Concordance of the Two Age Effects.}
+\label{tab:joint-concordance}
+\endlastfoot
+\multicolumn{4}{@{}l}{\blocktag{A. Pooled}} \\[0.15em]
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna}          & 193 & $-0.13$ & $[-0.29,+0.05]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5}   & 170 & $-0.31$ & $[-0.44,-0.16]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 158 & $-0.31$ & $[-0.48,-0.12]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash}   & 197 & $-0.40$ & $[-0.54,-0.23]$ \\
+\modeltag{mistralPastel}{Mistral Small 4}      & 170 & $-0.21$ & $[-0.37,-0.05]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B}            & 167 & $-0.22$ & $[-0.39,-0.04]$ \\
+\midrule
+\multicolumn{4}{@{}l}{\blocktag{B. Age Restricted}} \\[0.15em]
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna}          & 25 & $+0.03$ & $[-0.42,+0.51]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5}   & 14 & $-0.45$\textsuperscript{\dag} & $[-0.81,+0.12]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 12 & $-0.29$\textsuperscript{\dag} & $[-0.85,+0.36]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash}   & 24 & $-0.63$ & $[-0.81,-0.31]$ \\
+\modeltag{mistralPastel}{Mistral Small 4}      & 21 & $-0.37$ & $[-0.78,+0.11]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B}            & 17 & $-0.41$\textsuperscript{\dag} & $[-0.86,+0.13]$ \\
+\midrule
+\multicolumn{4}{@{}l}{\blocktag{C. Harmful}} \\[0.15em]
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna}          & 45 & $+0.53$ & $[+0.26,+0.73]$ \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5}   & 31 & $-0.05$ & $[-0.37,+0.29]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 24 & $+0.01$ & $[-0.43,+0.45]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash}   & 48 & $-0.22$ & $[-0.50,+0.09]$ \\
+\modeltag{mistralPastel}{Mistral Small 4}      & 36 & $+0.12$ & $[-0.21,+0.43]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B}            & 25 & $+0.08$ & $[-0.36,+0.48]$ \\
+\midrule
+\multicolumn{4}{@{}l}{\blocktag{D. Rights}} \\[0.15em]
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna}          & 74 & \multicolumn{2}{l}{\textsuperscript{\ddag}} \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5}   & 75 & $-0.32$ & $[-0.48,-0.10]$ \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 72 & $-0.09$ & $[-0.37,+0.22]$ \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash}   & 75 & $+0.00$ & $[-0.28,+0.28]$ \\
+\modeltag{mistralPastel}{Mistral Small 4}      & 69 & $-0.16$ & $[-0.37,+0.06]$ \\
+\modeltag{gemmaPastel}{Gemma 4 31B}            & 75 & $+0.01$ & $[-0.32,+0.34]$ \\
+\midrule
+\multicolumn{4}{@{}l}{\blocktag{E. Benign}} \\[0.15em]
+\midrule
+\multicolumn{4}{@{}l}{\quad All six models\textsuperscript{\ddag}, $n$ from 44 to 50} \\
+\end{longtable}
+\vspace{0.2em}
+\noindent\footnotesize
+\emph{Note.} Spearman correlation between the two age effects at scenario level.
+Panel A pools all four scenario types and the rest split them. A positive value
+is a model that simplifies most where it also refuses most, a negative one a
+trade-off between the two. \textsuperscript{\dag} rests on fewer than twenty
+scenarios and \textsuperscript{\ddag} is unestimable, the refusal shift being
+constant. The pooled panel is negative on all six models; the signs diverge once
+split by scenario type.
+\par}

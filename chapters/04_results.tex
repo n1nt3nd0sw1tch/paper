@@ -1,0 +1,269 @@
+% ------------------------------------------------------------
+% Results
+% ------------------------------------------------------------
+\chapter{Results}
+\label{ch:results}
+\label{sec:flow}
+
+This chapter reports the Adaptation experiment. It establishes what the classified corpus contains and how far it can be trusted:
+what was collected, what a provider withheld, how stable a reply is when the
+same request is put again, and how closely the classifier that applied the
+rubric agrees with a human annotator. Sections~\ref{sec:safety}
+to~\ref{sec:joint} then report the safety analysis, the linguistic
+accessibility analysis, and the two considered together.
+
+\section{Classification}
+
+All rates are computed over replies that were returned. Two quantities are
+exceptions and say so where they appear: the block rate in
+Section~\ref{sec:blocking}, which counts requests that returned nothing, and
+the end-to-end sensitivity analysis in Section~\ref{sec:safety}.
+
+The design puts 200 scenarios to six models under thirteen disclosure
+conditions, three times each, for 46,800 requests. A provider withheld 160 of
+them before any completion was returned, leaving 46,640 replies. Those replies
+are the \emph{corpus} throughout: the collected replies, never the scenarios
+and never the source datasets. Table~\ref{tab:corpus-flow} gives the counts by
+model.
+
+\input{tables/04/tab_corpus_flow}
+
+\paragraph{Block Rate}
+\label{sec:blocking}
+
+Almost all of the blocking belongs to one model. Gemini 3.5 Flash Lite accounts
+for 159 of the 160, or 2.04\% of what was put to it, which the inverted shading
+marks as the only departure from the panel rate by more than half a point, and
+Claude Haiku 4.5 for the other; the remaining four models answered every
+request. A blocked request carries no rubric verdict, so it is excluded from
+every rate computed over replies. Section~\ref{sec:blocking} analyses it on its
+own terms, and Section~\ref{sec:safety} counts it again in an end-to-end view.
+
+The classifier resolved every returned reply into one of the four outcome
+cells, so the classified count and the returned count agree on every row and
+only one of them is tabulated. Individual rates are computed over smaller
+subsets, which retain between 97.07 and 100\% of the requests allocated
+to them. The lowest figure belongs to Age Restricted scenarios at an explicit
+age below eighteen, where blocking concentrates, and it is the only subset
+falling below 99.6\%.
+
+\input{tables/03/tab_collection}
+
+A block produces no reply at all. The request was withheld before any text was
+generated, so nothing can be classified, although a request was refused all the
+same. It is reported here before it is set aside from the safety denominator.
+
+Each provider states a reason, and the reasons differ. The single
+Claude Haiku 4.5 block carries \texttt{CONTENT\_FILTER}. Of the 159 from
+Gemini 3.5 Flash Lite, 158 carry \texttt{PROHIBITED\_CONTENT} and one carries
+\texttt{RECITATION}, which is a check against reproducing training data rather
+than a policy judgement about what was asked. One of the 160 is therefore not
+an age-related intervention at all, and the pattern below rests on the other
+159.
+
+Blocking concentrates in conditions that confer minor age. Across all harm
+domains, the observed rate for Gemini 3.5 Flash Lite lies between 4.2 and 6.0
+per cent from age seven to age fifteen and falls to 1.2\% at seventeen,
+with no block at eighteen, at twenty-one, or under Neutral. Sexual Content
+carries most of the effect: 45.0 to 55.0\% from seven to eleven, 40.0
+and 36.7\% at thirteen and fifteen, and 11.7\% at seventeen. Of
+the 159 blocks, 143 fall in Sexual Content, fifteen in Violence and one in
+Bullying. Table~\ref{tab:corpus-blocking} in Appendix~\ref{app:adaptation-results} gives
+the full grid.
+
+Two blocks fall outside the explicit ages, one on each of the two models that
+blocked anything, and both under a routine cue associated with minority; no
+block anywhere in the corpus occurred under an adult cue. The
+Gemini 3.5 Flash Lite exception is the single Bullying block counted above and
+is the whole of that domain's contribution. The Claude Haiku 4.5 exception is
+that model's only block in 7,800 requests, and it fell on a Benign scenario,
+which the design expects to be answered at every age. It is recorded because it is the one place in the corpus where an intervention
+outside the model withheld an ordinary request from a user who gave no age.
+
+Two contrasts were declared for this family, both on the block rate over
+submitted requests and both paired within scenario: the six explicit minor ages
+against the two explicit adult ages, and the same six against the two implicit
+minor cues. All six models enter, including those that blocked nothing, so that
+admission does not depend on the result, and a model that never blocked returns
+an effect of exactly zero. Gemini 3.5 Flash Lite gives $+4.4$ percentage points
+$[2.1, 7.1]$ and $+4.3$ $[1.9, 7.1]$, with $q = 0.004$ in both cases. Twelve
+scenarios carry a non-zero difference, few enough to enumerate every one of the
+$2^{12}$ sign assignments, so both permutation values are exact rather than
+sampled, at $2/4096$ and $3/4096$. The other five models return zero, or $-0.1$
+in one case, and none is distinguishable from no difference.
+
+These contrasts show an association and nothing stronger. Nothing about the
+pipeline that produced the pattern is visible from outside the interface, so
+what is established is that blocking goes with explicit minor-age disclosure
+and not that an age-gating mechanism has been identified. The consequence for
+Section~\ref{sec:safety} is that the safety analysis for Gemini 3.5 Flash Lite
+rests on the conditions in which it answered, with the end-to-end view beside
+it.
+
+\paragraph{Significance Testing}
+\label{sec:unanimity}
+
+Every request was put three times with byte-identical text at the provider
+default sampling setting, so where the three replies differ the disclosure
+condition cannot be the cause and the difference is stochastic variation rather
+than a difference in policy. A cell is one scenario under one condition, of
+which there are 2,600 in a model, and variation is the share of cells whose three
+replies did not all land in the same place. It is computed only on cells where
+all three replicates returned, since a cell blocked throughout would otherwise
+count as invariant on a value none of its replicates holds.
+Table~\ref{tab:corpus-unanimity} splits the outcome into three disjoint
+regions: cells where only Answer varied, cells where only Delivery Response
+varied, and cells where both did. Those three sum to the fourth column up to
+rounding, the interval is a percentile bootstrap over scenarios on that fourth
+column, and bold marks the lowest value in each column.
+
+\input{tables/04/tab_corpus_unanimity}
+
+Five models vary their outcome on 5.0 to 8.8\% of cells.
+Mistral Small 4 does so on 37.2\% $[33.5, 40.9]$, more than four times
+the next highest, and 22.3 of those 37.2 points sit in Delivery Response alone:
+it reaches the same Answer on all three replies and then differs in whether the
+content arrives. Put the same request to it three times and what it was willing
+to do will generally be the same, while what actually arrives may not.
+DeepSeek-V4 Flash is the only model varying more in Answer than in Delivery
+Response, 3.3 points against 1.5, and Gemini 3.5 Flash Lite carries the largest
+overlap outside Mistral Small 4, 3.1 of its 7.2 points. A single figure a model
+would have merged these three behaviours into one number.
+
+Asked of the thirteen rubric labels rather than of the outcome, the denominator
+decides the answer. Table~\ref{tab:safety-stability} reports unanimity twice,
+over all cells and over the cells where the label was recorded at least once,
+and much of the stability visible in the first reading turns out to be repeated
+absence. The two primary labels hold up under both: Answer at 93.6\%
+overall and 72.7 among active cells, Delivery Response at 90.9 and 88.6. The
+rarer characteristics do not. Risk Statement falls from 74.9 to 40.7,
+Eligibility Statement from 96.5 to 28.0, Boundary Identity from 96.4 to 20.2,
+and Companion Identity from 99.8 to 10.8 over the 37 cells in which it was ever
+recorded; Social Signpost and Expert Signpost are unanimous on 77.3 and 81.3
+per cent of all cells. Replicate stability is therefore high for the two
+variables the primary results rest on, and the apparent stability of several
+rare characteristics is largely a count of how often nothing happened. This is
+one reason those characteristics are reported as prevalences and never as the
+basis of a test, and Section~\ref{sec:safety-characteristics} reads them with
+this subsection in view.
+
+Every test in this thesis averages the three replicates within a cell before
+any comparison, so this variation is averaged down rather than carried forward
+and places no limit on the size of any effect reported later. It does mean that
+a difference involving Mistral Small 4 is measured on a noisier instrument than
+the same difference between two others. The macro-average across the six is
+12.1\%; withholding Mistral Small 4 lowers it to 7.0, and withholding
+any other model leaves it between 12.7 and 13.5.
+
+Cell counts differ only because blocking removes cells. Gemini 3.5 Flash Lite
+loses 51 in which no replicate returned and five in which some did, and
+Claude Haiku 4.5 loses one. Provider status was itself almost perfectly
+consistent, at or above 99.81\% for both, which suggests a deterministic
+filter and not a sampled decision.
+
+\paragraph{Rater Agreement}
+\label{subsec:judge}
+
+Scoring 46,800 replies by hand is not possible, so the rubric of
+Section~\ref{subsec:properties} was applied by a language model acting as a
+classifier. \texttt{gpt-oss:120b} scored the whole corpus and is the instrument every rate
+rests on; \texttt{qwen3.5:397b} scored the 600-reply calibration sample only and
+contributed nothing to the classification. Both are described in
+Section~\ref{subsec:classifier}.
+
+Six hundred replies were annotated by hand, one hundred from each model, drawn
+from the first replicate and stratified within model by scenario type, harm
+category and disclosure condition, so that the sample carries the shape of the
+corpus rather than the easiest cases in it. The draw reaches 83 distinct
+scenarios and all thirteen conditions. Annotation was machine-assisted; no row
+was marked unsure, and all 600 produced a valid verdict on the first attempt,
+so no retry logic contributes to what follows. Section~\ref{subsec:classifier} records the fixed runtime and the
+reasoning setting.
+Agreement is reported per label rather than pooled, with precision and recall
+beside $\kappa$, since $\kappa$ alone cannot separate a classifier that misses a
+rare behaviour from one that applies it too often. Three further coefficients
+agree to three decimal places on every label and are not tabulated.
+
+\input{tables/04/tab_judge_agreement}
+
+Table~\ref{tab:judge-agreement} reports the result, with intervals from four
+thousand model resamples and the two rate columns giving the share of replies
+each reader marked positive. Seven of the twelve estimable labels reach
+$\kappa \ge 0.85$, the median is 0.898, and the classifier and the annotator
+differ on 247 of the 7,351 judged cells, or 3.4\%. The false-positive and
+false-negative columns sum to 246 rather than 247, the difference being one
+Alternative Response the classifier scored, and the annotator did not, which a
+confusion matrix cannot place. The two labels that constitute the four-cell
+outcome are the strongest of all: Answer at 0.978 $[0.955, 0.995]$ and Delivery
+Response at 0.936 $[0.901, 0.967]$. Four labels sit lower, and three fail in
+one direction, precision falling below recall, so the classifier applies them
+more often than the annotator rather than missing them. Risk Statement is the
+clearest case, returning Yes on 31.0\% of replies against the
+annotator's 22.2\%, with 70 of its 87 errors false positives.
+
+For the weakest labels, the intervals matter more than the point estimates. A
+threshold of $\kappa = 0.70$ decides which labels may carry a test in
+Section~\ref{sec:safety}, and three intervals straddle it: Eligibility
+Statement at 0.702 $[0.487, 0.874]$, Alternative Response at 0.635
+$[0.516, 0.749]$ and Boundary Identity at 0.615 $[0.372, 0.795]$. Each is
+positive on fewer than sixteen of the 600 replies, or on 151 replies in the
+case of Alternative Response, which is scored only where the reply refused or
+delivered nothing, so for those three the threshold separates a point estimate
+rather than a settled value. Section~\ref{sec:safety} therefore reports a
+sensitivity analysis that withholds Eligibility Statement and re-corrects the
+family without it. Companion Identity did not occur in the sample at all, so it
+has no coefficient and its corpus rate is reported as an observation.
+
+Agreement is also not uniform across the panel. Table~\ref{tab:judge-model}
+gives disagreement by model and by scenario type, over the twelve labels scored
+on each reply: the range across models is 1.8 to 5.3\%, so comparisons between
+models inherit that, and Harmful items are about twice as hard as Benign ones.
+Bold marks the lowest value in each panel.
+
+\input{tables/04/tab_judge_model}
+
+That spread also bears on the
+classifier's provenance. \texttt{gpt-oss:120b} and GPT-5.6 Luna share a
+provider, although not a model family or a training lineage, and
+Section~\ref{subsec:classifier} records this as a limitation of the instrument.
+A classifier reading its own provider's replies more favourably would show its
+lowest disagreement there. It shows its highest, at 5.3\% against 1.8 on
+Mistral Small 4. One hundred replies do not establish the absence of a provider
+effect, but the check runs against the concern rather than with it.
+
+Agreement among annotators shows that the rubric can be applied consistently.
+It does not show that the rubric is unambiguous. The same 600 replies were
+therefore scored again by \texttt{qwen3.5:397b}, an open-weight model from a
+different provider, family and architecture, applying the same rubric under the
+same fingerprint \texttt{e5f836fffbf6}. It returned a valid verdict on all 600.
+Median agreement with the annotator was 0.898 for the primary classifier and
+0.886 for the second, and 0.885 between them, so the two read most labels
+alike.
+
+Three labels diverge, and the pattern is informative. On Boundary Identity,
+Eligibility Statement and Alternative Response, the second classifier agreed
+with the annotator better than the primary did, at 0.894 against 0.615, 0.796
+against 0.702 and 0.681 against 0.635. Where a second model applies a
+definition well, the definition is workable, and the shortfall belongs to the
+classifier, which is the sharpest argument against reading the primary
+classifier's weakest labels as measurements. Risk Statement behaves the other
+way. The two classifiers agreed with \emph{each other} at $\kappa = 0.469$,
+lower than either agreed with the annotator, and returned Yes on 31.0 and 12.7
+per cent of replies. Given the same definition, they do not converge, so what is
+unstable is the measurement rather than the replies being measured. Whether the
+underlying construct is itself underdetermined is a stronger claim than two
+classifier configurations can settle and is not made here. What follows is
+narrow: the absolute rates are not reported as measurements, and only the
+ordering the label produces across the six models is used, since that ordering
+tracks the annotator's closely ($\rho = 0.83$, $p = 0.042$) even where the
+levels do not. Comparative statements about which models warn more are
+therefore admissible and appear in
+Section~\ref{sec:safety-characteristics}; point estimates of how often each
+model warns are not.
+
+The second classifier stops at the calibration sample by design. Its purpose is
+to ask whether the rubric is unambiguous, which needs only the replies a human
+also labelled, and a full second pass would give two complete sets of labels
+with no principled rule for choosing between them. Every rate in this thesis is
+produced by one reader applying one policy, and the second reader is reported
+as a check on the policy rather than as a source of results.

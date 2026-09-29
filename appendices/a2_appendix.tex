@@ -1,0 +1,182 @@
+% Appendix, Algorithms and Pipelines. Requires algorithm and algpseudocode.
+% Every algorithm is [H], so each stays beside the paragraph that introduces it.
+% \Call is never nested here: algpseudocode fails on a nested one.
+% Short captions are what the List of Algorithms prints.
+\chapter{Algorithms and Pipelines}
+\label{app:algorithms}
+
+This chapter summarises the main implementation stages of the experimental
+pipeline. The corresponding methodological design is described in
+Chapter~\ref{ch:methods}, while implementation details are available in the
+repository in Appendix~\ref{app:code}.
+
+\paragraph{Benchmark}
+\label{app:alg-benchmark}
+
+The benchmark pipeline combines the source datasets with the fixed scenario
+specification and expands the resulting 200 scenarios across the age conditions.
+
+\begin{algorithm}[H]
+\caption[Benchmark]{\textbf{Benchmark.} From the source
+datasets to the expanded prompt file. The scenario specification is the only
+hand-written input.}
+\label{alg:assembly}
+\footnotesize
+\begin{algorithmic}[1]
+\Require source dataset specifications, keyword rules, the scenario specification $\Sigma$
+\Ensure 200 scenarios, each expanded across the thirteen age signals
+\State $X \gets \emptyset$
+\ForAll{named source datasets}
+    \State load the original records and apply the inclusion and exclusion rules of that dataset
+    \State map the retained records onto the ten harm domains
+    \State $X \gets X \cup$ the retained records
+\EndFor
+\State reassign records whose wording matches a keyword rule to the domain that rule names
+\State drop records repeating the wording of an earlier one, and give each an identifier
+\State $D \gets$ one draft per usable record in $X$ \Comment{Rebuilt}
+\ForAll{scenarios specified in $\Sigma$}
+    \State check the required columns, the length bounds, the declared taxonomy, and that the request carries no explicit age
+    \State write the scenario into $D$, against its source record where it derives from one
+\EndFor
+\State report every pair of requests in $\Sigma$ above the similarity ceiling \Comment{Advisory}
+\State $B \gets$ the written drafts, as the benchmark
+\State \textbf{assert} $|B| = 200$ and the type and domain quotas are met
+\State $P \gets \Call{BuildPrompts}{B, C}$
+\State \Return $B$ and $P$
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{Response Collection}
+\label{app:alg-collection}
+
+Responses are collected incrementally. Existing outputs are detected before
+each run, allowing interrupted experiments to resume without regenerating
+completed responses.
+
+\begin{algorithm}[H]
+\caption[Response Collection]{\textbf{Response Collection.}
+The pass is idempotent: the outstanding set is derived from the file already
+written, so rerunning after a failure collects only what is missing.}
+\label{alg:collection}
+\footnotesize
+\begin{algorithmic}[1]
+\Require prompts $P$, model $m$, replicates $k$, output file $f$
+\Ensure every $(\text{prompt}, \text{replicate})$ cell is written exactly once
+\State $W \gets \{(p, j) : p \in P,\; j \in 1 \ldots k\}$
+\State $C \gets$ the keys of the rows already in $f$
+\State $R \gets W \setminus C$
+\If{$R = \emptyset$}
+    \State \Return
+\EndIf
+\ForAll{$(p, j) \in R$}
+    \State $x \gets \Call{Prompt}{p}$
+    \State $y \gets \Call{Generate}{m, x}$
+    \State append $(p, j, m, y, \text{metadata})$ to $f$
+\EndFor
+\State \Return the cells that failed, if any
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{Classification}
+\label{app:alg-classification}
+
+The classifier receives the canonical request
+and model response, while age condition, scenario type and expected outcome are
+withheld.
+
+\begin{algorithm}[H]
+\caption[Response Classification]{\textbf{Response
+Classification.} The classifier sees the canonical request and the reply, and
+neither the age signal, the scenario type nor the expected answer.}
+\label{alg:classify}
+\footnotesize
+\begin{algorithmic}[1]
+\Require canonical request $r$, reply $y$, the fixed rubric $\Pi$
+\Ensure the thirteen labels, recorded against the rubric fingerprint
+\If{the provider withheld the reply}
+    \State record the block; leave the thirteen labels undefined
+    \State \Return \Comment{Service Property}
+\EndIf
+\State $\text{item} \gets r \frown y$ \Comment{Canonical Only}
+\State $v \gets \Call{Classify}{\Pi, \text{item}}$
+\State validate $v$ against the values each label admits
+\State record $v$ with the classifier identifier and the fingerprint of $\Pi$
+\State \Return $v$
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{Retention}
+\label{app:alg-retention}
+
+Multi-turn responses are evaluated using the same classification. The dialogue history is truncated at the target turn, and the opening user message is replaced with a standardised request to withhold the age condition while keeping the whole conversation.
+
+\begin{algorithm}[H]
+\caption[Dialogue Classification]{\textbf{Dialogue
+Classification.} Each generated turn is scored on its own, under the same rubric
+as Algorithm~\ref{alg:classify}.}
+\label{alg:classify-turn}
+\footnotesize
+\begin{algorithmic}[1]
+\Require dialogue turns $D$ in order, target turn $t$, canonical request $r$, rubric $\Pi$
+\Ensure a classification of turn $t$ formed without sight of any turn after it
+\State $L \gets \emptyset$
+\ForAll{rows $d \in D$ in order}
+    \State $n \gets \Call{Turn}{d}$
+    \If{$n > t$}
+        \State \textbf{break} \Comment{Truncate Here}
+    \EndIf
+    \State $x \gets \Call{Text}{d}$
+    \If{$n = t$}
+        \State $L \gets L \frown [\textsc{target reply}, x]$
+        \State \textbf{break}
+    \EndIf
+    \If{$n = 1$}
+        \State $x \gets r$ \Comment{Same Substitution}
+    \EndIf
+    \State $L \gets L \frown [\Call{Role}{d}, x]$
+\EndFor
+\State \Return $\Call{Classify}{\Pi, L}$
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{Estimation and Inference}
+\label{app:alg-inference}
+
+Paired effects are estimated at the scenario level and aggregated equally across
+models. Confidence intervals use scenario bootstrap resampling, while
+Benjamini--Hochberg correction is applied within each declared test family.
+
+\begin{algorithm}[H]
+\caption[Estimation and Inference]{\textbf{Estimation and
+Inference.} The scenario is the resampled unit throughout; each model carries
+equal weight in the macro-average, and correction runs over a whole family after
+every contrast has been registered.}
+\label{alg:inference}
+\footnotesize
+\begin{algorithmic}[1]
+\Require classified replies $X$, measure $y$, comparison sets $A$ and $B$, family $F$, contrast name $\nu$
+\Ensure one effect per model, a macro-average, and an adjusted $q$ value within $F$
+\ForAll{models $m$}
+    \State $Y_m \gets$ mean of $y$ over replicates, by scenario and age signal
+    \State $S_m \gets$ scenarios $Y_m$ observes under every member of $A \cup B$
+    \State $d_m(s) \gets \overline{Y_m(s, A)} - \overline{Y_m(s, B)}$ for $s \in S_m$
+    \State $\theta_m \gets \overline{d_m}$
+    \State $[l_m, u_m] \gets$ percentile interval, resampling $S_m$ with replacement
+    \State $p_m \gets$ two-sided sign-flip permutation on $d_m$, exact where few differences are non-zero
+    \State register $(F, \nu, m, \theta_m, l_m, u_m, p_m, |S_m|)$
+\EndFor
+\For{$b \gets 1$ \textbf{to} the number of draws}
+    \State $I^{*} \gets$ the scenario index resampled once \Comment{Shared Draw}
+    \State $\theta^{*}_{b} \gets$ mean over $m$ of $\overline{d_m}$ on $I^{*} \cap S_m$
+\EndFor
+\State $\bar{\theta} \gets$ mean over $m$ of $\theta_m$; $[l, u] \gets$ percentiles of $\theta^{*}$
+\State register $(F, \nu, \textsc{macro}, \bar{\theta}, l, u, \textsc{none})$
+\Statex
+\State \textbf{once every contrast has been registered:}
+\ForAll{declared families $F$}
+    \State apply Benjamini--Hochberg to every non-missing $p$ value in $F$ \Comment{Per Family}
+\EndFor
+\State a row carrying no $p$ value is marked untested rather than null
+\State \Return the register
+\end{algorithmic}
+\end{algorithm}

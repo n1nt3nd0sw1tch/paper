@@ -1,0 +1,63 @@
+
+\definecolor{gapgreen}{HTML}{2E5B45}
+\definecolor{gaprule}{HTML}{5C8F6E}
+\definecolor{gapfill}{HTML}{E7F1E9}
+\definecolor{gapink}{HTML}{1C3527}
+
+\newtcolorbox{researchgap}[1][Research Gap]{%
+    enhanced,
+    colback=white,
+    colframe=white,
+    frame hidden,
+    boxrule=0pt,
+    coltitle=white,
+    colbacktitle=gapgreen,
+    fonttitle=\small\bfseries,
+    title={#1},
+    left=0mm,
+    right=0mm,
+    top=7.5mm,
+    bottom=0mm,
+    before skip=1.4em,
+    after skip=1.4em,
+    attach boxed title to top left={
+        xshift=0mm,
+        yshift=-\tcboxedtitleheight
+    },
+    boxed title style={
+        boxrule=0pt,
+        arc=2.2mm,
+        outer arc=2.2mm,
+        left=3mm,
+        right=3mm,
+        top=1.2mm,
+        bottom=1.2mm
+    }
+}
+
+\newtcolorbox{gapblock}{%
+    enhanced,
+    colback=gapfill,
+    colframe=gaprule,
+    coltext=gapink,
+    before upper={\setstretch{1.12}},
+    boxrule=0pt,
+    leftrule=1.8pt,
+    arc=2.5mm,
+    outer arc=2.5mm,
+    left=3mm,
+    right=2.5mm,
+    top=2.5mm,
+    bottom=2.5mm,
+    before skip=0.3em,
+    after skip=1em
+}
+
+% ------------------------------------------------------------
+
+\begin{researchgap}
+\begin{gapblock}
+\small\ttfamily
+Current studies evaluate child safety in areas like benchmarking, age inference, multi-turn safety, and readability separately. However, it is not apparent whether a model's response improves in safety, clarity, and accessibility when the same request is made with different age signals, or whether these improvements hold during an ongoing conversation.
+\end{gapblock}
+\end{researchgap}

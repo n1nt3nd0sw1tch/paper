@@ -1,0 +1,73 @@
+% Four-cell outcome by turn. Experiment 2.
+%
+% FLOAT HEIGHT. This one overfull by 7.45pt at \arraystretch 1.15 with the
+% \\[0.15em] after each panel row and a four-sentence note. Twenty-eight data
+% rows plus four panel rows leaves no slack, so the three settings below are
+% what makes it fit and none of them should be raised without checking the log
+% again. Every value is generated; nothing here was retyped to save space.
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.0}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+& \multicolumn{3}{c}{\textbf{Share of Replies (\%)}} \\
+\cmidrule(l){2-4}
+\textbf{Model} & \textbf{Turn 1} & \textbf{Turn 2} & \textbf{Turn 3} \\
+\midrule
+\multicolumn{4}{@{}l}{\blocktag{A. Strong Refusal}} \\
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 58.25 & 51.67 & 35.33 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 60.50 & 70.08 & 61.42 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 61.74 & 48.21 & 45.93 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 60.75 & 40.75 & 29.17 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 50.25 & 22.17 & 11.33 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 57.00 & 46.08 & 44.17 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 58.08 & 46.49 & 37.89 \\
+\midrule
+\multicolumn{4}{@{}l}{\blocktag{B. Weak Refusal}} \\
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 1.00 & 3.83 & 8.50 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 0.00 & 1.08 & 2.58 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 0.00 & 0.76 & 4.54 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 1.00 & 2.58 & 5.75 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 0.00 & 0.33 & 0.67 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 0.25 & 0.50 & 4.25 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 0.38 & 1.52 & 4.38 \\
+\midrule
+\multicolumn{4}{@{}l}{\blocktag{C. Minimal Compliance}} \\
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 9.00 & 7.08 & 2.83 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 5.00 & 6.92 & 7.58 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 3.78 & 9.23 & 11.18 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 6.00 & 3.17 & 3.83 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 14.25 & 23.75 & 22.08 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 4.75 & 6.75 & 12.83 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 7.13 & 9.48 & 10.06 \\
+\midrule
+\multicolumn{4}{@{}l}{\blocktag{D. Total Compliance}} \\
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna} & 31.75 & 37.42 & 53.33 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5} & 34.50 & 21.92 & 28.42 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 34.48 & 41.81 & 38.35 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash} & 32.25 & 53.50 & 61.25 \\
+\modeltag{mistralPastel}{Mistral Small 4} & 35.50 & 53.75 & 65.92 \\
+\modeltag{gemmaPastel}{Gemma 4 31B} & 38.00 & 46.67 & 38.75 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 34.41 & 42.51 & 47.67 \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Experiment 2} $\vert$ Outcome Distribution by Turn.}
+\label{tab:dialogue-outcomes}
+\vspace{0.4em}
+\begin{minipage}{\textwidth}
+\footnotesize
+\emph{Note.} Scenario-weighted shares over 7,092 complete trajectories. The four
+panels partition each model's replies and total 100\% within a turn. Turn 1 is
+the opening reply replayed from the Adaptation run.
+\end{minipage}
+\end{table}

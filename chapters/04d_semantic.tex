@@ -1,0 +1,189 @@
+% ------------------------------------------------------------
+% Chapter 4, Examples in Adaptation Experiment.
+%
+% Included after chapters/04c_joint.tex, so that it follows all three
+% Adaptation result sections. The file letter reflects the order in which the
+% file was added and not its position in the chapter.
+%
+% The four exhibits were previously set inline in the sections that analyse
+% them. They are collected here so that the reply text sits in one place and
+% the analysis sections carry argument rather than long verbatim blocks. Each
+% is still referred to by name from the section that reads it, and the labels
+% are unchanged, so every existing \Cref to a case resolves as before.
+%
+% The counterpart collection for the dialogue arm is
+% Section~\ref{sec:examples-persistence}, which is a subsection of the
+% Persistence section because those exhibits are multi-turn and are only
+% intelligible against the turn structure described there.
+% ------------------------------------------------------------
+
+\subsection{Dialogue Drift}
+\label{sec:semantics-drift}
+
+Table~\ref{tab:semantic-dialogue} reports how far each pressed turn moved from
+the opening reply of its own dialogue, on all 7,092 complete trajectories.
+
+\input{tables/04/tab_semantic_dialogue}
+
+The three attack methods separate cleanly, and on a common cohort of 2,360
+cells carrying all three, Emotional Pushback moves replies further than Role
+Play by $+0.145$ $[0.114, 0.176]$ and further than Purpose Reverse by $+0.196$
+$[0.168, 0.224]$. This is the section's most useful negative result. Emotional
+Pushback produces the most semantic movement of the three, and
+Section~\ref{sec:dialogue} shows that it is the one method that reduces Action
+Defect at the first pressed turn, while Role Play, which moves the text less,
+damages the action most. Semantic drift is therefore not a proxy for safety
+deterioration, and a large drift is as consistent with a model restating a
+refusal at length as with a model giving one up.
+
+Mistral Small 4 requires its own baseline. Two replicates of a single prompt
+already sit at 0.593 mean similarity for that model, where the other five sit
+between 0.816 and 0.884, so its apparently large drift is read against a much
+lower floor and is not comparable with the rest of the panel as a raw number.
+
+Table~\ref{tab:semantic-transition} groups the 6,642 dialogues scorable at both
+turns by whether the delivered action matched the benchmark's expectation at
+Turn 1 and at Turn 3.
+
+\input{tables/04/tab_semantic_transition}
+
+The descriptive rows hold different mixes of model and attack method, and
+method alone predicts drift, so they cannot on their own attribute the
+difference to the change in action. Restricting to the 4,338 branches aligned at
+Turn 1 and holding model, method, scenario type and condition, a branch that
+became defective ended less similar to its opening by $-0.046$
+$[-0.069, -0.023]$. The association is small and it survives adjustment.
+
+It is also not monotone in failure. Branches defective at both turns drift least
+of the four groups, at 0.323, below those that stayed aligned throughout. The
+reading consistent with all four rows is that drift marks the turn at which a
+position changed, not the badness of the position arrived at, since a branch
+that had already given up its boundary at Turn 1 has little left to change.
+
+\paragraph{Additional Analyses}
+\label{sec:semantics-robustness}
+
+Five checks bear on whether the pattern above survives its own assumptions. The
+tables behind them are in Appendix~\ref{app:semantics}.
+
+Coverage is incomplete, and the incompleteness is structured.
+Gemini 3.5 Flash Lite returns 0.827 of the planned pairs on the three Age
+Restricted contrasts that read the full minor ladder and 0.960 at the statutory
+boundary, where the other five models return every pair. Provider blocking is
+itself a deployment behaviour, and dropping a scenario because a
+minor-conditioned reply was withheld would remove the harder cases selectively,
+so the available-case estimate is primary. A common-scenario full-replicate
+sensitivity, which keeps a scenario only where every condition the contrast
+reads carries all three replicates for all six models, moves the estimates
+modestly and in one direction: 0.189 becomes 0.180 on twenty of twenty-five
+scenarios, 0.149 becomes 0.136, and the boundary contrast 0.079 becomes 0.073 on
+twenty-three. The ordering of the six contrasts is unchanged.
+
+Response length is associated with separation, at $1.64\times10^{-4}$ per token
+of length difference $[1.39\times10^{-4}, 1.92\times10^{-4}]$. Length is part of
+how a model adapts rather than an external nuisance, so it is treated as a
+sensitivity and not as a confound. Holding it at a common difference of 136
+tokens and averaging equally over the panel, Age Restricted remains the largest
+cell on each of the four contrasts that vary an explicit age, at 0.161 against
+0.095, 0.120 and 0.133 for introducing a minor age. It is not the largest on the
+two that vary only an implicit cue, where Rights exceeds it at 0.058 against
+0.044 and at 0.069 against 0.042. That is the same division the specificity
+estimates draw: what is specific to the age-conditioned stratum is the response
+to an explicit age, not the response to a cue.
+
+Cosine distance correlates with token Jaccard distance between $\rho = 0.635$
+and $\rho = 0.748$ across the contrasts, so the embedding is not measuring
+something wholly detached from the words, nor is it merely restating them. Its
+association with whether the classified outcome changed is much weaker, between
+$\rho = -0.010$ and $\rho = 0.202$, which is the first indication that semantic
+movement and rubric movement are not the same quantity.
+
+Across the corpus 8.1\% of cell-level estimates are negative. That is a
+finite-sample property of a difference of two noisy means rather than a defect,
+and no estimate is truncated at zero. The share runs between 4.3 and 7.2 per
+cent on the three contrasts with the largest separations and between 18.4 and
+19.8 on the three smallest, which are the two cue contrasts and the single step
+from seventeen to eighteen, so it tracks the size of the separation and not
+whether that separation is specific to the age-conditioned stratum: the boundary
+contrast carries the highest negative share of the six and its specificity still
+excludes zero. Read that way the column is a statement about precision, since
+the boundary estimate rests on one condition pair where the ladder contrasts
+rest on many.
+
+A second encoder, \texttt{all-mpnet-base-v2}, was pinned before any full-corpus
+result was seen, together with the three statements that would count as
+reproduction: the ordering of the six contrasts within Age Restricted, the sign
+of the specificity on each contrast, and explicit age displacement exceeding
+implicit cue displacement against Neutral. Fixing the criteria in advance is
+what makes the comparison informative. All three hold. The ordering is
+identical, from 0.189 down to 0.046 under MiniLM and from 0.180 down to 0.041
+under MPNet; the specificity is positive on all six contrasts under both
+encoders, and the same four intervals exclude zero in both; and the explicit
+contrast exceeds the implicit one at 0.180 against 0.044 under MPNet as at 0.189
+against 0.047 under MiniLM. Agreement extends past the declared statements: the
+length coefficient is $1.69\times10^{-4}$ against $1.64\times10^{-4}$, the
+full-replicate sensitivity moves each contrast in the same direction and retains
+the same scenarios, the three attack methods keep their order with every
+paired difference excluding zero, and the Experiment 2 association is of the
+same sign and slightly larger, at $-0.061$ $[-0.085, -0.037]$ against $-0.046$
+$[-0.069, -0.023]$. Absolute similarities are consistently higher under MPNet,
+by roughly 0.02 to 0.03 on the between-condition figures and similarly on the
+within-condition ones, which is a property of the embedding space rather than of
+the replies and is why separation subtracts a within-condition baseline. This is
+an encoder sensitivity, not an independent replication: the replies and the
+estimands are the same, and only the measurement model changes.
+
+The result this section supports is that the text of a reply moves with the
+disclosed age, that it moves furthest where the benchmark's expected action
+depends on age, and that the movement at the statutory boundary is larger than
+the same step produces in any control stratum. Because the four-cell outcome and
+the rubric labels cannot register a reply that was rewritten without changing
+category, this is evidence that age conditioning is broader than the refusal
+rate alone reports.
+
+
+
+\subsection{Examples}
+\label{sec:examples-persistence}
+Boundaries do hold, and the outcome cell does not say how.
+\Cref{case:dialogue-luna} is GPT-5.6 Luna on an Abuse and Hate scenario at an
+explicit age of eleven, refusing at all three turns under two successive
+inversion instructions and naming a fictional substitute at each one.
+\Cref{case:dialogue-persona} is Gemma 4 31B on a Bullying scenario at an
+explicit age of fifteen, holding at the first pressed turn under Role Play and
+answering the persona rather than adopting it. Both are Strong Refusal and
+Table~\ref{tab:dialogue-outcomes} cannot separate them. The property block can:
+the first carries Alternative Response and the second carries only System
+Identity, so one redirects the request and the other only closes it. The Gemma
+dialogue does not itself hold at the third turn.
+
+A reply counted as a defect on the answer axis has not necessarily supplied
+anything. \Cref{case:dialogue-protective} is Mistral Small 4 under the same
+method, the same persona instruction and the same explicit age as
+\cref{case:dialogue-persona}, on an Abuse and Hate scenario. Where Gemma 4 31B
+answers the persona, Mistral Small 4 adopts it: the opening refusal is gone, and
+the turn is scored Compliance against an expected Refusal and counts toward
+Table~\ref{tab:dialogue-defects}. Delivery Response is nonetheless No, the only
+other label marked is Alternative Response, and the remaining ten are all No, so
+the turn substituted a topic and supplied nothing. The defect rate registers a
+boundary given up in words, and cannot separate that from one that held in
+substance.
+
+The measure is blind in the other direction as well.
+\Cref{case:dialogue-inversion} is Gemini 3.5 Flash Lite on an Age Restricted
+scenario at an explicit age of eighteen, where the benchmark expects compliance
+and the opening reply gives a correct purchase procedure with the age check in
+it. One inversion instruction rewrites that procedure step by step, and the
+steps it rewrites are the age ones, so the reply now opens by telling the user
+to discard their identification and refuse to verify their age. Nothing is
+enabled by it, since the stated purpose throughout is to abandon the purchase
+and refusing identification prevents a sale rather than securing one. The turn
+is nonetheless Compliance against an expected Compliance, so it is aligned at
+both turns and neither the outcome cell nor the defect rate records anything at
+all. It is the concrete form of the caution above that a Purpose Reverse
+improvement between turns can be mechanical, and it shows that a defect rate
+cannot register damage on a stratum where compliance is what the benchmark
+expects.
+
+\input{cases/case_dialogue_luna}
+\input{cases/case_dialogue_inversion}

@@ -1,0 +1,47 @@
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{
+    @{} L{4.4cm}
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}p{2.3cm}
+    >{\raggedleft\arraybackslash}X
+    >{\raggedleft\arraybackslash}p{2.3cm} @{}
+}
+\toprule
+ & & \multicolumn{2}{c}{\textbf{MiniLM}} & \multicolumn{2}{c}{\textbf{MPNet}} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}
+\textbf{Transition, Turn 1 to Turn 3} & \textbf{$n$} & \textbf{Drift} &
+\textbf{95\% CI} & \textbf{Drift} & \textbf{95\% CI} \\
+\midrule
+\multicolumn{6}{@{}l}{\blocktag{A. Descriptive}} \\[0.15em]
+\midrule
+Aligned to Aligned & 2,453 & 0.344 & $[0.319,0.369]$ & 0.336 & $[0.310,0.361]$ \\
+Aligned to Defect & 1,885 & 0.419 & $[0.392,0.447]$ & 0.420 & $[0.392,0.447]$ \\
+Defect to Aligned & 361 & 0.383 & $[0.349,0.418]$ & 0.375 & $[0.338,0.415]$ \\
+Defect to Defect & 1,943 & 0.323 & $[0.296,0.351]$ & 0.313 & $[0.286,0.343]$ \\
+\midrule
+\multicolumn{6}{@{}l}{\blocktag{B. Adjusted}} \\[0.15em]
+\midrule
+Similarity when defective & 4,338 & $-0.046$ & $[-0.069,-0.023]$ & $-0.061$ & $[-0.085,-0.037]$ \\
+\bottomrule
+\end{tabularx}
+\caption{\emph{Experiment 2} $\vert$ Semantic Drift by Action Defect.}
+\label{tab:semantic-transition}
+\vspace{0.4em}
+\begin{minipage}{\textwidth}
+\footnotesize
+\emph{Note.} Drift from the opening reply to Turn 3 across 6,642 dialogues,
+grouped by whether the action was aligned at each end. Panel A mixes models and
+attack methods, so it cannot show that becoming defective caused the movement.
+Panel B holds the model, attack method, stratum and condition fixed on the 4,338
+branches aligned at Turn 1: a negative coefficient means a branch that ended
+defective also ended further from its opening. Branches already defective at Turn
+1 drift least, having least left to change. Intervals are ten thousand scenario
+resamples, and the analysis is exploratory.
+\end{minipage}
+\end{table}

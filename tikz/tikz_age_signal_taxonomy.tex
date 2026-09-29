@@ -1,0 +1,79 @@
+% The age signal taxonomy, Chapter 2.
+%
+% COLOURS. Every colour is already defined in style/colours.tex, so this figure
+% adds none. The two branches are told apart by depth of one hue rather than by
+% two hues: explicit disclosure in blue, implicit cue in grey.
+%
+% That is not decoration. Green against orange is the pairing colours.tex argues
+% against, being the worst available for a red-green colourblind reader, and two
+% arbitrary hues would say only that the branches differ. Depth says which is
+% stronger, which is what Chapter 3 claims throughout: the cue arm is the weaker
+% form of disclosure. The figure carries the argument rather than sitting beside
+% it, and it survives greyscale, the blue at L* 83 against the grey at L* 77.
+%
+% TERMINOLOGY. Explicit Age and Implicit Cue, not Explicit Disclosure and
+% Implicit Cue, so the branch names match the thirteen conditions of
+% Section 3.1.3 and every table that reports them. Quoted user wording is left
+% as a user would type it and is not Title Cased.
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  >=stealth,
+  root/.style={rectangle, rounded corners=3pt, draw=figureInk, fill=figurePale!30,
+    align=center, font=\fontsize{11}{13}\selectfont\bfseries,
+    inner sep=5pt, text width=2.8cm, minimum height=0.8cm},
+  catexp/.style={rectangle, rounded corners=3pt, draw=macroColour!80!black,
+    fill=macroRow, align=center, font=\fontsize{10}{12}\selectfont\bfseries,
+    inner sep=5pt, text width=3.2cm, minimum height=0.8cm},
+  catimp/.style={rectangle, rounded corners=3pt, draw=figureMuted,
+    fill=figurePale!45, align=center, font=\fontsize{10}{12}\selectfont\bfseries,
+    inner sep=5pt, text width=3.2cm, minimum height=0.8cm},
+  leafexp/.style={rectangle, rounded corners=3pt, draw=macroColour,
+    fill=macroRow!45, align=center, font=\fontsize{9}{10.5}\selectfont,
+    inner sep=4pt, text width=3.4cm, minimum height=0.85cm},
+  leafimp/.style={rectangle, rounded corners=3pt, draw=figureMuted!70,
+    fill=figurePale!22, align=center, font=\fontsize{9}{10.5}\selectfont,
+    inner sep=4pt, text width=3.4cm, minimum height=0.85cm},
+  edge/.style={draw=figureMuted, semithick, ->},
+  bus/.style={draw=figureMuted, semithick}
+]
+
+% The gloss under each leaf. A tikz /.style is a key and cannot be called as a
+% macro, so this is a \newcommand and not a style entry.
+\newcommand{\gloss}[1]{{\fontsize{8}{9}\selectfont\itshape #1}}
+
+\node[root]   (root) at (0,0)         {Age Signal};
+\node[catexp] (exp)  at (-3.2,-1.45)  {Explicit Age};
+\node[catimp] (imp)  at ( 3.2,-1.45)  {Implicit Cue};
+
+\node[leafexp] (e1) at (-3.2,-2.75) {Age Statement\\[1pt]\gloss{``I am 11''}};
+\node[leafexp] (e2) at (-3.2,-3.85) {Date of Birth\\[1pt]\gloss{Sign-Up Field}};
+\node[leafexp] (e3) at (-3.2,-4.95) {School Year\\[1pt]\gloss{``I'm in Year 6''}};
+
+\node[leafimp] (i1) at (3.2,-2.75) {Task Level\\[1pt]\gloss{``Year 6 maths''}};
+\node[leafimp] (i2) at (3.2,-3.85) {Spelling Errors\\[1pt]\gloss{Developmental}};
+\node[leafimp] (i3) at (3.2,-4.95) {Media Interests\\[1pt]\gloss{Age-Typical Games}};
+\node[leafimp] (i4) at (3.2,-6.05) {Caregiver Reliance\\[1pt]\gloss{``ask my mum''}};
+
+\coordinate (split) at (0,-0.75);
+\draw[edge] (root.south) -- (split);
+\draw[edge] (split) -| (exp.north);
+\draw[edge] (split) -| (imp.north);
+
+\draw[bus] (exp.south) -- (-3.2,-2.1) -- (-5.3,-2.1);
+\draw[bus] (-5.3,-2.1) -- (-5.3,-4.95);
+\draw[edge] (-5.3,-2.75) -- (e1.west);
+\draw[edge] (-5.3,-3.85) -- (e2.west);
+\draw[edge] (-5.3,-4.95) -- (e3.west);
+
+\draw[bus] (imp.south) -- (3.2,-2.1) -- (5.3,-2.1);
+\draw[bus] (5.3,-2.1) -- (5.3,-6.05);
+\draw[edge] (5.3,-2.75) -- (i1.east);
+\draw[edge] (5.3,-3.85) -- (i2.east);
+\draw[edge] (5.3,-4.95) -- (i3.east);
+\draw[edge] (5.3,-6.05) -- (i4.east);
+
+\end{tikzpicture}
+\caption{\emph{Background} $\vert$ Age Signals.}
+\label{tikz:age_signal_taxonomy}
+\end{figure}

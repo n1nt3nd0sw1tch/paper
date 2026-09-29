@@ -1,0 +1,53 @@
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lrrrrrrrr@{}}
+\toprule
+& \multicolumn{8}{c}{\textbf{Age}} \\
+\cmidrule(l){2-9}
+\textbf{Model} & \textbf{7} & \textbf{9} & \textbf{11} & \textbf{13} &
+\textbf{15} & \textbf{17} & \textbf{18} & \textbf{21} \\
+\midrule
+\multicolumn{9}{@{}l}{\blocktag{A. Refusal Rate (\%)}} \\[0.15em]
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna}          & 77.3 & 78.7 & 70.7 & 69.3 & 64.0 & 65.3 & 21.3 & 6.7 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5}   & 78.7 & 77.3 & 76.0 & 73.3 & 68.0 & 52.0 & 20.0 & 13.3 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 75.0 & 71.7 & 66.7 & 60.0 & 51.7 & 47.2 & 17.3 & 12.0 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash}   & 68.0 & 68.0 & 69.3 & 72.0 & 62.7 & 61.3 & 28.0 & 20.0 \\
+\modeltag{mistralPastel}{Mistral Small 4}      & 53.3 & 56.0 & 46.7 & 45.3 & 44.0 & 32.0 & 29.3 & 17.3 \\
+\modeltag{gemmaPastel}{Gemma 4 31B}            & 64.0 & 60.0 & 60.0 & 57.3 & 50.7 & 38.7 & 10.7 & 4.0 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 69.4 & 68.6 & 64.9 & 62.9 & 56.8 & 49.4 & 21.1 & 12.2 \\
+\midrule
+\multicolumn{9}{@{}l}{\blocktag{B. Grade Level}} \\[0.15em]
+\midrule
+\modeltag{openaiPastel}{GPT-5.6 Luna}          & 6.08 & 6.56 & 7.21 & 7.98 & 8.57 & 9.04 & 9.35 & 9.56 \\
+\modeltag{anthropicPastel}{Claude Haiku 4.5}   & 4.58 & 4.94 & 5.61 & 6.76 & 7.30 & 7.83 & 8.23 & 8.46 \\
+\modeltag{geminiPastel}{Gemini 3.5 Flash Lite} & 6.56 & 7.03 & 7.62 & 8.31 & 8.90 & 9.33 & 9.47 & 9.56 \\
+\modeltag{deepseekPastel}{DeepSeek-V4 Flash}   & 4.87 & 5.15 & 5.88 & 6.64 & 7.31 & 7.76 & 7.86 & 7.88 \\
+\modeltag{mistralPastel}{Mistral Small 4}      & 6.24 & 6.32 & 6.88 & 7.56 & 8.18 & 8.30 & 8.49 & 8.71 \\
+\modeltag{gemmaPastel}{Gemma 4 31B}            & 5.14 & 5.68 & 6.41 & 7.23 & 8.15 & 8.48 & 8.67 & 8.77 \\
+\midrule
+\rowcolor{macroRow} Macro-Average & 5.58 & 5.95 & 6.60 & 7.41 & 8.07 & 8.46 & 8.68 & 8.82 \\
+\bottomrule
+\end{tabular}
+\caption{\emph{Experiment 1} $\vert$ Safety and Reading Level by Age.}
+\label{tab:joint-ladders}
+\vspace{0.4em}
+\begin{minipage}{\textwidth}
+\footnotesize
+\emph{Note.} No new estimate appears here. Panel A is the Refusal Rate within
+Age Restricted scenarios, repeating Table~\ref{tab:safety-ladder}, and Panel B
+the Flesch--Kincaid grade level in school grades, repeating
+Table~\ref{tab:readability-levels}, placed together so that
+Table~\ref{tab:joint-shape} can be read against its sources. The two use
+different cohorts: refusal within Age Restricted scenarios, grade level over all
+explicit-age replies. Refusal falls sharply between seventeen and eighteen where
+grade level rises by about a fifth of a school grade. Panel A gives
+Gemini 3.5 Flash Lite 20 scenarios at the younger ages and 25 at the older,
+provider blocking having removed the rest.
+\end{minipage}
+\end{table}

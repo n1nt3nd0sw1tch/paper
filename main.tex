@@ -1,0 +1,67 @@
+% ------------------------------------------------------------
+% main.tex — master file
+% MSc Dissertation, University College London
+% Build: latexmk -pdf main.tex
+% ------------------------------------------------------------
+
+\documentclass[11pt,a4paper,oneside]{report}
+\input{style/preamble}
+\input{style/colours}
+
+\begin{document}
+
+% ---------- Front matter ----------
+\pagenumbering{roman}
+\pagestyle{front}
+\input{style/front}
+\input{style/notation}
+
+% ---------- Main matter ----------
+\clearpage
+\pagenumbering{arabic}
+\pagestyle{main}
+
+\include{chapters/01_introduction}
+\include{chapters/02_chapter}
+\clearpage
+\input{chapters/03_methods}
+\input{chapters/03b_experiments}
+\input{chapters/03c_evaluation}
+\clearpage
+\input{chapters/04_results}
+\input{chapters/04a_safety}
+\input{chapters/04b_linguistics}
+\input{chapters/04c_joint}
+\input{chapters/04c_semantic}
+\input{chapters/04d_dialogue}
+\input{chapters/04d_semantic}
+\clearpage
+\include{chapters/05_discussion}
+\include{chapters/06_conclusion}
+\include{chapters/07_future_work}
+
+% ---------- References ----------
+\clearpage
+\phantomsection
+\renewcommand{\headchapter}{References}
+\printbibliography[heading=bibintoc,title={References}]
+
+% ---------- Appendices ----------
+\clearpage
+\begin{appendices}
+
+\include{appendices/a_appendix}
+\include{appendices/a2_appendix}
+\include{appendices/b_appendix}
+\include{appendices/c_appendix}
+\include{appendices/d_appendix}
+\include{appendices/f_appendix}
+\include{appendices/f1_appendix}
+\include{appendices/f2_appendix}
+\include{appendices/f3_appendix}
+\include{appendices/f4_appendix}
+\include{appendices/f5_appendix}
+
+\end{appendices}
+
+\end{document}

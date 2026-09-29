@@ -1,0 +1,153 @@
+% ------------------------------------------------------------
+% Chapter 1: Introduction
+%
+% Order is Motivation, Aims, Scope, Contributions, Terminology, Structure.
+% Scope sits before Contributions so that what the study does not claim is
+% fixed before what it claims is stated.
+%
+% Regulation is named here and argued in Section 2.2.3. Provider policy is not
+% described here at all. The abstract states the findings once; Section 1.4
+% states them once more with the contribution attached, and nowhere else in the
+% front matter.
+% ------------------------------------------------------------
+\chapter{Introduction}
+\label{ch:introduction}
+
+Generative Artificial Intelligence (AI) chatbots are general-purpose tools for
+writing, learning and social interaction, and children and adolescents are among
+their users. The features that make them engaging, such as personalised
+responses, retained conversational context and reactions to sensitive
+disclosures, also raise safety concerns. For a child, an exchange appropriate for
+an adult can carry age-inappropriate advice, misinformation, privacy risks, or
+content that is difficult to evaluate critically at their developmental stage
+\cite{figueiraActionsSpeakLouder2026}.
+
+\section{Motivation}
+\label{sec:intro_motivation}
+
+Age gates are one layer of protection and not the only one. Prior work shows that
+chatbots can infer a user's age from explicit disclosures and conversational
+cues, yet may take no protective action once a child is identified
+\cite{figueiraActionsSpeakLouder2026}. If a child reaches the model despite the
+gate, the safety of the interaction depends on the reply itself.
+
+Existing child-safety benchmarks evaluate harmful content and age-appropriate
+language separately, and usually within single-turn exchanges. None varies the
+user while holding the request fixed, so whether a reply adapts to an age the
+model can already detect is unmeasured.
+
+This thesis studies \emph{age conditioning}: the systematic change in a model's
+response as a function of the age the user states, measured on safety behaviour
+and on reading level. The term is behavioural throughout. It says that the reply
+changes with the stated age; it does not say that the model inferred the age,
+represented it, or applied any rule.
+
+\section{Aims and Objectives}
+\label{sec:intro_aims}
+
+This thesis builds a controlled benchmark that isolates age conditioning and uses
+it to test whether LLM chatbots adapt their safety behaviour and language to a
+user's apparent age. The objectives are to:
+
+\begin{enumerate}
+\item construct a benchmark in which the age signal varies while the request
+content is held constant;
+\item score safety behaviour and linguistic accessibility on the same reply;
+\item compare explicit age disclosure against implicit age cues;
+\item measure whether age-conditioned behaviour survives multi-turn attack; and
+\item interpret the results against provider policy and the regulatory framework
+for online child safety.
+\end{enumerate}
+
+Two experiments carry them. Experiment~1, Adaptation, holds each request fixed
+and varies only the age signal, covering the first three objectives.
+Experiment~2, Retention, continues a stratified subset of those exchanges under
+attack, covering the fourth. Separating the two keeps the single-turn comparison
+matched. The fifth objective frames the discussion rather than forming a further
+experiment.
+
+\noindent
+Four research questions follow:
+
+\noindent\textbf{RQ1:}
+Does a model refuse differently when the user states a child's age rather than an
+adult's?
+
+\noindent\textbf{RQ2:}
+Does it write at a different reading level?
+
+\noindent\textbf{RQ3:}
+Is the change smaller when the age is implied than when it is stated?
+
+\noindent\textbf{RQ4:}
+Does the change survive an adversarial conversation?
+
+\section{Scope}
+\label{sec:intro_scope}
+
+The study examines measurable properties of model outputs and nothing else. It
+uses no data from real children, does not study user perception, and does not
+identify the internal cause of any behaviour. The age is supplied rather than
+elicited, so nothing here establishes that a model inferred it. Findings indicate
+whether chatbots show consistent age-sensitive behaviour and where it is uneven,
+not why a given model behaves as it does.
+
+\section{Contributions}
+\label{sec:intro_contributions}
+
+The principal contribution is a controlled evaluation framework and a benchmark
+of matched, age-conditioned prompts. It scores safety behaviour and linguistic
+accessibility on the same reply, two properties usually assessed in isolation,
+and records over-restriction alongside unsafe permissiveness so that both failure
+directions are visible.
+
+Applied to six commercial models over 46,800 requests, it establishes that age
+conditioning is real and uneven. Refusal on age-restricted requests is 45.5
+percentage points higher for a stated minor age than a stated adult age, and text
+for a stated minor sits 1.77 grade levels lower. The two have different shapes:
+almost half of the refusal movement across fourteen years of age falls in the
+single step from seventeen to eighteen, where the same step carries between 4 and
+11 per cent of the reading-level movement. A model can therefore be calibrated to
+the statutory line and not to the developmental range beneath it. Conditioning is
+also about three times weaker when the age is implied than when it is stated.
+
+Two secondary contributions follow from the instrument. Crossing the decision
+with the delivered content separates a permissive model from one that agrees and
+then supplies nothing, which a refusal rate reports identically. And decomposing
+the reading-level change shows it is carried by word choice rather than sentence
+length.
+
+None of the individual ingredients is new. Prior work has held prompts constant
+while varying age \cite{ozcanEvaluatingChildAppropriateLanguage2026}, evaluated
+demographic bias \cite{benkiraneHowCanWe2025}, contrasted explicit and implicit
+cues \cite{figueiraActionsSpeakLouder2026, giorgiExplicitImplicitLarge2024},
+characterised multi-turn degradation
+\cite{caoSafeDialBenchFineGrainedSafety2026, liStateDependentSafetyFailures2026},
+measured readability \cite{valentiniAutomaticGenerationSimplification2023,
+oshikaSimplifyingTranslationsChildren2024}, and evaluated mixed sets of
+open-source and closed-source models
+\cite{jiaoSafeChildLLMDevelopmentalBenchmark2025}. The contribution is their
+controlled integration, so that a difference in the reply is attributable to the
+age signal rather than to its wording.
+
+\section{Terminology}
+\label{sec:intro_terminology}
+
+Three terms are used for the age bands, and only in these senses. A \emph{child}
+is a user aged up to 12, an \emph{adolescent} a user aged 13 to 17, and an
+\emph{adult} a user aged 18 or over. Where a statement applies to both of the
+first two groups they are named together. Models are \emph{closed-source} where
+the weights are not released and the model is reached through a provider
+endpoint, and \emph{open-source} where the weights are published and decoding can
+be controlled directly.
+
+\section{Thesis Structure}
+\label{sec:intro_structure}
+
+Chapter~\ref{ch:background} reviews related work on child safety in large
+language models, age conditioning, age-appropriate language generation,
+multi-turn safety and regulation. Chapter~\ref{ch:methods} describes the
+benchmark, the model panel, the collection protocol and the evaluation measures,
+and specifies the two experiments. Chapter~\ref{ch:results} reports the results
+and Chapter~\ref{ch:discussion} interprets them. Chapter~\ref{ch:conclusion}
+concludes and Chapter~\ref{ch:future} sets out future work.

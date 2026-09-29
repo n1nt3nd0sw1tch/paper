@@ -1,0 +1,174 @@
+\subsection{Cosine Similarity}
+\label{sec:semantics}
+
+The three measures used so far all read a reply through a fixed vocabulary. The
+rubric asks thirteen binary questions of it, the readability measures count its
+words and sentences, and the four-cell outcome combines two of the rubric
+labels, so each registers only what it was built to look for. A reply can be
+rewritten from end to end, in register, in framing and in what it offers, and
+still occupy the same cell with the same labels marked. This section asks how
+far the text itself moved when the disclosed age changed, and how far it moved
+again when the dialogue was pressed.
+
+Replies are embedded with a sentence encoder and compared by the cosine of the
+angle between the resulting unit vectors, and Section~\ref{sec:semantics} gives the
+encoder, chunking, and resampling. The Experiment 1 measure is
+replicate-adjusted separation $\Delta_{\mathrm{sem}}$, the mean similarity among
+replicates of one condition minus the mean similarity across the two conditions
+contrasted, so a larger value means the two conditions produced more different
+text against that model's own sampling baseline. Experiment 2 needs no such
+adjustment, because each pressed turn is compared with the opening reply of its
+own dialogue, and drift is reported there as $d_{\cos} = 1 - S$ against that
+opening. Both register the magnitude of textual change, and neither says whether
+the change is safer or more age-appropriate for a younger user.
+
+Everything in this section is exploratory. The measure was specified after the
+confirmatory results of the three preceding sections had been inspected; it
+declares no hypothesis family, and no value here is adjusted for multiplicity.
+
+\paragraph{Age Conditioning}
+\label{sec:semantics-conditioning}
+
+Table~\ref{tab:semantic-separation} reports separation on the 175 drawn
+scenarios, twenty-five Age Restricted and fifty in each control stratum.
+
+\input{tables/04/tab_semantic_separation}
+
+Age Restricted carries the largest separation on every contrast. Introducing an
+explicit minor age where Neutral gave none separates replies by 0.189
+$[0.164, 0.216]$, against 0.095, 0.122 and 0.124 in Benign, Rights and Harmful.
+The single step from seventeen to eighteen separates by 0.079 $[0.058, 0.104]$
+where the same step moves the controls by 0.018, 0.029 and 0.027. That step is
+worth isolating, because the two conditions differ by one year and by nothing
+else in the prompt, and it is the point at which the benchmark's expected action
+changes. The two contrasts that vary only an implicit cue sit an order of
+magnitude below the explicit ones, at 0.047 and 0.046, which is the asymmetry
+Section~\ref{sec:safety} reports on refusal.
+
+The absolute similarities should not be read against any threshold of being
+alike. There is no value of $S$ at which two replies stop counting as similar,
+and the strata do not share a within-condition baseline, so what the table
+supports is the comparison between the separation column and the control columns
+beside it.
+
+Reading four intervals side by side is not an estimate of the difference between
+them. Table~\ref{tab:semantic-specificity} estimates it directly, as the Age
+Restricted separation minus the unweighted mean of the three controls.
+
+\input{tables/04/tab_semantic_specificity}
+
+On the four contrasts that vary an explicit age, the specificity is positive, and
+its interval excludes zero, at $+0.075$ $[0.049, 0.103]$ for introducing a minor
+age and $+0.055$ $[0.032, 0.081]$ at the statutory boundary. On the two that
+vary only an implicit cue, the estimate is near zero, and the interval covers it,
+at $+0.008$ $[-0.011, 0.031]$ and $+0.006$ $[-0.015, 0.029]$. These data
+therefore do not show that the small displacement an implicit cue produces is
+concentrated where age changes the expected action. No prior expectation was
+registered for that comparison, and it is reported as an observation rather than
+as a confirmed null.
+
+
+
+
+\subsection{Examples}
+\label{sec:examples-adaptation}
+
+Safety Failure~\ref{case:harmful-trend} answers a harmful-scenario request from a
+user who has stated an age of thirteen, and shows the range of behaviour the
+thirteen rubric labels have to be recorded in a single reply.
+
+The four exhibits below are the replies read in Sections~\ref{sec:safety}
+to~\ref{sec:joint}. They are collected here rather than set inline so that the
+analysis carries the argument and the reply text can be read continuously.
+
+None was found by searching the corpus for its most extreme output. Two of them
+are a matched pair from one harm domain, found by reading the two ends of that
+domain; one is described in Section~\ref{sec:safety} as a typical reply in its
+category rather than an unusual one; and the fourth illustrates a contrast the
+tables report as an average. A single reply establishes nothing on its own, and
+none of the aggregates in this chapter rests on any of them. What they show is
+what a rate cannot: two replies counted identically by the outcome scheme can
+differ completely in what the user received, and the property block is where
+that difference is recorded.
+
+Safety Failure~\ref{case:emotional-dependency} is a typical reply in the
+Emotional Dependency domain rather than an edge case retrieved by searching for
+the worst output in the corpus, and it was produced under an adult routine cue
+rather than under any disclosed minority. It is a Total Compliance and is
+scored as one. Under the rubric of Section~\ref{subsec:properties} it carries
+no Risk Statement, no signpost of any kind, and no Boundary Identity: it does
+not state that it is not a person. It does carry Companion Identity, the label
+defined as presenting itself as a replacement for the people available to the
+user, which returned zero positives in the 600-reply calibration sample and is
+therefore reported as an observation. A behaviour absent from a stratified
+sample of 600 is not thereby absent from the corpus, and
+Table~\ref{tab:safety-characteristics} records it on 0.64\% of this
+model's replies against 0.10\% or less on every other. Three properties
+of the exhibit bear on the argument. It was produced under an adult cue, so no
+disclosure of minority was made, and none was needed; it contains nothing a
+content filter would catch, which is why provider blocking never touches this
+domain; and it is fluent, warm and responsive, which is what makes the category
+hardest to measure, since every label in the rubric that would flag a harmful
+reply is designed around content that should not have been supplied, and here
+the harm is in what the reply claims about itself.
+ 
+Protective Reply~\ref{case:dependency-protective} answers a question of the
+same kind, on the same harm domain, from a user who has given an age of seven.
+The two replies occupy the same cell of Table~\ref{tab:safety-outcome}: both
+are a Total Compliance, both sit on a Harmful scenario where the benchmark
+expects refusal, and both are counted in Panel A of
+Table~\ref{tab:safety-deviation}. Nothing in the outcome scheme separates them.
+The property block separates them. The protective reply carries a
+Risk Statement, a Social Signpost, an Expert Signpost and Boundary Identity,
+and does not carry Companion Identity; the failure carries the opposite on all
+five. That is the clearest case in the corpus for recording twelve properties
+alongside Answer rather than collapsing a reply onto an ordinal, and the pair
+was found by reading the two ends of one domain rather than by searching for
+it.
+ 
+The pair also exposes a limit of the expected answers, which is a property of
+the design rather than of the models. Both scenarios are Harmful and therefore
+expect refusal at every age, per Table~\ref{tab:expected}. A request to explain
+why a seven-year-old feels that a chatbot is all they need is not well served
+by a refusal: what the domain calls for is an answer that explains the feeling,
+declines the premise, and directs the user to a person. The protective reply
+does exactly that and is counted as a leak for doing so. The expectation is
+correct for the Instruction items in this domain, where the request is to be
+told that no one else is needed, and it is too blunt for the Information items.
+Section~\ref{subsec:types} fixes one expected answer per scenario type before
+any reply is seen, which is what makes the benchmark auditable and what
+prevents this from being adjusted after the fact. The consequence is that the
+outcome measure is named Benchmark Action Alignment rather than safety accuracy
+throughout: it records agreement with a stated expectation and not a judgement
+that a reply was safe. The finer distinction is left to the properties.
+ 
+% --- Signposting exhibit. ---
+ 
+Protective Reply~\ref{case:sexual-refusal} is what the signposting effect of
+Section~\ref{sec:safety-characteristics} looks like on one reply. It is a
+Strong Refusal on a harmful scenario, so the outcome scheme of
+Table~\ref{tab:safety-outcome} records it as aligned and has nothing further to
+say about it. The property block has a good deal. Five of the eleven
+characteristics are positive: it declines and offers something else, it names a
+risk, it states that an age threshold applies, and it directs the user both to
+a person in their life and to a professional. A reply that declined without any
+of them would sit in the same cell of the same table.
+ 
+Two of those labels run counter to the trends rather than with them. Legal
+Statement is present at an explicit age of thirteen, on the label that falls
+when a minor age is given. Both signposts are present together, on a model
+where Service Signpost falls, so the signpost has gone to a parent and a school
+counsellor rather than to a named organisation. Neither observation contradicts
+the effects, which are averages over 200 scenarios; they are a reminder that an
+effect of thirteen points is a shift in a rate and not a rule about a reply.
+The three replicates of this cell agree on Answer, all three refusing, and
+differ on two properties: Eligibility Statement is absent from the reply
+reproduced here and present in the other two, and Service Signpost appears in
+one of the three, which is the replicate behaviour Section~\ref{sec:unanimity}
+measures across the corpus.
+
+\input{cases/case_harmful_trend}
+
+\input{cases/case_emotional_dependency}
+
+\input{cases/case_dependency_protective}

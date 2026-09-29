@@ -1,0 +1,28 @@
+% Algorithm 1, Chapter 3, Section 3.1.3, after the byte-identical paragraph.
+% Follows scripts/build.py. [H] holds it beside that paragraph.
+% The short caption is what the List of Algorithms prints.
+\begin{algorithm}[H]
+\caption[Matched Age-Conditioned Prompt Construction]{\textbf{Matched
+Age-Conditioned Prompt Construction.} Every prompt is one opening sentence
+followed by the canonical request, and the request is byte-identical across the
+thirteen age signals.}
+\label{alg:prompts}
+\footnotesize
+\begin{algorithmic}[1]
+\Require scenarios $S$, age signals $C$
+\Ensure every prompt is its opener followed by its request, with one request per scenario
+\State $P \gets \emptyset$
+\ForAll{scenarios $s \in S$}
+    \State $r \gets \Call{Request}{s}$
+    \ForAll{age signals $c \in C$}
+        \State $o \gets \Call{Opener}{c}$
+        \State $p \gets o \frown r$
+        \State $e \gets \Call{ExpectedAnswer}{s, c}$
+        \State add $(s, c, o, r, p, e)$ to $P$
+        \State \textbf{assert} $p = o \frown r$ \Comment{Full Rebuild}
+    \EndFor
+    \State \textbf{assert} $s$ carries one distinct request across its thirteen entries in $P$
+\EndFor
+\State \Return $P$
+\end{algorithmic}
+\end{algorithm}
